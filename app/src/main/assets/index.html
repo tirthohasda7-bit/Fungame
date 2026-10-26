@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="বাংলা ফান গেমস - সম্পূর্ণ ফ্রি, আধুনিক ও মোবাইল-বান্ধব কুইজ, টিক-ট্যাক-টো এবং মেমোরি কার্ড ম্যাচিং গেম।">
+  <meta name="theme-color" content="#131127">
+  <title>বাংলা ফান গেমস | Bangla Fun Games</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="navbar" id="top-nav">
+    <div class="nav-container">
+      <div class="brand" onclick="navigateTo('home')">
+        <span class="brand-icon">🎮</span>
+        <div class="brand-text">
+          <span class="brand-title">বাংলা ফান গেমস</span>
+          <span class="brand-subtitle">Bangla Fun Games</span>
+        </div>
+      </div>
+      
+      <div class="nav-actions">
+        <button id="sound-btn" class="icon-btn" aria-label="সাউন্ড অন বা অফ" title="সাউন্ড চালু/বন্ধ">
+          <span id="sound-icon">🔊</span>
+        </button>
+        <button id="theme-btn" class="icon-btn" aria-label="থিম পরিবর্তন" title="থিম পরিবর্তন">
+          <span id="theme-icon">🌙</span>
+        </button>
+        <button class="nav-link-btn" onclick="openAboutModal()">
+          <span>ℹ️ পরিচিতি</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-container">
+    
+    <!-- ==================== HOME / HUB VIEW ==================== -->
+    <section id="view-home" class="app-view active">
+      <!-- Hero Banner -->
+      <div class="hero-card">
+        <div class="hero-image-wrapper">
+          <img src="banner.jpg" alt="Bangla Fun Games Banner" class="hero-img" onerror="this.style.display='none'">
+        </div>
+        <div class="hero-overlay">
+          <span class="hero-badge">✨ ১০০% ফ্রি • কোনো বিজ্ঞাপন নেই • অফলাইন সমর্থিত</span>
+          <h1 class="hero-title">আনন্দ ও বুদ্ধির সেরা বাংলা গেমস</h1>
+          <p class="hero-desc">আপনার সাধারণ জ্ঞান যাচাই করুন, বন্ধুদের সাথে কাটাকুটি খেলুন অথবা স্মৃতিশক্তি পরীক্ষা করুন!</p>
+          <div class="hero-actions">
+            <a href="#games-section" class="btn btn-primary btn-large">
+              <span>🚀 গেম তালিকা দেখুন</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Stats / Highlights -->
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span class="stat-icon">🧠</span>
+          <div class="stat-info">
+            <span class="stat-value">২৫+</span>
+            <span class="stat-label">কুইজ প্রশ্ন</span>
+          </div>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-icon">⚔️</span>
+          <div class="stat-info">
+            <span class="stat-value">২ মোড</span>
+            <span class="stat-label">টিক-ট্যাক-টো</span>
+          </div>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-icon">🃏</span>
+          <div class="stat-info">
+            <span class="stat-value">১৬ কার্ড</span>
+            <span class="stat-label">মেমোরি চ্যালেঞ্জ</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Games Hub Section -->
+      <section id="games-section" class="section-games">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span>🎯 সব গেমস</span>
+            <span class="count-badge" id="games-count">৩টি গেম</span>
+          </h2>
+          <p class="section-subtitle">পছন্দের গেম বেছে নিয়ে "খেলুন" বাটনে ক্লিক করুন</p>
+        </div>
+
+        <!-- Search and Category Filters -->
+        <div class="filter-controls">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="game-search" placeholder="গেমের নাম দিয়ে খুঁজুন..." aria-label="গেম খুঁজুন">
+            <button id="clear-search" class="clear-btn" style="display:none;" aria-label="মুছে ফেলুন">✕</button>
+          </div>
+          <div class="category-tabs" role="tablist">
+            <button class="tab-btn active" data-category="all" role="tab">সব গেম</button>
+            <button class="tab-btn" data-category="quiz" role="tab">কুইজ</button>
+            <button class="tab-btn" data-category="board" role="tab">বোর্ড গেম</button>
+            <button class="tab-btn" data-category="memory" role="tab">মেমোরি ও ব্রেন</button>
+          </div>
+        </div>
+
+        <!-- Games Cards Grid -->
+        <div class="games-grid" id="games-grid">
+          
+          <!-- Game 1: Bengali Quiz -->
+          <article class="game-card" data-category="quiz" data-title="বাংলা কুইজ সাধারণ জ্ঞান">
+            <div class="game-card-banner quiz-banner">
+              <span class="game-emoji">🏆</span>
+              <span class="badge-tag">সাধারণ জ্ঞান</span>
+            </div>
+            <div class="game-card-body">
+              <h3 class="game-title">বাংলা কুইজ চ্যালেঞ্জ</h3>
+              <p class="game-desc">বাংলাদেশ ও বিশ্বের ইতিহাস, বিজ্ঞান, খেলাধুলা ও সাহিত্য নিয়ে ২৫টি চমৎকার কুইজ প্রশ্ন।</p>
+              <div class="game-features">
+                <span>⏱️ স্কোর ট্র্যাকিং</span>
+                <span>⭐ সঠিক উত্তর ব্যাখ্যা</span>
+              </div>
+              <div class="card-footer">
+                <span class="best-score-preview" id="preview-best-quiz">সর্বোচ্চ স্কোর: <strong>০/২৫</strong></span>
+                <button class="btn btn-primary" onclick="launchGame('quiz')">
+                  <span>খেলুন ▶</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 2: Tic-Tac-Toe -->
+          <article class="game-card" data-category="board" data-title="টিক ট্যাক টো কাটাকুটি">
+            <div class="game-card-banner ttt-banner">
+              <span class="game-emoji">❌ ⭕</span>
+              <span class="badge-tag">২ প্লেয়ার বা AI</span>
+            </div>
+            <div class="game-card-body">
+              <h3 class="game-title">টিক-ট্যাক-টো (কাটাকুটি)</h3>
+              <p class="game-desc">একই ফোনে বন্ধুর সাথে খেলুন অথবা বুদ্ধিমান কম্পিউটারের বিপক্ষে কাটাকুটি খেলে জয়ী হোন!</p>
+              <div class="game-features">
+                <span>🤖 কম্পিউটার মোড</span>
+                <span>👥 ২ জন খেলোয়াড়</span>
+              </div>
+              <div class="card-footer">
+                <span class="best-score-preview" id="preview-best-ttt">মোট জয়: <strong>০</strong></span>
+                <button class="btn btn-secondary" onclick="launchGame('tictactoe')">
+                  <span>খেলুন ▶</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 3: Memory Match -->
+          <article class="game-card" data-category="memory" data-title="মেমোরি কার্ড ম্যাচিং স্মৃতি পরীক্ষা">
+            <div class="game-card-banner memory-banner">
+              <span class="game-emoji">🎴</span>
+              <span class="badge-tag">ব্রেন ট্রেইনার</span>
+            </div>
+            <div class="game-card-body">
+              <h3 class="game-title">মেমোরি কার্ড ম্যাচিং</h3>
+              <p class="game-desc">কার্ডগুলো উল্টে জোড়া মেলান! কম চালে এবং দ্রুততম সময়ে সব কার্ড মিলিয়ে চ্যাম্পিয়ন হোন।</p>
+              <div class="game-features">
+                <span>⚡ স্মৃতি পরীক্ষা</span>
+                <span>⏱️ সময় ও চাল ট্র্যাকার</span>
+              </div>
+              <div class="card-footer">
+                <span class="best-score-preview" id="preview-best-memory">সেরা চাল: <strong>-</strong></span>
+                <button class="btn btn-accent" onclick="launchGame('memory')">
+                  <span>খেলুন ▶</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div id="no-results" class="no-results" style="display:none;">
+          <span>🔍</span>
+          <p>কোনো গেম খুঁজে পাওয়া যায়নি! অন্য নামে অনুসন্ধান করুন।</p>
+          <button class="btn btn-outline" onclick="resetSearch()">সব গেম দেখুন</button>
+        </div>
+      </section>
+
+      <!-- Why Bangla Fun Games section -->
+      <section class="section-info">
+        <h3 class="info-title">💡 কেন বাংলা ফান গেমস সেরা?</h3>
+        <div class="info-grid">
+          <div class="info-box">
+            <span class="info-icon">📱</span>
+            <h4>মোবাইল ফ্রেন্ডলি</h4>
+            <p>যেকোনো সাধারণ স্মার্টফোনে কোনো ল্যাগ ছাড়াই সাবলীলভাবে চলে।</p>
+          </div>
+          <div class="info-box">
+            <span class="info-icon">🇧🇩</span>
+            <h4>খাঁটি বাংলা ভাষায়</h4>
+            <p>সহজ ও সুন্দর বাংলা ভাষায় সব নির্দেশিকা এবং আকর্ষণীয় ইন্টারফেস।</p>
+          </div>
+          <div class="info-box">
+            <span class="info-icon">🔒</span>
+            <h4>১০০% নিরাপদ ও ফ্রি</h4>
+            <p>কোনো সাইন-আপ বা পেমেন্ট নেই। ডাটা ডিভাইসেই সংরক্ষিত থাকে।</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ==================== GAME 1: BENGALI QUIZ VIEW ==================== -->
+    <section id="view-quiz" class="app-view game-view">
+      <div class="game-header-bar">
+        <button class="back-btn" onclick="navigateTo('home')">
+          <span>← গেম তালিকায় ফিরুন</span>
+        </button>
+        <h2 class="view-heading">🏆 বাংলা কুইজ চ্যালেঞ্জ</h2>
+        <button class="help-btn" onclick="toggleHelp('quiz')">
+          <span>❓ নিয়ম</span>
+        </button>
+      </div>
+
+      <!-- Quiz Help Box -->
+      <div id="help-quiz" class="help-card" style="display:none;">
+        <h4>📝 কুইজ খেলার নিয়ম:</h4>
+        <p>• প্রতিটি প্রশ্নের জন্য ৪টি বিকল্প থাকবে, সঠিকটি বেছে নিন।</p>
+        <p>• সঠিক উত্তর দিলে পয়েন্ট পাবেন এবং তাৎক্ষণিক ফলাফল দেখতে পাবেন।</p>
+        <p>• সব প্রশ্ন শেষে আপনার সর্বমোট স্কোর ও পারফরম্যান্স বিশ্লেষণ দেখতে পাবেন।</p>
+      </div>
+
+      <!-- Quiz Live Container -->
+      <div class="quiz-container">
+        <!-- Progress Bar & Info -->
+        <div class="quiz-status-card">
+          <div class="quiz-progress-wrapper">
+            <div class="progress-labels">
+              <span id="quiz-question-counter">প্রশ্ন: ১/২৫</span>
+              <span id="quiz-score-counter">স্কোর: <strong>০</strong></span>
+            </div>
+            <div class="progress-bar-bg">
+              <div id="quiz-progress-bar" class="progress-bar-fill" style="width: 4%;"></div>
+            </div>
+          </div>
+          <div class="quiz-mini-meta">
+            <span id="quiz-category-tag" class="meta-pill">সাধারণ জ্ঞান</span>
+            <span id="quiz-best-score-display" class="meta-pill">সর্বোচ্চ স্কোর: ০</span>
+          </div>
+        </div>
+
+        <!-- Question Box -->
+        <div class="question-card" id="quiz-question-box">
+          <div class="question-number-badge" id="quiz-q-num">প্রশ্ন ০১</div>
+          <h3 class="question-text" id="quiz-question-text">প্রশ্ন লোড হচ্ছে...</h3>
+          
+          <!-- Options List -->
+          <div class="options-grid" id="quiz-options-container">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <!-- Explanation & Feedback Box -->
+          <div id="quiz-feedback-box" class="feedback-card" style="display:none;">
+            <div class="feedback-header">
+              <span id="feedback-icon">✅</span>
+              <h4 id="feedback-title">সঠিক উত্তর!</h4>
+            </div>
+            <p id="feedback-explanation" class="feedback-text"></p>
+            <button id="quiz-next-btn" class="btn btn-primary btn-block" onclick="nextQuizQuestion()">
+              <span>পরবর্তী প্রশ্ন ➔</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quiz Completed Result Card -->
+        <div id="quiz-result-card" class="result-card" style="display:none;">
+          <div class="result-trophy">🎉</div>
+          <h3 class="result-title">কুইজ সম্পন্ন হয়েছে!</h3>
+          <p class="result-subtitle" id="quiz-result-greeting">দারুণ খেলেছেন!</p>
+          
+          <div class="result-score-circle">
+            <span class="score-large" id="quiz-final-score">০</span>
+            <span class="score-total">/ ২৫</span>
+          </div>
+
+          <div class="result-stats-grid">
+            <div class="res-stat">
+              <span class="res-stat-icon">🎯</span>
+              <span class="res-stat-val" id="quiz-accuracy">০%</span>
+              <span class="res-stat-name">সঠিক হার</span>
+            </div>
+            <div class="res-stat">
+              <span class="res-stat-icon">👑</span>
+              <span class="res-stat-val" id="quiz-final-best">০</span>
+              <span class="res-stat-name">সর্বোচ্চ রেকর্ড</span>
+            </div>
+          </div>
+
+          <div class="result-actions">
+            <button class="btn btn-primary btn-large" onclick="restartQuiz()">
+              <span>🔄 আবার খেলুন</span>
+            </button>
+            <button class="btn btn-outline" onclick="navigateTo('home')">
+              <span>🏠 হোম পেজে যান</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GAME 2: TIC-TAC-TOE VIEW ==================== -->
+    <section id="view-tictactoe" class="app-view game-view">
+      <div class="game-header-bar">
+        <button class="back-btn" onclick="navigateTo('home')">
+          <span>← গেম তালিকায় ফিরুন</span>
+        </button>
+        <h2 class="view-heading">❌ ⭕ টিক-ট্যাক-টো</h2>
+        <button class="help-btn" onclick="toggleHelp('ttt')">
+          <span>❓ নিয়ম</span>
+        </button>
+      </div>
+
+      <!-- TTT Help -->
+      <div id="help-ttt" class="help-card" style="display:none;">
+        <h4>📝 খেলার নিয়ম:</h4>
+        <p>• যেকোনো ৩টি চিহ্ন (সারি, কলাম বা কোণাকুণি) সোজা করতে পারলে আপনি জিতবেন।</p>
+        <p>• বন্ধুর সাথে একই ফোনে খেলতে পারেন, অথবা কম্পিউটারের বিরুদ্ধে খেলতে পারেন।</p>
+      </div>
+
+      <div class="ttt-container">
+        <!-- Mode Selector -->
+        <div class="mode-selector">
+          <button id="mode-p2p" class="mode-btn active" onclick="setTTTMode('p2p')">
+            <span>👥 ২ জন খেলোয়াড়</span>
+          </button>
+          <button id="mode-ai" class="mode-btn" onclick="setTTTMode('ai')">
+            <span>🤖 কম্পিউটার বনাম আপনি</span>
+          </button>
+        </div>
+
+        <!-- Scoreboard -->
+        <div class="ttt-scoreboard">
+          <div class="score-box p1" id="box-p1">
+            <span class="player-icon">❌</span>
+            <span class="player-title" id="name-p1">খেলোয়াড় ১</span>
+            <span class="player-score" id="score-x">০</span>
+          </div>
+          <div class="score-box tie">
+            <span class="player-icon">🤝</span>
+            <span class="player-title">ড্র / টাই</span>
+            <span class="player-score" id="score-draw">০</span>
+          </div>
+          <div class="score-box p2" id="box-p2">
+            <span class="player-icon">⭕</span>
+            <span class="player-title" id="name-p2">খেলোয়াড় ২</span>
+            <span class="player-score" id="score-o">০</span>
+          </div>
+        </div>
+
+        <!-- Status Banner -->
+        <div class="ttt-turn-banner" id="ttt-status-banner">
+          <span class="turn-indicator-icon" id="turn-icon">❌</span>
+          <span class="turn-text" id="ttt-turn-text">এখন খেলোয়াড় ১ (❌)-এর চাল</span>
+        </div>
+
+        <!-- 3x3 Board -->
+        <div class="ttt-board" id="ttt-board" role="grid" aria-label="কাটাকুটি বোর্ড">
+          <button class="ttt-cell" data-index="0" aria-label="ঘর ১"></button>
+          <button class="ttt-cell" data-index="1" aria-label="ঘর ২"></button>
+          <button class="ttt-cell" data-index="2" aria-label="ঘর ৩"></button>
+          <button class="ttt-cell" data-index="3" aria-label="ঘর ৪"></button>
+          <button class="ttt-cell" data-index="4" aria-label="ঘর ৫"></button>
+          <button class="ttt-cell" data-index="5" aria-label="ঘর ৬"></button>
+          <button class="ttt-cell" data-index="6" aria-label="ঘর ৭"></button>
+          <button class="ttt-cell" data-index="7" aria-label="ঘর ৮"></button>
+          <button class="ttt-cell" data-index="8" aria-label="ঘর ৯"></button>
+        </div>
+
+        <!-- Controls -->
+        <div class="game-controls">
+          <button class="btn btn-primary" onclick="restartTTT()">
+            <span>🔄 নতুন রাউন্ড</span>
+          </button>
+          <button class="btn btn-outline" onclick="resetTTTScores()">
+            <span>🗑️ স্কোর মুছুন</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GAME 3: MEMORY MATCHING VIEW ==================== -->
+    <section id="view-memory" class="app-view game-view">
+      <div class="game-header-bar">
+        <button class="back-btn" onclick="navigateTo('home')">
+          <span>← গেম তালিকায় ফিরুন</span>
+        </button>
+        <h2 class="view-heading">🎴 মেমোরি কার্ড ম্যাচিং</h2>
+        <button class="help-btn" onclick="toggleHelp('memory')">
+          <span>❓ নিয়ম</span>
+        </button>
+      </div>
+
+      <!-- Memory Help -->
+      <div id="help-memory" class="help-card" style="display:none;">
+        <h4>📝 খেলার নিয়ম:</h4>
+        <p>• যেকোনো দুটি কার্ডে ট্যাপ করে উল্টান।</p>
+        <p>• দুটি কার্ডের ছবি মিলে গেলে সেগুলি উন্মুক্ত থাকবে।</p>
+        <p>• না মিললে কার্ড দুটি আবার উল্টে যাবে। কম চালে সব জোড়া মেলান!</p>
+      </div>
+
+      <div class="memory-container">
+        <!-- Live Stat Bar -->
+        <div class="memory-stats-bar">
+          <div class="mem-stat-item">
+            <span class="mem-label">চালের সংখ্যা</span>
+            <span class="mem-val" id="mem-moves">০</span>
+          </div>
+          <div class="mem-stat-item">
+            <span class="mem-label">জোড়া মিলল</span>
+            <span class="mem-val" id="mem-matches">০ / ৮</span>
+          </div>
+          <div class="mem-stat-item">
+            <span class="mem-label">সময়</span>
+            <span class="mem-val" id="mem-timer">০০:০০</span>
+          </div>
+        </div>
+
+        <!-- Memory Grid 4x4 -->
+        <div class="memory-grid" id="memory-grid" role="region" aria-label="মেমোরি কার্ড গ্রিড">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Controls -->
+        <div class="game-controls">
+          <button class="btn btn-accent btn-large" onclick="initMemoryGame()">
+            <span>🔄 নতুন করে সাজান</span>
+          </button>
+        </div>
+
+        <!-- Win Celebration Modal for Memory -->
+        <div id="memory-win-modal" class="modal-backdrop" style="display:none;">
+          <div class="modal-card">
+            <div class="modal-trophy">🎊</div>
+            <h3 class="modal-title">অভিনন্দন! আপনি জিতেছেন!</h3>
+            <p class="modal-desc">সবগুলো কার্ডের জোড়া সফলভাবে মেলাতে পেরেছেন।</p>
+            
+            <div class="modal-stats-box">
+              <div class="mstat">
+                <span class="mstat-num" id="modal-moves">০</span>
+                <span class="mstat-lbl">মোট চাল</span>
+              </div>
+              <div class="mstat">
+                <span class="mstat-num" id="modal-time">০০:০০</span>
+                <span class="mstat-lbl">সময় লেগেছে</span>
+              </div>
+              <div class="mstat">
+                <span class="mstat-num" id="modal-best-moves">-</span>
+                <span class="mstat-lbl">সেরা চালের রেকর্ড</span>
+              </div>
+            </div>
+
+            <div class="modal-buttons">
+              <button class="btn btn-primary btn-large" onclick="closeMemWinModal(); initMemoryGame();">
+                <span>🔄 আবার খেলুন</span>
+              </button>
+              <button class="btn btn-outline" onclick="closeMemWinModal(); navigateTo('home');">
+                <span>🏠 গেম তালিকা</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== ABOUT / INFO MODAL ==================== -->
+  <div id="about-modal" class="modal-backdrop" style="display:none;">
+    <div class="modal-card about-modal-card">
+      <div class="modal-top">
+        <h3 class="modal-title">ℹ️ বাংলা ফান গেমস সম্পর্কে</h3>
+        <button class="close-x" onclick="closeAboutModal()" aria-label="বন্ধ করুন">✕</button>
+      </div>
+      
+      <div class="about-content">
+        <p><strong>বাংলা ফান গেমস (Bangla Fun Games)</strong> একটি সম্পূর্ণ ফ্রি, আধুনিক ও মোবাইল-বান্ধব অনলাইন গেমিং পোর্টাল।</p>
+        
+        <div class="about-feature-list">
+          <div class="a-feat">
+            <span class="a-icon">✨</span>
+            <div>
+              <strong>জিরো খরচ ও ওপেন টেকনোলজি:</strong>
+              <p>এটি শুধুমাত্র HTML5, CSS3 ও Vanilla JavaScript দিয়ে তৈরি। কোনো পেইড API বা ডাটাবেজের প্রয়োজন নেই।</p>
+            </div>
+          </div>
+          <div class="a-feat">
+            <span class="a-icon">📱</span>
+            <div>
+              <strong>মোবাইলে সরাসরি ব্যবহার:</strong>
+              <p>আপনার অ্যান্ড্রয়েড ফোন, ট্যাব অথবা কম্পিউটারের যেকোনো ব্রাউজারে এটি নিখুঁতভাবে চলবে।</p>
+            </div>
+          </div>
+          <div class="a-feat">
+            <span class="a-icon">💾</span>
+            <div>
+              <strong>লোকাল স্টোরেজ:</strong>
+              <p>আপনার সর্বোচ্চ স্কোর ও সেটিংস আপনার নিজের ডিভাইসের ব্রাউজারেই সুরক্ষিত থাকে। কোনো ব্যক্তিগত তথ্য সংগ্রহ করা হয় না।</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hosting-guide-box">
+          <h4>🌐 কীভাবে ইন্টারনেটে ফ্রি পাবলিশ করবেন?</h4>
+          <ol>
+            <li><strong>GitHub Pages:</strong> GitHub এ একটি ফ্রি রিপোজিটরি খুলে <code>index.html</code>, <code>style.css</code>, <code>script.js</code> আপলোড করুন এবং Pages চালু করুন।</li>
+            <li><strong>Netlify / Vercel:</strong> ফোল্ডারটি সরাসরি টেনে দিয়ে ১ মিনিটেই লাইভ ওয়েবসাইট লিংক পেয়ে যাবেন।</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="modal-buttons">
+        <button class="btn btn-primary" onclick="closeAboutModal()">
+          <span>বুঝেছি, ধন্যবাদ! 👍</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation for Quick Mobile Access -->
+  <nav class="mobile-bottom-nav">
+    <button class="bnav-btn active" id="bnav-home" onclick="navigateTo('home')">
+      <span class="bnav-icon">🏠</span>
+      <span class="bnav-text">হোম</span>
+    </button>
+    <button class="bnav-btn" id="bnav-quiz" onclick="launchGame('quiz')">
+      <span class="bnav-icon">🏆</span>
+      <span class="bnav-text">কুইজ</span>
+    </button>
+    <button class="bnav-btn" id="bnav-tictactoe" onclick="launchGame('tictactoe')">
+      <span class="bnav-icon">❌⭕</span>
+      <span class="bnav-text">কাটাকুটি</span>
+    </button>
+    <button class="bnav-btn" id="bnav-memory" onclick="launchGame('memory')">
+      <span class="bnav-icon">🎴</span>
+      <span class="bnav-text">মেমোরি</span>
+    </button>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>

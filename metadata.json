@@ -1,0 +1,6 @@
+{
+  "name": "Bangla Fun Games",
+  "description": "বাংলা ফান গেমস - কুইজ, টিক-ট্যাক-টো এবং মেমোরি ম্যাচিং গেমের চমৎকার মোবাইল-বান্ধব গেমিং প্ল্যাটফর্ম।",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
