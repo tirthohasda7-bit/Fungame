@@ -2,8 +2,12 @@ package com.example
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
+import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -17,10 +21,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
@@ -29,6 +31,11 @@ import com.example.ui.theme.MyApplicationTheme
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    try {
+      WebView.setDataDirectorySuffix("bfg_app")
+    } catch (_: Exception) {
+      // Suffix already set or not supported
+    }
     enableEdgeToEdge()
     setContent {
       MyApplicationTheme {
@@ -46,17 +53,33 @@ class MainActivity : ComponentActivity() {
   }
 }
 
+private class WebViewHolder {
+  var webView: WebView? = null
+}
+
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun BanglaFunGamesApp() {
-  var webViewInstance by remember { mutableStateOf<WebView?>(null) }
+  val holder = remember { WebViewHolder() }
 
   BackHandler {
-    webViewInstance?.let { wv ->
-      wv.evaluateJavascript("if (typeof currentView !== 'undefined' && currentView !== 'home') { navigateTo('home'); 'navigated'; } else { 'stay'; }") { res ->
+    holder.webView?.let { wv ->
+      wv.evaluateJavascript(
+        "if (typeof currentView !== 'undefined' && currentView !== 'home') { navigateTo('home'); 'navigated'; } else { 'stay'; }"
+      ) { res ->
         if (res?.contains("navigated") != true && wv.canGoBack()) {
           wv.goBack()
         }
+      }
+    }
+  }
+
+  DisposableEffect(Unit) {
+    onDispose {
+      holder.webView?.let { wv ->
+        wv.stopLoading()
+        wv.destroy()
+        holder.webView = null
       }
     }
   }
@@ -78,16 +101,35 @@ fun BanglaFunGamesApp() {
           loadWithOverviewMode = true
           allowFileAccess = true
           allowContentAccess = true
+          mediaPlaybackRequiresUserGesture = false
+          mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
           cacheMode = WebSettings.LOAD_DEFAULT
         }
-        webViewClient = object : WebViewClient() {}
-        webChromeClient = object : WebChromeClient() {}
+        webViewClient = object : WebViewClient() {
+          override fun onReceivedError(
+            view: WebView?,
+            request: WebResourceRequest?,
+            error: WebResourceError?
+          ) {
+            super.onReceivedError(view, request, error)
+            Log.w("BanglaFunGames", "WebView error: ${error?.description}")
+          }
+        }
+        webChromeClient = object : WebChromeClient() {
+          override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+            Log.d(
+              "BanglaFunGames",
+              "${consoleMessage?.message()} [${consoleMessage?.sourceId()}:${consoleMessage?.lineNumber()}]"
+            )
+            return true
+          }
+        }
         loadUrl("file:///android_asset/index.html")
-        webViewInstance = this
+        holder.webView = this
       }
     },
     update = { wv ->
-      webViewInstance = wv
+      holder.webView = wv
     }
   )
 }

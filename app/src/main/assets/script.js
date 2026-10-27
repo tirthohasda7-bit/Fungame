@@ -128,6 +128,12 @@ function launchGame(gameType) {
     restartTTT();
   } else if (gameType === 'memory') {
     initMemoryGame();
+  } else if (gameType === 'rps') {
+    initRPS();
+  } else if (gameType === 'guess') {
+    initNumberGuess();
+  } else if (gameType === 'math') {
+    initMathChallenge();
   }
 }
 
@@ -211,7 +217,8 @@ function resetSearch() {
   searchInput.value = '';
   activeCategory = 'all';
   categoryTabs.forEach(t => t.classList.remove('active'));
-  document.querySelector('.tab-btn[data-category="all"]').classList.add('active');
+  const allTab = document.querySelector('.tab-btn[data-category="all"]');
+  if (allTab) allTab.classList.add('active');
   filterGames();
 }
 
@@ -250,22 +257,46 @@ soundBtn.addEventListener('click', () => {
 });
 
 function updateHomeBestScores() {
+  // Quiz
   const bestQuiz = localStorage.getItem('bfg_best_quiz') || '0';
   const quizPreview = document.getElementById('preview-best-quiz');
   if (quizPreview) {
     quizPreview.innerHTML = `সর্বোচ্চ স্কোর: <strong>${toBnNum(bestQuiz)}/২৫</strong>`;
   }
 
+  // TTT
   const bestTTT = localStorage.getItem('bfg_ttt_wins') || '0';
   const tttPreview = document.getElementById('preview-best-ttt');
   if (tttPreview) {
     tttPreview.innerHTML = `মোট জয়: <strong>${toBnNum(bestTTT)}</strong>`;
   }
 
+  // Memory
   const bestMem = localStorage.getItem('bfg_best_memory');
   const memPreview = document.getElementById('preview-best-memory');
   if (memPreview) {
     memPreview.innerHTML = `সেরা চাল: <strong>${bestMem ? toBnNum(bestMem) : '-'}</strong>`;
+  }
+
+  // RPS
+  const rpsWins = localStorage.getItem('bfg_rps_wins') || '0';
+  const rpsPreview = document.getElementById('preview-best-rps');
+  if (rpsPreview) {
+    rpsPreview.innerHTML = `মোট জয়: <strong>${toBnNum(rpsWins)}</strong>`;
+  }
+
+  // Guess
+  const bestGuess = localStorage.getItem('bfg_best_guess');
+  const guessPreview = document.getElementById('preview-best-guess');
+  if (guessPreview) {
+    guessPreview.innerHTML = `সেরা চাল: <strong>${bestGuess ? toBnNum(bestGuess) + ' বার' : '-'}</strong>`;
+  }
+
+  // Math
+  const bestMath = localStorage.getItem('bfg_best_math') || '0';
+  const mathPreview = document.getElementById('preview-best-math');
+  if (mathPreview) {
+    mathPreview.innerHTML = `সেরা স্কোর: <strong>${toBnNum(bestMath)}</strong>`;
   }
 }
 
@@ -515,7 +546,6 @@ function selectQuizOption(selectedIdx, btnElement) {
   feedbackExp.innerText = qData.explanation;
   feedbackBox.style.display = 'block';
 
-  // Smooth scroll to feedback if on small phone
   feedbackBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -540,13 +570,11 @@ function finishQuiz() {
   const accuracy = Math.round((quizScore / total) * 100);
   document.getElementById('quiz-accuracy').innerText = `${toBnNum(accuracy)}%`;
 
-  // Best score handling
   const prevBest = parseInt(localStorage.getItem('bfg_best_quiz') || '0', 10);
   const newBest = Math.max(prevBest, quizScore);
   localStorage.setItem('bfg_best_quiz', newBest);
   document.getElementById('quiz-final-best').innerText = `${toBnNum(newBest)}/২৫`;
 
-  // Feedback message
   const greetingEl = document.getElementById('quiz-result-greeting');
   if (quizScore >= 23) {
     greetingEl.innerText = 'অসাধারণ প্রতিভা! আপনি কুইজ মাস্টার!';
@@ -570,15 +598,15 @@ function restartQuiz() {
 // GAME 2: TIC-TAC-TOE (টিক-ট্যাক-টো / কাটাকুটি খেলা)
 // ====================================================================
 let tttBoard = Array(9).fill(null);
-let tttCurrentPlayer = 'X'; // 'X' or 'O'
+let tttCurrentPlayer = 'X';
 let tttGameActive = true;
-let tttMode = 'p2p'; // 'p2p' or 'ai'
+let tttMode = 'p2p';
 let tttScores = { x: 0, o: 0, draw: 0 };
 
 const WINNING_COMBOS = [
-  [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-  [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-  [0, 4, 8], [2, 4, 6]             // Diagonals
+  [0, 1, 2], [3, 4, 5], [6, 7, 8],
+  [0, 3, 6], [1, 4, 7], [2, 5, 8],
+  [0, 4, 8], [2, 4, 6]
 ];
 
 function setTTTMode(mode) {
@@ -606,9 +634,7 @@ function handleTTTCellClick(index) {
 
   makeTTTMove(index, tttCurrentPlayer);
 
-  // If AI mode and game still active and next is O
   if (tttGameActive && tttMode === 'ai' && tttCurrentPlayer === 'O') {
-    // Disable board briefly for natural feel
     setTimeout(() => {
       if (tttGameActive) makeAIMove();
     }, 400);
@@ -630,14 +656,12 @@ function makeTTTMove(index, player) {
   } else if (tttBoard.every(cell => cell !== null)) {
     handleTTTDraw();
   } else {
-    // Next turn
     tttCurrentPlayer = tttCurrentPlayer === 'X' ? 'O' : 'X';
     updateTTTStatus();
   }
 }
 
 function makeAIMove() {
-  // Simple smart AI: Win if can, block if must, take center, or random
   let bestMove = findBestAIMove();
   if (bestMove !== -1) {
     makeTTTMove(bestMove, 'O');
@@ -645,7 +669,6 @@ function makeAIMove() {
 }
 
 function findBestAIMove() {
-  // 1. Can AI (O) win in 1 move?
   for (let i = 0; i < 9; i++) {
     if (tttBoard[i] === null) {
       tttBoard[i] = 'O';
@@ -657,7 +680,6 @@ function findBestAIMove() {
     }
   }
 
-  // 2. Can Player (X) win in 1 move? Block them!
   for (let i = 0; i < 9; i++) {
     if (tttBoard[i] === null) {
       tttBoard[i] = 'X';
@@ -669,16 +691,13 @@ function findBestAIMove() {
     }
   }
 
-  // 3. Take center if free
   if (tttBoard[4] === null) return 4;
 
-  // 4. Take corners
   const corners = [0, 2, 6, 8].filter(idx => tttBoard[idx] === null);
   if (corners.length > 0) {
     return corners[Math.floor(Math.random() * corners.length)];
   }
 
-  // 5. Any remaining cell
   const emptyCells = [];
   tttBoard.forEach((val, idx) => {
     if (val === null) emptyCells.push(idx);
@@ -704,7 +723,6 @@ function handleTTTWin(winInfo) {
   tttGameActive = false;
   playSound('win');
 
-  // Highlight winning cells
   winInfo.combo.forEach(idx => {
     const cell = document.querySelector(`.ttt-cell[data-index="${idx}"]`);
     if (cell) cell.classList.add('win-highlight');
@@ -823,7 +841,6 @@ function initMemoryGame() {
   document.getElementById('mem-matches').innerText = '০ / ৮';
   document.getElementById('mem-timer').innerText = '০০:০০';
 
-  // Duplicate and shuffle items
   const cardPool = [...MEMORY_ITEMS, ...MEMORY_ITEMS];
   shuffleArray(cardPool);
 
@@ -846,7 +863,6 @@ function initMemoryGame() {
     grid.appendChild(cardEl);
   });
 
-  // Start timer on first user click or right now
   startMemoryTimer();
 }
 
@@ -889,7 +905,6 @@ function checkMemoryMatch() {
   const id2 = card2.getAttribute('data-id');
 
   if (id1 === id2) {
-    // Matched!
     playSound('correct');
     card1.classList.add('matched');
     card2.classList.add('matched');
@@ -901,7 +916,6 @@ function checkMemoryMatch() {
       setTimeout(handleMemoryGameWin, 500);
     }
   } else {
-    // Not matched - flip back
     memIsLocked = true;
     setTimeout(() => {
       card1.classList.remove('flipped');
@@ -938,6 +952,500 @@ function handleMemoryGameWin() {
 function closeMemWinModal() {
   playSound('tap');
   document.getElementById('memory-win-modal').style.display = 'none';
+}
+
+// ====================================================================
+// GAME 4: ROCK PAPER SCISSORS (পাথর কাগজ কাঁচি)
+// ====================================================================
+const RPS_CHOICES = {
+  rock: { name: 'পাথর', emoji: '🪨', beats: 'scissors', msg: 'পাথর কাঁচিকে গুঁড়ো করে' },
+  paper: { name: 'কাগজ', emoji: '📄', beats: 'rock', msg: 'কাগজ পাথরকে ঢেকে দেয়' },
+  scissors: { name: 'কাঁচি', emoji: '✂️', beats: 'paper', msg: 'কাঁচি কাগজকে কেটে ফেলে' }
+};
+
+let rpsScores = { player: 0, comp: 0, draw: 0, streak: 0 };
+let rpsIsPlaying = false;
+
+function initRPS() {
+  rpsScores.streak = 0;
+  updateRPSScoreboard();
+  resetRPSRound();
+}
+
+function updateRPSScoreboard() {
+  document.getElementById('rps-score-player').innerText = toBnNum(rpsScores.player);
+  document.getElementById('rps-score-comp').innerText = toBnNum(rpsScores.comp);
+  document.getElementById('rps-score-draw').innerText = toBnNum(rpsScores.draw);
+  document.getElementById('rps-streak-count').innerText = toBnNum(rpsScores.streak);
+
+  const bestStreak = localStorage.getItem('bfg_best_rps_streak') || '0';
+  document.getElementById('rps-best-streak').innerText = toBnNum(bestStreak);
+}
+
+function playRPSRound(playerChoiceKey) {
+  if (rpsIsPlaying) return;
+  rpsIsPlaying = true;
+  playSound('tap');
+
+  const pChoice = RPS_CHOICES[playerChoiceKey];
+  const keys = ['rock', 'paper', 'scissors'];
+  const compChoiceKey = keys[Math.floor(Math.random() * keys.length)];
+  const cChoice = RPS_CHOICES[compChoiceKey];
+
+  const pCircle = document.getElementById('rps-display-player');
+  const cCircle = document.getElementById('rps-display-comp');
+  const pLabel = document.getElementById('rps-label-player');
+  const cLabel = document.getElementById('rps-label-comp');
+  const outcomeTitle = document.getElementById('rps-outcome-title');
+  const outcomeDesc = document.getElementById('rps-outcome-desc');
+
+  // Disable buttons temporarily
+  document.querySelectorAll('.rps-weapon-btn').forEach(btn => btn.disabled = true);
+
+  // Shaking animation
+  pCircle.className = 'rps-choice-circle shaking';
+  cCircle.className = 'rps-choice-circle shaking';
+  pCircle.innerText = '✊';
+  cCircle.innerText = '✊';
+  pLabel.innerText = 'লড়াই চলছে...';
+  cLabel.innerText = 'লড়াই চলছে...';
+  outcomeTitle.innerText = '৩... ২... ১... লড়াই!';
+  outcomeDesc.innerText = 'কম্পিউটার তার চাল দিচ্ছে...';
+
+  setTimeout(() => {
+    pCircle.classList.remove('shaking');
+    cCircle.classList.remove('shaking');
+
+    pCircle.innerText = pChoice.emoji;
+    cCircle.innerText = cChoice.emoji;
+    pLabel.innerText = pChoice.name;
+    cLabel.innerText = cChoice.name;
+
+    // Check winner
+    if (playerChoiceKey === compChoiceKey) {
+      // Draw
+      rpsScores.draw++;
+      outcomeTitle.innerText = '🤝 ম্যাচ ড্র হয়েছে!';
+      outcomeDesc.innerText = `দুজনেই "${pChoice.name}" বেছে নিয়েছেন।`;
+      playSound('tap');
+    } else if (pChoice.beats === compChoiceKey) {
+      // Player won
+      rpsScores.player++;
+      rpsScores.streak++;
+      pCircle.classList.add('winner-glow');
+      outcomeTitle.innerText = '🎉 অভিনন্দন! আপনি জিতেছেন!';
+      outcomeDesc.innerText = `${pChoice.msg}! চমৎকার চাল ছিল।`;
+      playSound('win');
+
+      // Save best streak & wins
+      const currentWins = parseInt(localStorage.getItem('bfg_rps_wins') || '0', 10);
+      localStorage.setItem('bfg_rps_wins', currentWins + 1);
+
+      const bestStreak = parseInt(localStorage.getItem('bfg_best_rps_streak') || '0', 10);
+      if (rpsScores.streak > bestStreak) {
+        localStorage.setItem('bfg_best_rps_streak', rpsScores.streak);
+      }
+      updateHomeBestScores();
+    } else {
+      // Computer won
+      rpsScores.comp++;
+      rpsScores.streak = 0;
+      cCircle.classList.add('winner-glow');
+      outcomeTitle.innerText = '🤖 কম্পিউটার জিতেছে!';
+      outcomeDesc.innerText = `${cChoice.msg}! পরবর্তী রাউন্ডে চেষ্টা করুন।`;
+      playSound('wrong');
+    }
+
+    updateRPSScoreboard();
+    document.querySelectorAll('.rps-weapon-btn').forEach(btn => btn.disabled = false);
+    rpsIsPlaying = false;
+  }, 600);
+}
+
+function resetRPSRound() {
+  playSound('tap');
+  const pCircle = document.getElementById('rps-display-player');
+  const cCircle = document.getElementById('rps-display-comp');
+  pCircle.className = 'rps-choice-circle';
+  cCircle.className = 'rps-choice-circle';
+  pCircle.innerText = '❓';
+  cCircle.innerText = '❓';
+  document.getElementById('rps-label-player').innerText = 'পছন্দ করুন';
+  document.getElementById('rps-label-comp').innerText = 'অপেক্ষারত';
+  document.getElementById('rps-outcome-title').innerText = 'আপনার চাল বেছে নিন!';
+  document.getElementById('rps-outcome-desc').innerText = 'নিচের বাটনগুলোতে চাপ দিয়ে পাথর, কাগজ বা কাঁচি নির্বাচন করুন।';
+  document.querySelectorAll('.rps-weapon-btn').forEach(btn => btn.disabled = false);
+  rpsIsPlaying = false;
+}
+
+function resetRPSScoreboard() {
+  playSound('tap');
+  rpsScores = { player: 0, comp: 0, draw: 0, streak: 0 };
+  updateRPSScoreboard();
+  resetRPSRound();
+}
+
+// ====================================================================
+// GAME 5: NUMBER GUESSING (সংখ্যা অনুমানের খেলা - ১ থেকে ১০০)
+// ====================================================================
+let guessSecretNumber = 50;
+let guessAttempts = 0;
+let guessGameOver = false;
+
+function initNumberGuess() {
+  playSound('tap');
+  guessSecretNumber = Math.floor(Math.random() * 100) + 1;
+  guessAttempts = 0;
+  guessGameOver = false;
+
+  document.getElementById('guess-attempt-count').innerText = '০ বার';
+  const bestRecord = localStorage.getItem('bfg_best_guess');
+  document.getElementById('guess-best-record').innerText = bestRecord ? `${toBnNum(bestRecord)} বার` : '-';
+
+  const mysteryCircle = document.getElementById('mystery-display');
+  mysteryCircle.innerText = '?';
+  mysteryCircle.className = 'mystery-circle';
+  document.getElementById('mystery-text').innerText = 'গোপন সংখ্যাটি লক করা আছে';
+
+  const hintTitle = document.getElementById('hint-title');
+  const hintMsg = document.getElementById('hint-msg');
+  const hintIcon = document.getElementById('hint-icon');
+  hintIcon.innerText = '💡';
+  hintTitle.innerText = 'অনুমান শুরু করুন!';
+  hintMsg.innerText = '১ থেকে ১০০ এর মধ্যে যেকোনো একটি সংখ্যা লিখুন।';
+
+  const inputField = document.getElementById('guess-input-field');
+  inputField.value = '৫০';
+  inputField.disabled = false;
+  document.getElementById('guess-submit-btn').disabled = false;
+
+  const historyContainer = document.getElementById('guess-history-list');
+  historyContainer.innerHTML = '<span class="history-empty">এখনো কোনো অনুমান করা হয়নি।</span>';
+  document.getElementById('history-count').innerText = '০টি চাল';
+}
+
+function adjustGuessInput(delta) {
+  if (guessGameOver) return;
+  playSound('tap');
+  const input = document.getElementById('guess-input-field');
+  let currentVal = parseInt(input.value, 10);
+  if (isNaN(currentVal)) currentVal = 50;
+  currentVal = Math.min(100, Math.max(1, currentVal + delta));
+  input.value = currentVal;
+}
+
+function submitNumberGuess() {
+  if (guessGameOver) return;
+
+  const input = document.getElementById('guess-input-field');
+  const guess = parseInt(input.value, 10);
+
+  if (isNaN(guess) || guess < 1 || guess > 100) {
+    playSound('wrong');
+    document.getElementById('hint-icon').innerText = '⚠️';
+    document.getElementById('hint-title').innerText = 'ভুল ইনপুট!';
+    document.getElementById('hint-msg').innerText = 'দয়া করে ১ থেকে ১০০ এর মধ্যে একটি বৈধ সংখ্যা লিখুন।';
+    return;
+  }
+
+  guessAttempts++;
+  document.getElementById('guess-attempt-count').innerText = `${toBnNum(guessAttempts)} বার`;
+  document.getElementById('history-count').innerText = `${toBnNum(guessAttempts)}টি চাল`;
+
+  const hintIcon = document.getElementById('hint-icon');
+  const hintTitle = document.getElementById('hint-title');
+  const hintMsg = document.getElementById('hint-msg');
+  const historyList = document.getElementById('guess-history-list');
+
+  // Remove empty placeholder
+  const emptyPlaceholder = historyList.querySelector('.history-empty');
+  if (emptyPlaceholder) emptyPlaceholder.remove();
+
+  if (guess === guessSecretNumber) {
+    // Win!
+    guessGameOver = true;
+    playSound('win');
+    input.disabled = true;
+    document.getElementById('guess-submit-btn').disabled = true;
+
+    const mysteryCircle = document.getElementById('mystery-display');
+    mysteryCircle.innerText = toBnNum(guessSecretNumber);
+    mysteryCircle.classList.add('revealed');
+    document.getElementById('mystery-text').innerText = '🎉 গোপন সংখ্যাটি উন্মোচিত হয়েছে!';
+
+    hintIcon.innerText = '🎯';
+    hintTitle.innerText = 'অভিনন্দন! একদম সঠিক সংখ্যা!';
+    hintMsg.innerText = `আপনি মাত্র ${toBnNum(guessAttempts)} বার চেষ্টা করে সংখ্যাটি বের করেছেন!`;
+
+    // Add to history
+    const chip = document.createElement('span');
+    chip.className = 'history-chip correct';
+    chip.innerText = `#${toBnNum(guessAttempts)}: ${toBnNum(guess)} (সঠিক! 🎯)`;
+    historyList.prepend(chip);
+
+    // Save best record (lowest attempts)
+    const prevBest = localStorage.getItem('bfg_best_guess');
+    if (!prevBest || guessAttempts < parseInt(prevBest, 10)) {
+      localStorage.setItem('bfg_best_guess', guessAttempts);
+      document.getElementById('guess-best-record').innerText = `${toBnNum(guessAttempts)} বার`;
+      hintMsg.innerText += ' 👑 এটি আপনার নতুন সেরা রেকর্ড!';
+    }
+    updateHomeBestScores();
+  } else if (guess < guessSecretNumber) {
+    // Too low
+    playSound('tap');
+    hintIcon.innerText = '🔼';
+    hintTitle.innerText = `সংখ্যাটি আরও বড়! (${toBnNum(guess)} এর চেয়ে বড়)`;
+    hintMsg.innerText = 'আরেকটু বড় সংখ্যা অনুমান করে আবার চেষ্টা করুন।';
+
+    const chip = document.createElement('span');
+    chip.className = 'history-chip low';
+    chip.innerText = `#${toBnNum(guessAttempts)}: ${toBnNum(guess)} 🔼 আরও বড়`;
+    historyList.prepend(chip);
+  } else {
+    // Too high
+    playSound('tap');
+    hintIcon.innerText = '🔽';
+    hintTitle.innerText = `সংখ্যাটি আরও ছোট! (${toBnNum(guess)} এর চেয়ে ছোট)`;
+    hintMsg.innerText = 'আরেকটু ছোট সংখ্যা অনুমান করে আবার চেষ্টা করুন।';
+
+    const chip = document.createElement('span');
+    chip.className = 'history-chip high';
+    chip.innerText = `#${toBnNum(guessAttempts)}: ${toBnNum(guess)} 🔽 আরও ছোট`;
+    historyList.prepend(chip);
+  }
+}
+
+// ====================================================================
+// GAME 6: MATH CHALLENGE (গণিত স্পিড চ্যালেঞ্জ)
+// ====================================================================
+let mathLevel = 'easy'; // 'easy', 'medium', 'hard'
+let mathScore = 0;
+let mathStreak = 0;
+let mathCorrectCount = 0;
+let mathTimerSeconds = 45;
+let mathTimerInterval = null;
+let mathIsActive = false;
+let currentMathAnswer = 0;
+
+function setMathLevel(lvl) {
+  playSound('tap');
+  mathLevel = lvl;
+  document.getElementById('math-lvl-easy').classList.toggle('active', lvl === 'easy');
+  document.getElementById('math-lvl-medium').classList.toggle('active', lvl === 'medium');
+  document.getElementById('math-lvl-hard').classList.toggle('active', lvl === 'hard');
+  restartMathChallenge();
+}
+
+function initMathChallenge() {
+  restartMathChallenge();
+}
+
+function restartMathChallenge() {
+  playSound('tap');
+  clearInterval(mathTimerInterval);
+
+  mathScore = 0;
+  mathStreak = 0;
+  mathCorrectCount = 0;
+  mathTimerSeconds = 45;
+  mathIsActive = true;
+
+  document.getElementById('math-score-val').innerText = '০';
+  document.getElementById('math-streak-val').innerText = '🔥 ০';
+  document.getElementById('math-timer-val').innerText = `${toBnNum(mathTimerSeconds)} সে.`;
+  document.getElementById('math-timer-bar').style.width = '100%';
+
+  document.getElementById('math-result-card').style.display = 'none';
+  document.getElementById('math-card-area').style.display = 'flex';
+  document.getElementById('math-active-controls').style.display = 'flex';
+
+  generateMathProblem();
+  startMathTimer();
+}
+
+function startMathTimer() {
+  clearInterval(mathTimerInterval);
+  const totalSecs = 45;
+
+  mathTimerInterval = setInterval(() => {
+    if (!mathIsActive) return;
+    mathTimerSeconds--;
+
+    document.getElementById('math-timer-val').innerText = `${toBnNum(mathTimerSeconds)} সে.`;
+    const pct = (mathTimerSeconds / totalSecs) * 100;
+    document.getElementById('math-timer-bar').style.width = `${Math.max(0, pct)}%`;
+
+    if (mathTimerSeconds <= 0) {
+      endMathChallenge();
+    }
+  }, 1000);
+}
+
+function generateMathProblem() {
+  let num1, num2, op, answer, questionText;
+
+  if (mathLevel === 'easy') {
+    // Only + and - up to 30
+    op = Math.random() > 0.5 ? '+' : '-';
+    if (op === '+') {
+      num1 = Math.floor(Math.random() * 25) + 3;
+      num2 = Math.floor(Math.random() * 20) + 2;
+      answer = num1 + num2;
+    } else {
+      num1 = Math.floor(Math.random() * 30) + 10;
+      num2 = Math.floor(Math.random() * num1) + 1;
+      answer = num1 - num2;
+    }
+    questionText = `${toBnNum(num1)} ${op} ${toBnNum(num2)} = ?`;
+  } else if (mathLevel === 'medium') {
+    // +, -, and multiplication up to 10
+    const ops = ['+', '-', '×'];
+    op = ops[Math.floor(Math.random() * ops.length)];
+    if (op === '+') {
+      num1 = Math.floor(Math.random() * 45) + 10;
+      num2 = Math.floor(Math.random() * 45) + 5;
+      answer = num1 + num2;
+    } else if (op === '-') {
+      num1 = Math.floor(Math.random() * 60) + 20;
+      num2 = Math.floor(Math.random() * (num1 - 5)) + 5;
+      answer = num1 - num2;
+    } else {
+      num1 = Math.floor(Math.random() * 10) + 2;
+      num2 = Math.floor(Math.random() * 9) + 2;
+      answer = num1 * num2;
+    }
+    questionText = `${toBnNum(num1)} ${op} ${toBnNum(num2)} = ?`;
+  } else {
+    // Hard: +, -, ×, and ÷ (clean division)
+    const ops = ['+', '-', '×', '÷'];
+    op = ops[Math.floor(Math.random() * ops.length)];
+    if (op === '+') {
+      num1 = Math.floor(Math.random() * 80) + 20;
+      num2 = Math.floor(Math.random() * 70) + 15;
+      answer = num1 + num2;
+    } else if (op === '-') {
+      num1 = Math.floor(Math.random() * 100) + 30;
+      num2 = Math.floor(Math.random() * (num1 - 10)) + 10;
+      answer = num1 - num2;
+    } else if (op === '×') {
+      num1 = Math.floor(Math.random() * 12) + 3;
+      num2 = Math.floor(Math.random() * 12) + 2;
+      answer = num1 * num2;
+    } else {
+      // Clean division
+      num2 = Math.floor(Math.random() * 9) + 2;
+      answer = Math.floor(Math.random() * 10) + 2;
+      num1 = num2 * answer;
+    }
+    questionText = `${toBnNum(num1)} ${op} ${toBnNum(num2)} = ?`;
+  }
+
+  currentMathAnswer = answer;
+  document.getElementById('math-equation-text').innerText = questionText;
+
+  // Generate 4 options
+  const options = new Set([answer]);
+  while (options.size < 4) {
+    const offset = (Math.floor(Math.random() * 7) + 1) * (Math.random() > 0.5 ? 1 : -1);
+    const candidate = answer + offset;
+    if (candidate >= 0 && candidate !== answer) {
+      options.add(candidate);
+    }
+  }
+
+  const optArray = Array.from(options);
+  shuffleArray(optArray);
+
+  const container = document.getElementById('math-options-grid');
+  container.innerHTML = '';
+
+  optArray.forEach(optVal => {
+    const btn = document.createElement('button');
+    btn.className = 'math-opt-btn';
+    btn.innerText = toBnNum(optVal);
+    btn.onclick = () => selectMathOption(optVal, btn);
+    container.appendChild(btn);
+  });
+}
+
+function selectMathOption(chosen, btn) {
+  if (!mathIsActive) return;
+
+  const isCorrect = (chosen === currentMathAnswer);
+  const feedbackBadge = document.getElementById('math-feedback-badge');
+  const feedbackMsg = document.getElementById('math-feedback-msg');
+
+  if (isCorrect) {
+    playSound('correct');
+    btn.classList.add('correct');
+    mathCorrectCount++;
+    mathStreak++;
+
+    const bonus = Math.min(20, mathStreak * 2);
+    const points = 10 + bonus;
+    mathScore += points;
+
+    document.getElementById('math-score-val').innerText = toBnNum(mathScore);
+    document.getElementById('math-streak-val').innerText = `🔥 ${toBnNum(mathStreak)}`;
+
+    feedbackMsg.innerText = `+${toBnNum(points)} পয়েন্ট!`;
+    feedbackBadge.style.display = 'block';
+
+    setTimeout(() => {
+      feedbackBadge.style.display = 'none';
+      if (mathIsActive) generateMathProblem();
+    }, 250);
+  } else {
+    playSound('wrong');
+    btn.classList.add('wrong');
+    mathStreak = 0;
+    document.getElementById('math-streak-val').innerText = '🔥 ০';
+
+    // Highlight correct
+    document.querySelectorAll('.math-opt-btn').forEach(b => {
+      if (b.innerText === toBnNum(currentMathAnswer)) {
+        b.classList.add('correct');
+      }
+    });
+
+    setTimeout(() => {
+      if (mathIsActive) generateMathProblem();
+    }, 500);
+  }
+}
+
+function endMathChallenge() {
+  mathIsActive = false;
+  clearInterval(mathTimerInterval);
+  playSound('win');
+
+  document.getElementById('math-card-area').style.display = 'none';
+  document.getElementById('math-active-controls').style.display = 'none';
+
+  const resultCard = document.getElementById('math-result-card');
+  resultCard.style.display = 'block';
+
+  document.getElementById('math-final-score').innerText = toBnNum(mathScore);
+  document.getElementById('math-correct-count').innerText = `${toBnNum(mathCorrectCount)}টি`;
+
+  const prevBest = parseInt(localStorage.getItem('bfg_best_math') || '0', 10);
+  const newBest = Math.max(prevBest, mathScore);
+  localStorage.setItem('bfg_best_math', newBest);
+  document.getElementById('math-best-display').innerText = toBnNum(newBest);
+
+  const greeting = document.getElementById('math-result-greeting');
+  if (mathScore >= 200) {
+    greeting.innerText = 'অসাধারণ! আপনি একজন গণিত জিনিয়াস!';
+  } else if (mathScore >= 120) {
+    greeting.innerText = 'দারুণ স্পিড ও নির্ভুল হিসাব!';
+  } else if (mathScore >= 60) {
+    greeting.innerText = 'ভালো পারফরম্যান্স! নিয়মিত চর্চায় আরও উন্নতি হবে।';
+  } else {
+    greeting.innerText = 'আবার চেষ্টা করুন এবং দ্রুত হিসাব করার দক্ষতা বাড়ান!';
+  }
+
+  updateHomeBestScores();
 }
 
 // ==================== Initialization ====================
