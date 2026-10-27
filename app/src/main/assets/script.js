@@ -26,7 +26,7 @@ function initAudio() {
   }
 }
 
-function playSound(type) {
+function playSound(type, param) {
   if (!soundEnabled) return;
   try {
     initAudio();
@@ -71,6 +71,45 @@ function playSound(type) {
       gain.gain.linearRampToValueAtTime(0.01, now + 0.09);
       osc.start(now);
       osc.stop(now + 0.09);
+    } else if (type === 'eat') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(540, now);
+      osc.frequency.exponentialRampToValueAtTime(1080, now + 0.08);
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.linearRampToValueAtTime(0.01, now + 0.09);
+      osc.start(now);
+      osc.stop(now + 0.09);
+    } else if (type === 'hit') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(320, now);
+      osc.frequency.exponentialRampToValueAtTime(160, now + 0.1);
+      gain.gain.setValueAtTime(0.22, now);
+      gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
+      osc.start(now);
+      osc.stop(now + 0.12);
+    } else if (type === 'pop') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, now);
+      osc.frequency.exponentialRampToValueAtTime(300, now + 0.07);
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+      osc.start(now);
+      osc.stop(now + 0.08);
+    } else if (type === 'slide') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(360, now);
+      osc.frequency.linearRampToValueAtTime(460, now + 0.05);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.linearRampToValueAtTime(0.01, now + 0.06);
+      osc.start(now);
+      osc.stop(now + 0.06);
+    } else if (type === 'tone' && typeof param === 'number') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(param, now);
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.linearRampToValueAtTime(0.01, now + 0.28);
+      osc.start(now);
+      osc.stop(now + 0.28);
     } else if (type === 'win') {
       // Fanfare notes
       const notes = [440, 554.37, 659.25, 880];
@@ -134,6 +173,18 @@ function launchGame(gameType) {
     initNumberGuess();
   } else if (gameType === 'math') {
     initMathChallenge();
+  } else if (gameType === 'snake') {
+    initSnakeGame();
+  } else if (gameType === '2048') {
+    init2048();
+  } else if (gameType === 'whack') {
+    initWhackGame();
+  } else if (gameType === 'numpuzzle') {
+    initNumPuzzle();
+  } else if (gameType === 'bubble') {
+    initBubbleGame();
+  } else if (gameType === 'colormem') {
+    initColorMemory();
   }
 }
 
@@ -155,6 +206,48 @@ function closeAboutModal() {
   document.getElementById('about-modal').style.display = 'none';
 }
 
+function openContactModal() {
+  playSound('tap');
+  document.getElementById('contact-modal').style.display = 'flex';
+}
+
+function closeContactModal() {
+  playSound('tap');
+  document.getElementById('contact-modal').style.display = 'none';
+}
+
+function handleContactSubmit(event) {
+  event.preventDefault();
+  playSound('win');
+  const form = document.getElementById('contact-form');
+  const successBox = document.getElementById('contact-success');
+  if (form && successBox) {
+    form.style.display = 'none';
+    successBox.style.display = 'block';
+  }
+}
+
+function resetContactForm() {
+  playSound('tap');
+  const form = document.getElementById('contact-form');
+  const successBox = document.getElementById('contact-success');
+  if (form && successBox) {
+    form.reset();
+    form.style.display = 'block';
+    successBox.style.display = 'none';
+  }
+}
+
+function openPrivacyModal() {
+  playSound('tap');
+  document.getElementById('privacy-modal').style.display = 'flex';
+}
+
+function closePrivacyModal() {
+  playSound('tap');
+  document.getElementById('privacy-modal').style.display = 'none';
+}
+
 // ==================== Search and Filter Logic ====================
 const searchInput = document.getElementById('game-search');
 const clearSearchBtn = document.getElementById('clear-search');
@@ -166,12 +259,13 @@ const gamesCountEl = document.getElementById('games-count');
 let activeCategory = 'all';
 
 function filterGames() {
-  const query = (searchInput.value || '').trim().toLowerCase();
+  const query = (searchInput ? searchInput.value || '' : '').trim().toLowerCase();
   let visibleCount = 0;
 
-  clearSearchBtn.style.display = query ? 'block' : 'none';
+  if (clearSearchBtn) clearSearchBtn.style.display = query ? 'block' : 'none';
 
-  gameCards.forEach(card => {
+  const cards = document.querySelectorAll('.game-card');
+  cards.forEach(card => {
     const cardCat = card.getAttribute('data-category');
     const cardTitle = (card.getAttribute('data-title') || '').toLowerCase();
     const textContent = card.innerText.toLowerCase();
@@ -187,8 +281,8 @@ function filterGames() {
     }
   });
 
-  gamesCountEl.innerText = `${toBnNum(visibleCount)}টি গেম`;
-  noResultsEl.style.display = visibleCount === 0 ? 'block' : 'none';
+  if (gamesCountEl) gamesCountEl.innerText = `${toBnNum(visibleCount)}টি গেম`;
+  if (noResultsEl) noResultsEl.style.display = visibleCount === 0 ? 'block' : 'none';
 }
 
 if (searchInput) {
@@ -297,6 +391,48 @@ function updateHomeBestScores() {
   const mathPreview = document.getElementById('preview-best-math');
   if (mathPreview) {
     mathPreview.innerHTML = `সেরা স্কোর: <strong>${toBnNum(bestMath)}</strong>`;
+  }
+
+  // Snake
+  const bestSnake = localStorage.getItem('bfg_best_snake') || '0';
+  const snakePreview = document.getElementById('preview-best-snake');
+  if (snakePreview) {
+    snakePreview.innerHTML = `সেরা স্কোর: <strong>${toBnNum(bestSnake)}</strong>`;
+  }
+
+  // 2048
+  const best2048 = localStorage.getItem('bfg_best_2048') || '0';
+  const p2048Preview = document.getElementById('preview-best-2048');
+  if (p2048Preview) {
+    p2048Preview.innerHTML = `সেরা স্কোর: <strong>${toBnNum(best2048)}</strong>`;
+  }
+
+  // Whack
+  const bestWhack = localStorage.getItem('bfg_best_whack') || '0';
+  const whackPreview = document.getElementById('preview-best-whack');
+  if (whackPreview) {
+    whackPreview.innerHTML = `সেরা স্কোর: <strong>${toBnNum(bestWhack)}</strong>`;
+  }
+
+  // Num Puzzle
+  const bestNumPuzzle = localStorage.getItem('bfg_best_numpuzzle');
+  const numPuzzlePreview = document.getElementById('preview-best-numpuzzle');
+  if (numPuzzlePreview) {
+    numPuzzlePreview.innerHTML = `সেরা চাল: <strong>${bestNumPuzzle ? toBnNum(bestNumPuzzle) + ' চাল' : '-'}</strong>`;
+  }
+
+  // Bubble
+  const bestBubble = localStorage.getItem('bfg_best_bubble') || '0';
+  const bubblePreview = document.getElementById('preview-best-bubble');
+  if (bubblePreview) {
+    bubblePreview.innerHTML = `সেরা স্কোর: <strong>${toBnNum(bestBubble)}</strong>`;
+  }
+
+  // Color Memory
+  const bestColorMem = localStorage.getItem('bfg_best_colormem') || '0';
+  const colorMemPreview = document.getElementById('preview-best-colormem');
+  if (colorMemPreview) {
+    colorMemPreview.innerHTML = `সর্বোচ্চ রাউন্ড: <strong>${toBnNum(bestColorMem)}</strong>`;
   }
 }
 
@@ -1448,6 +1584,1288 @@ function endMathChallenge() {
   updateHomeBestScores();
 }
 
+// ====================================================================
+// GAME 7: SNAKE GAME (সাপের খেলা)
+// ====================================================================
+let snakeCanvas = null;
+let snakeCtx = null;
+let snakeGridSize = 18; // 18x18 cells
+let snakeTileSize = 20; // 360x360 px
+let snake = [];
+let snakeDir = { x: 1, y: 0 };
+let snakeNextDir = { x: 1, y: 0 };
+let snakeFood = { x: 10, y: 10, isGolden: false };
+let snakeScore = 0;
+let snakeApplesCount = 0;
+let snakeIsActive = false;
+let snakeIsPaused = false;
+let snakeLoopInterval = null;
+let snakeSpeedMs = 130;
+
+function initSnakeGame() {
+  snakeCanvas = document.getElementById('snake-canvas');
+  if (!snakeCanvas) return;
+  snakeCtx = snakeCanvas.getContext('2d');
+
+  // Setup Touch D-Pad buttons
+  const setUp = document.getElementById('dpad-up');
+  const setDown = document.getElementById('dpad-down');
+  const setLeft = document.getElementById('dpad-left');
+  const setRight = document.getElementById('dpad-right');
+
+  if (setUp && !setUp.dataset.bound) {
+    setUp.dataset.bound = 'true';
+    setUp.addEventListener('click', () => changeSnakeDir(0, -1));
+    setDown.addEventListener('click', () => changeSnakeDir(0, 1));
+    setLeft.addEventListener('click', () => changeSnakeDir(-1, 0));
+    setRight.addEventListener('click', () => changeSnakeDir(1, 0));
+  }
+
+  // Setup Touch swipe on canvas
+  let touchStartX = 0;
+  let touchStartY = 0;
+  snakeCanvas.addEventListener('touchstart', (e) => {
+    if (e.touches && e.touches[0]) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  snakeCanvas.addEventListener('touchend', (e) => {
+    if (!e.changedTouches || !e.changedTouches[0]) return;
+    const diffX = e.changedTouches[0].clientX - touchStartX;
+    const diffY = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(diffX) > 25 || Math.abs(diffY) > 25) {
+      if (Math.abs(diffX) > Math.abs(diffY)) {
+        changeSnakeDir(diffX > 0 ? 1 : -1, 0);
+      } else {
+        changeSnakeDir(0, diffY > 0 ? 1 : -1);
+      }
+    }
+  }, { passive: true });
+
+  // Keyboard navigation for desktop/tablet
+  window.addEventListener('keydown', (e) => {
+    if (currentView !== 'snake' || !snakeIsActive) return;
+    if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') changeSnakeDir(0, -1);
+    else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') changeSnakeDir(0, 1);
+    else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') changeSnakeDir(-1, 0);
+    else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') changeSnakeDir(1, 0);
+    else if (e.key === ' ' || e.key === 'p' || e.key === 'P') togglePauseSnake();
+  });
+
+  restartSnakeGame();
+}
+
+function changeSnakeDir(x, y) {
+  // Prevent 180-degree reversing
+  if (snakeDir.x === -x && snakeDir.y === -y) return;
+  snakeNextDir = { x, y };
+}
+
+function restartSnakeGame() {
+  document.getElementById('snake-overlay').style.display = 'none';
+  snakeScore = 0;
+  snakeApplesCount = 0;
+  snakeDir = { x: 1, y: 0 };
+  snakeNextDir = { x: 1, y: 0 };
+  snakeIsPaused = false;
+  snakeIsActive = true;
+  document.getElementById('snake-pause-text').innerText = '⏸️ বিরতি';
+
+  // Starting snake body (length 3)
+  snake = [
+    { x: 6, y: 9 },
+    { x: 5, y: 9 },
+    { x: 4, y: 9 }
+  ];
+
+  spawnSnakeFood();
+  updateSnakeUI();
+
+  if (snakeLoopInterval) clearInterval(snakeLoopInterval);
+  snakeLoopInterval = setInterval(snakeGameTick, snakeSpeedMs);
+  drawSnake();
+}
+
+function spawnSnakeFood() {
+  let valid = false;
+  let newFood = { x: 0, y: 0, isGolden: false };
+
+  while (!valid) {
+    newFood.x = Math.floor(Math.random() * snakeGridSize);
+    newFood.y = Math.floor(Math.random() * snakeGridSize);
+    valid = !snake.some(seg => seg.x === newFood.x && seg.y === newFood.y);
+  }
+
+  // 20% chance of golden bonus apple
+  newFood.isGolden = (Math.random() < 0.2);
+  snakeFood = newFood;
+}
+
+function snakeGameTick() {
+  if (!snakeIsActive || snakeIsPaused) return;
+
+  snakeDir = { ...snakeNextDir };
+  const head = { x: snake[0].x + snakeDir.x, y: snake[0].y + snakeDir.y };
+
+  // Wall collision check
+  if (head.x < 0 || head.x >= snakeGridSize || head.y < 0 || head.y >= snakeGridSize) {
+    endSnakeGame();
+    return;
+  }
+
+  // Self collision check
+  if (snake.some(seg => seg.x === head.x && seg.y === head.y)) {
+    endSnakeGame();
+    return;
+  }
+
+  snake.unshift(head);
+
+  // Check food collision
+  if (head.x === snakeFood.x && head.y === snakeFood.y) {
+    const points = snakeFood.isGolden ? 30 : 10;
+    snakeScore += points;
+    snakeApplesCount++;
+    playSound('eat');
+    spawnSnakeFood();
+    updateSnakeUI();
+  } else {
+    snake.pop(); // Remove tail
+  }
+
+  drawSnake();
+}
+
+function drawSnake() {
+  if (!snakeCtx) return;
+  const w = snakeCanvas.width;
+  const h = snakeCanvas.height;
+
+  // Background
+  snakeCtx.fillStyle = '#0f0e26';
+  snakeCtx.fillRect(0, 0, w, h);
+
+  // Subtle grid lines
+  snakeCtx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+  snakeCtx.lineWidth = 1;
+  for (let i = 0; i <= snakeGridSize; i++) {
+    snakeCtx.beginPath();
+    snakeCtx.moveTo(i * snakeTileSize, 0);
+    snakeCtx.lineTo(i * snakeTileSize, h);
+    snakeCtx.stroke();
+
+    snakeCtx.beginPath();
+    snakeCtx.moveTo(0, i * snakeTileSize);
+    snakeCtx.lineTo(w, i * snakeTileSize);
+    snakeCtx.stroke();
+  }
+
+  // Draw Food
+  const fx = snakeFood.x * snakeTileSize + snakeTileSize / 2;
+  const fy = snakeFood.y * snakeTileSize + snakeTileSize / 2;
+  const fr = snakeTileSize / 2 - 2;
+
+  snakeCtx.beginPath();
+  snakeCtx.arc(fx, fy, fr, 0, Math.PI * 2);
+  snakeCtx.fillStyle = snakeFood.isGolden ? '#f59e0b' : '#ef4444';
+  snakeCtx.fill();
+
+  // Food highlight glow
+  snakeCtx.beginPath();
+  snakeCtx.arc(fx - 3, fy - 3, fr / 3, 0, Math.PI * 2);
+  snakeCtx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+  snakeCtx.fill();
+
+  // Draw Snake
+  snake.forEach((seg, idx) => {
+    const sx = seg.x * snakeTileSize;
+    const sy = seg.y * snakeTileSize;
+    const isHead = idx === 0;
+
+    snakeCtx.beginPath();
+    snakeCtx.roundRect(sx + 1, sy + 1, snakeTileSize - 2, snakeTileSize - 2, isHead ? 6 : 4);
+    snakeCtx.fillStyle = isHead ? '#10b981' : '#059669';
+    snakeCtx.fill();
+
+    // Eyes on head
+    if (isHead) {
+      snakeCtx.fillStyle = '#ffffff';
+      const eyeR = 2.5;
+      let e1x = sx + 5, e1y = sy + 5, e2x = sx + 15, e2y = sy + 5;
+      if (snakeDir.x === 1) { e1x = sx + 14; e1y = sy + 5; e2x = sx + 14; e2y = sy + 15; }
+      else if (snakeDir.x === -1) { e1x = sx + 5; e1y = sy + 5; e2x = sx + 5; e2y = sy + 15; }
+      else if (snakeDir.y === 1) { e1x = sx + 5; e1y = sy + 14; e2x = sx + 15; e2y = sy + 14; }
+
+      snakeCtx.beginPath();
+      snakeCtx.arc(e1x, e1y, eyeR, 0, Math.PI * 2);
+      snakeCtx.arc(e2x, e2y, eyeR, 0, Math.PI * 2);
+      snakeCtx.fill();
+
+      snakeCtx.fillStyle = '#000000';
+      snakeCtx.beginPath();
+      snakeCtx.arc(e1x, e1y, 1.2, 0, Math.PI * 2);
+      snakeCtx.arc(e2x, e2y, 1.2, 0, Math.PI * 2);
+      snakeCtx.fill();
+    }
+  });
+}
+
+function togglePauseSnake() {
+  if (!snakeIsActive) return;
+  snakeIsPaused = !snakeIsPaused;
+  document.getElementById('snake-pause-text').innerText = snakeIsPaused ? '▶️ চালু করুন' : '⏸️ বিরতি';
+  playSound('tap');
+}
+
+function endSnakeGame() {
+  snakeIsActive = false;
+  clearInterval(snakeLoopInterval);
+  playSound('wrong');
+
+  const prevBest = parseInt(localStorage.getItem('bfg_best_snake') || '0', 10);
+  if (snakeScore > prevBest) {
+    localStorage.setItem('bfg_best_snake', snakeScore);
+  }
+  updateSnakeUI();
+  updateHomeBestScores();
+
+  const overlay = document.getElementById('snake-overlay');
+  overlay.style.display = 'flex';
+  document.getElementById('snake-overlay-desc').innerText = `আপনার মোট স্কোর: ${toBnNum(snakeScore)} পয়েন্ট (${toBnNum(snakeApplesCount)}টি আপেল)।`;
+}
+
+function updateSnakeUI() {
+  const bestSnake = localStorage.getItem('bfg_best_snake') || '0';
+  document.getElementById('snake-score-val').innerText = toBnNum(snakeScore);
+  document.getElementById('snake-best-val').innerText = toBnNum(bestSnake);
+  document.getElementById('snake-apple-val').innerText = `${toBnNum(snakeApplesCount)}টি`;
+}
+
+// ====================================================================
+// GAME 8: 2048 PUZZLE (২০৪৮ পাজল)
+// ====================================================================
+let p2048Grid = [];
+let p2048Score = 0;
+let p2048Won = false;
+let p2048GameOver = false;
+
+function init2048() {
+  restart2048();
+
+  const gridEl = document.getElementById('p2048-grid');
+  if (gridEl && !gridEl.dataset.swipeBound) {
+    gridEl.dataset.swipeBound = 'true';
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    gridEl.addEventListener('touchstart', (e) => {
+      if (e.touches && e.touches[0]) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    gridEl.addEventListener('touchend', (e) => {
+      if (!e.changedTouches || !e.changedTouches[0]) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > 30 || Math.abs(dy) > 30) {
+        if (Math.abs(dx) > Math.abs(dy)) {
+          move2048(dx > 0 ? 'right' : 'left');
+        } else {
+          move2048(dy > 0 ? 'down' : 'up');
+        }
+      }
+    }, { passive: true });
+  }
+
+  // Keyboard navigation
+  window.addEventListener('keydown', (e) => {
+    if (currentView !== '2048') return;
+    if (e.key === 'ArrowUp') move2048('up');
+    else if (e.key === 'ArrowDown') move2048('down');
+    else if (e.key === 'ArrowLeft') move2048('left');
+    else if (e.key === 'ArrowRight') move2048('right');
+  });
+}
+
+function restart2048() {
+  p2048Grid = [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0]
+  ];
+  p2048Score = 0;
+  p2048Won = false;
+  p2048GameOver = false;
+  document.getElementById('p2048-overlay').style.display = 'none';
+
+  spawnTile2048();
+  spawnTile2048();
+  render2048();
+}
+
+function spawnTile2048() {
+  const emptyCells = [];
+  for (let r = 0; r < 4; r++) {
+    for (let c = 0; c < 4; c++) {
+      if (p2048Grid[r][c] === 0) emptyCells.push({ r, c });
+    }
+  }
+  if (emptyCells.length === 0) return;
+  const chosen = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+  p2048Grid[chosen.r][chosen.c] = Math.random() < 0.9 ? 2 : 4;
+}
+
+function render2048() {
+  const gridEl = document.getElementById('p2048-grid');
+  if (!gridEl) return;
+  gridEl.innerHTML = '';
+
+  for (let r = 0; r < 4; r++) {
+    for (let c = 0; c < 4; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'p2048-cell';
+
+      const val = p2048Grid[r][c];
+      if (val > 0) {
+        const tile = document.createElement('div');
+        const tileClass = val <= 2048 ? `tile-${val}` : 'tile-super';
+        tile.className = `p2048-tile ${tileClass}`;
+        tile.innerText = toBnNum(val);
+        cell.appendChild(tile);
+      }
+      gridEl.appendChild(cell);
+    }
+  }
+
+  const best2048 = parseInt(localStorage.getItem('bfg_best_2048') || '0', 10);
+  if (p2048Score > best2048) {
+    localStorage.setItem('bfg_best_2048', p2048Score);
+  }
+
+  document.getElementById('p2048-score-val').innerText = toBnNum(p2048Score);
+  document.getElementById('p2048-best-val').innerText = toBnNum(Math.max(p2048Score, best2048));
+  updateHomeBestScores();
+}
+
+function move2048(direction) {
+  if (p2048GameOver) return;
+  let rotated = false;
+  let changed = false;
+
+  const slideRow = (row) => {
+    let arr = row.filter(val => val !== 0);
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i] === arr[i + 1]) {
+        arr[i] *= 2;
+        p2048Score += arr[i];
+        if (arr[i] === 2048 && !p2048Won) {
+          trigger2048Win();
+        }
+        arr.splice(i + 1, 1);
+      }
+    }
+    while (arr.length < 4) arr.push(0);
+    return arr;
+  };
+
+  const oldGrid = JSON.stringify(p2048Grid);
+
+  if (direction === 'left') {
+    for (let r = 0; r < 4; r++) {
+      p2048Grid[r] = slideRow(p2048Grid[r]);
+    }
+  } else if (direction === 'right') {
+    for (let r = 0; r < 4; r++) {
+      p2048Grid[r] = slideRow(p2048Grid[r].reverse()).reverse();
+    }
+  } else if (direction === 'up') {
+    for (let c = 0; c < 4; c++) {
+      let col = [p2048Grid[0][c], p2048Grid[1][c], p2048Grid[2][c], p2048Grid[3][c]];
+      col = slideRow(col);
+      for (let r = 0; r < 4; r++) p2048Grid[r][c] = col[r];
+    }
+  } else if (direction === 'down') {
+    for (let c = 0; c < 4; c++) {
+      let col = [p2048Grid[0][c], p2048Grid[1][c], p2048Grid[2][c], p2048Grid[3][c]];
+      col = slideRow(col.reverse()).reverse();
+      for (let r = 0; r < 4; r++) p2048Grid[r][c] = col[r];
+    }
+  }
+
+  if (oldGrid !== JSON.stringify(p2048Grid)) {
+    playSound('slide');
+    spawnTile2048();
+    render2048();
+    check2048GameOver();
+  }
+}
+
+function check2048GameOver() {
+  for (let r = 0; r < 4; r++) {
+    for (let c = 0; c < 4; c++) {
+      if (p2048Grid[r][c] === 0) return;
+      if (c < 3 && p2048Grid[r][c] === p2048Grid[r][c + 1]) return;
+      if (r < 3 && p2048Grid[r][c] === p2048Grid[r + 1][c]) return;
+    }
+  }
+
+  p2048GameOver = true;
+  playSound('wrong');
+  const overlay = document.getElementById('p2048-overlay');
+  document.getElementById('p2048-overlay-icon').innerText = '😢';
+  document.getElementById('p2048-overlay-title').innerText = 'চাল শেষ!';
+  document.getElementById('p2048-overlay-desc').innerText = `কোনো খালি ঘর নেই। আপনার মোট স্কোর: ${toBnNum(p2048Score)}।`;
+  document.getElementById('p2048-continue-btn').style.display = 'none';
+  overlay.style.display = 'flex';
+}
+
+function trigger2048Win() {
+  p2048Won = true;
+  playSound('win');
+  const overlay = document.getElementById('p2048-overlay');
+  document.getElementById('p2048-overlay-icon').innerText = '🏆';
+  document.getElementById('p2048-overlay-title').innerText = 'অভিনন্দন!';
+  document.getElementById('p2048-overlay-desc').innerText = 'আপনি সফলভাবে ২০৪৮ তৈরি করেছেন!';
+  document.getElementById('p2048-continue-btn').style.display = 'inline-block';
+  overlay.style.display = 'flex';
+}
+
+function continue2048() {
+  document.getElementById('p2048-overlay').style.display = 'none';
+}
+
+// ====================================================================
+// GAME 9: WHACK-A-MOLE (ছুঁচো ধরা খেলা)
+// ====================================================================
+let whackScore = 0;
+let whackHits = 0;
+let whackTimeLeft = 30;
+let whackTimerInterval = null;
+let whackMoleInterval = null;
+let whackIsActive = false;
+let whackIsPaused = false;
+let currentWhackMoleIndex = -1;
+
+function initWhackGame() {
+  const grid = document.getElementById('whack-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  for (let i = 0; i < 9; i++) {
+    const hole = document.createElement('div');
+    hole.className = 'whack-hole';
+    hole.id = `whoole-${i}`;
+    hole.setAttribute('aria-label', `গর্ত ${i + 1}`);
+
+    const mole = document.createElement('div');
+    mole.className = 'mole-creature';
+    mole.id = `wmole-${i}`;
+    mole.innerText = '🐹';
+    mole.onclick = () => hitMole(i);
+
+    hole.appendChild(mole);
+    grid.appendChild(hole);
+  }
+
+  restartWhackGame();
+}
+
+function restartWhackGame() {
+  clearInterval(whackTimerInterval);
+  clearInterval(whackMoleInterval);
+
+  whackScore = 0;
+  whackHits = 0;
+  whackTimeLeft = 30;
+  whackIsActive = true;
+  whackIsPaused = false;
+  currentWhackMoleIndex = -1;
+
+  document.getElementById('whack-result-card').style.display = 'none';
+  document.getElementById('whack-active-controls').style.display = 'flex';
+  document.getElementById('whack-pause-text').innerText = '⏸️ বিরতি';
+
+  updateWhackUI();
+
+  // 30s Countdown timer
+  whackTimerInterval = setInterval(() => {
+    if (!whackIsActive || whackIsPaused) return;
+    whackTimeLeft--;
+    document.getElementById('whack-timer-val').innerText = `${toBnNum(whackTimeLeft)} সে.`;
+
+    if (whackTimeLeft <= 0) {
+      endWhackGame();
+    }
+  }, 1000);
+
+  // Mole pop loop
+  whackMoleInterval = setInterval(popRandomMole, 850);
+}
+
+function popRandomMole() {
+  if (!whackIsActive || whackIsPaused) return;
+
+  // Hide previous
+  if (currentWhackMoleIndex !== -1) {
+    const prevMole = document.getElementById(`wmole-${currentWhackMoleIndex}`);
+    if (prevMole) {
+      prevMole.classList.remove('up', 'whacked', 'golden');
+      prevMole.innerText = '🐹';
+    }
+  }
+
+  let nextIdx = Math.floor(Math.random() * 9);
+  if (nextIdx === currentWhackMoleIndex) nextIdx = (nextIdx + 1) % 9;
+  currentWhackMoleIndex = nextIdx;
+
+  const moleEl = document.getElementById(`wmole-${nextIdx}`);
+  if (!moleEl) return;
+
+  const isGolden = Math.random() < 0.22;
+  moleEl.classList.remove('whacked');
+  moleEl.classList.toggle('golden', isGolden);
+  moleEl.innerText = isGolden ? '⭐🐹' : '🐹';
+  moleEl.dataset.golden = isGolden ? 'true' : 'false';
+  moleEl.classList.add('up');
+
+  // Mole hides after short window if not hit
+  setTimeout(() => {
+    if (moleEl.classList.contains('up') && !moleEl.classList.contains('whacked')) {
+      moleEl.classList.remove('up');
+    }
+  }, 680);
+}
+
+function hitMole(idx) {
+  if (!whackIsActive || whackIsPaused) return;
+  const moleEl = document.getElementById(`wmole-${idx}`);
+  if (!moleEl || !moleEl.classList.contains('up') || moleEl.classList.contains('whacked')) return;
+
+  playSound('hit');
+  const isGolden = moleEl.dataset.golden === 'true';
+  const points = isGolden ? 30 : 10;
+
+  whackScore += points;
+  whackHits++;
+
+  moleEl.classList.add('whacked');
+  moleEl.innerText = isGolden ? '✨' : '💥';
+
+  setTimeout(() => {
+    moleEl.classList.remove('up', 'whacked', 'golden');
+  }, 220);
+
+  updateWhackUI();
+}
+
+function togglePauseWhack() {
+  if (!whackIsActive) return;
+  whackIsPaused = !whackIsPaused;
+  document.getElementById('whack-pause-text').innerText = whackIsPaused ? '▶️ চালু করুন' : '⏸️ বিরতি';
+  playSound('tap');
+}
+
+function endWhackGame() {
+  whackIsActive = false;
+  clearInterval(whackTimerInterval);
+  clearInterval(whackMoleInterval);
+  playSound('win');
+
+  const prevBest = parseInt(localStorage.getItem('bfg_best_whack') || '0', 10);
+  const newBest = Math.max(prevBest, whackScore);
+  localStorage.setItem('bfg_best_whack', newBest);
+
+  document.getElementById('whack-final-score').innerText = toBnNum(whackScore);
+  document.getElementById('whack-final-hits').innerText = `${toBnNum(whackHits)}টি`;
+  document.getElementById('whack-final-best').innerText = toBnNum(newBest);
+
+  const greeting = document.getElementById('whack-result-greeting');
+  if (whackScore >= 200) greeting.innerText = 'অসাধারণ রিফ্লেক্স! আপনি ছুঁচো ধরার মাস্টার!';
+  else if (whackScore >= 120) greeting.innerText = 'চমৎকার স্পিড ও নির্ভুল ট্যাপ!';
+  else greeting.innerText = 'ভালো চেষ্টা! বারবার চর্চায় স্কোর আরও বাড়বে।';
+
+  document.getElementById('whack-active-controls').style.display = 'none';
+  document.getElementById('whack-result-card').style.display = 'block';
+
+  updateWhackUI();
+  updateHomeBestScores();
+}
+
+function updateWhackUI() {
+  const bestWhack = localStorage.getItem('bfg_best_whack') || '0';
+  document.getElementById('whack-score-val').innerText = toBnNum(whackScore);
+  document.getElementById('whack-best-val').innerText = toBnNum(bestWhack);
+}
+
+// ====================================================================
+// GAME 10: 15 NUMBER PUZZLE (সংখ্যা সাজানোর ধাঁধা)
+// ====================================================================
+let numPuzzleTiles = [];
+let numPuzzleMoves = 0;
+let numPuzzleSeconds = 0;
+let numPuzzleTimer = null;
+let numPuzzleTimerStarted = false;
+let numPuzzleSolved = false;
+
+function initNumPuzzle() {
+  restartNumPuzzle();
+}
+
+function restartNumPuzzle() {
+  clearInterval(numPuzzleTimer);
+  numPuzzleMoves = 0;
+  numPuzzleSeconds = 0;
+  numPuzzleTimerStarted = false;
+  numPuzzleSolved = false;
+
+  document.getElementById('numpuzzle-overlay').style.display = 'none';
+  document.getElementById('numpuzzle-moves-val').innerText = '০';
+  document.getElementById('numpuzzle-time-val').innerText = '০০:০০';
+
+  const best = localStorage.getItem('bfg_best_numpuzzle');
+  document.getElementById('numpuzzle-best-val').innerText = best ? `${toBnNum(best)} চাল` : '-';
+
+  // Start with solved state 1-15, then 0
+  numPuzzleTiles = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
+
+  // Guaranteed 100% solvable shuffle by executing 160 random valid neighbor moves
+  let blankIdx = 15;
+  for (let i = 0; i < 160; i++) {
+    const neighbors = [];
+    const r = Math.floor(blankIdx / 4);
+    const c = blankIdx % 4;
+
+    if (r > 0) neighbors.push(blankIdx - 4);
+    if (r < 3) neighbors.push(blankIdx + 4);
+    if (c > 0) neighbors.push(blankIdx - 1);
+    if (c < 3) neighbors.push(blankIdx + 1);
+
+    const swapIdx = neighbors[Math.floor(Math.random() * neighbors.length)];
+    numPuzzleTiles[blankIdx] = numPuzzleTiles[swapIdx];
+    numPuzzleTiles[swapIdx] = 0;
+    blankIdx = swapIdx;
+  }
+
+  renderNumPuzzle();
+}
+
+function renderNumPuzzle() {
+  const grid = document.getElementById('numpuzzle-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  numPuzzleTiles.forEach((num, idx) => {
+    const tile = document.createElement('div');
+    tile.className = num === 0 ? 'num-tile empty' : 'num-tile';
+    tile.innerText = num === 0 ? '' : toBnNum(num);
+    if (num !== 0) {
+      tile.onclick = () => slideNumTile(idx);
+    }
+    grid.appendChild(tile);
+  });
+}
+
+function slideNumTile(idx) {
+  if (numPuzzleSolved) return;
+  const blankIdx = numPuzzleTiles.indexOf(0);
+
+  const r1 = Math.floor(idx / 4), c1 = idx % 4;
+  const r2 = Math.floor(blankIdx / 4), c2 = blankIdx % 4;
+
+  const isAdjacent = (Math.abs(r1 - r2) + Math.abs(c1 - c2)) === 1;
+  if (!isAdjacent) return;
+
+  // Start stopwatch on first move
+  if (!numPuzzleTimerStarted) {
+    numPuzzleTimerStarted = true;
+    numPuzzleTimer = setInterval(() => {
+      numPuzzleSeconds++;
+      const m = Math.floor(numPuzzleSeconds / 60);
+      const s = numPuzzleSeconds % 60;
+      const mStr = String(m).padStart(2, '0');
+      const sStr = String(s).padStart(2, '0');
+      document.getElementById('numpuzzle-time-val').innerText = `${toBnNum(mStr)}:${toBnNum(sStr)}`;
+    }, 1000);
+  }
+
+  // Swap with blank
+  numPuzzleTiles[blankIdx] = numPuzzleTiles[idx];
+  numPuzzleTiles[idx] = 0;
+  numPuzzleMoves++;
+  playSound('slide');
+
+  document.getElementById('numpuzzle-moves-val').innerText = toBnNum(numPuzzleMoves);
+  renderNumPuzzle();
+  checkNumPuzzleWin();
+}
+
+function checkNumPuzzleWin() {
+  for (let i = 0; i < 15; i++) {
+    if (numPuzzleTiles[i] !== i + 1) return;
+  }
+  if (numPuzzleTiles[15] !== 0) return;
+
+  // Win!
+  numPuzzleSolved = true;
+  clearInterval(numPuzzleTimer);
+  playSound('win');
+
+  const prevBest = parseInt(localStorage.getItem('bfg_best_numpuzzle') || '999999', 10);
+  if (numPuzzleMoves < prevBest) {
+    localStorage.setItem('bfg_best_numpuzzle', numPuzzleMoves);
+  }
+
+  const overlay = document.getElementById('numpuzzle-overlay');
+  document.getElementById('numpuzzle-win-details').innerText = `আপনি মাত্র ${toBnNum(numPuzzleMoves)} চালে এবং ${document.getElementById('numpuzzle-time-val').innerText} সময়ে ধাঁধা সমাধান করেছেন!`;
+  overlay.style.display = 'flex';
+
+  updateHomeBestScores();
+}
+
+// ====================================================================
+// GAME 11: BUBBLE SHOOTER (বাবল শুটার)
+// ====================================================================
+let bubbleCanvas = null;
+let bubbleCtx = null;
+let bubbleScore = 0;
+let bubbleRows = 5;
+let bubbleCols = 10;
+let bubbleRadius = 17;
+let bubbleGrid = [];
+let currentShooterBubble = null;
+let nextShooterBubble = null;
+let activeFlyingBubble = null;
+let bubbleIsActive = false;
+let bubbleIsPaused = false;
+let bubbleShotsFired = 0;
+let bubbleAnimReq = null;
+
+const BUBBLE_COLORS = [
+  { name: 'red', hex: '#ef4444', emoji: '🔴' },
+  { name: 'blue', hex: '#3b82f6', emoji: '🔵' },
+  { name: 'green', hex: '#10b981', emoji: '🟢' },
+  { name: 'yellow', hex: '#f59e0b', emoji: '🟡' },
+  { name: 'purple', hex: '#a855f7', emoji: '🟣' }
+];
+
+function getRandomBubbleColor() {
+  return BUBBLE_COLORS[Math.floor(Math.random() * BUBBLE_COLORS.length)];
+}
+
+function initBubbleGame() {
+  bubbleCanvas = document.getElementById('bubble-canvas');
+  if (!bubbleCanvas) return;
+  bubbleCtx = bubbleCanvas.getContext('2d');
+
+  if (!bubbleCanvas.dataset.bound) {
+    bubbleCanvas.dataset.bound = 'true';
+
+    const handleAimShoot = (e) => {
+      if (!bubbleIsActive || bubbleIsPaused || activeFlyingBubble) return;
+      const rect = bubbleCanvas.getBoundingClientRect();
+      const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+      const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+
+      const x = (clientX - rect.left) * (bubbleCanvas.width / rect.width);
+      const y = (clientY - rect.top) * (bubbleCanvas.height / rect.height);
+
+      shootBubble(x, y);
+    };
+
+    bubbleCanvas.addEventListener('click', handleAimShoot);
+    bubbleCanvas.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handleAimShoot(e);
+    }, { passive: false });
+  }
+
+  restartBubbleGame();
+}
+
+function restartBubbleGame() {
+  if (bubbleAnimReq) cancelAnimationFrame(bubbleAnimReq);
+  bubbleScore = 0;
+  bubbleShotsFired = 0;
+  bubbleIsActive = true;
+  bubbleIsPaused = false;
+  activeFlyingBubble = null;
+
+  document.getElementById('bubble-overlay').style.display = 'none';
+  document.getElementById('bubble-pause-text').innerText = '⏸️ বিরতি';
+
+  // Build grid (rows 0 to 4 filled, remaining rows empty up to row 12)
+  bubbleGrid = [];
+  for (let r = 0; r < 12; r++) {
+    bubbleGrid[r] = [];
+    for (let c = 0; c < bubbleCols; c++) {
+      if (r < 5) {
+        bubbleGrid[r][c] = getRandomBubbleColor();
+      } else {
+        bubbleGrid[r][c] = null;
+      }
+    }
+  }
+
+  currentShooterBubble = getRandomBubbleColor();
+  nextShooterBubble = getRandomBubbleColor();
+
+  updateBubbleUI();
+  bubbleGameLoop();
+}
+
+function shootBubble(targetX, targetY) {
+  const startX = bubbleCanvas.width / 2;
+  const startY = bubbleCanvas.height - 35;
+
+  const dx = targetX - startX;
+  const dy = targetY - startY;
+  if (dy >= 0) return; // Don't shoot downwards
+
+  const angle = Math.atan2(dy, dx);
+  const speed = 14;
+
+  activeFlyingBubble = {
+    x: startX,
+    y: startY,
+    vx: Math.cos(angle) * speed,
+    vy: Math.sin(angle) * speed,
+    color: currentShooterBubble
+  };
+
+  currentShooterBubble = nextShooterBubble;
+  nextShooterBubble = getRandomBubbleColor();
+  bubbleShotsFired++;
+
+  playSound('tap');
+  updateBubbleUI();
+}
+
+function bubbleGameLoop() {
+  if (!bubbleIsActive) return;
+
+  if (!bubbleIsPaused) {
+    updateBubblePhysics();
+    drawBubbleScene();
+  }
+
+  bubbleAnimReq = requestAnimationFrame(bubbleGameLoop);
+}
+
+function updateBubblePhysics() {
+  if (!activeFlyingBubble) return;
+
+  activeFlyingBubble.x += activeFlyingBubble.vx;
+  activeFlyingBubble.y += activeFlyingBubble.vy;
+
+  // Bounce off left and right canvas walls
+  if (activeFlyingBubble.x <= bubbleRadius) {
+    activeFlyingBubble.x = bubbleRadius;
+    activeFlyingBubble.vx = -activeFlyingBubble.vx;
+  } else if (activeFlyingBubble.x >= bubbleCanvas.width - bubbleRadius) {
+    activeFlyingBubble.x = bubbleCanvas.width - bubbleRadius;
+    activeFlyingBubble.vx = -activeFlyingBubble.vx;
+  }
+
+  // Check collision with top boundary or bubbles in grid
+  let hasCollided = false;
+
+  if (activeFlyingBubble.y <= bubbleRadius + 10) {
+    hasCollided = true;
+  } else {
+    // Check distance to all existing bubbles
+    for (let r = 0; r < 12 && !hasCollided; r++) {
+      for (let c = 0; c < bubbleCols && !hasCollided; c++) {
+        if (bubbleGrid[r][c]) {
+          const pos = getBubbleCoord(r, c);
+          const dist = Math.hypot(activeFlyingBubble.x - pos.x, activeFlyingBubble.y - pos.y);
+          if (dist < bubbleRadius * 1.85) {
+            hasCollided = true;
+          }
+        }
+      }
+    }
+  }
+
+  if (hasCollided) {
+    snapAndResolveBubble();
+  }
+}
+
+function getBubbleCoord(r, c) {
+  const isOdd = r % 2 === 1;
+  const offset = isOdd ? bubbleRadius : 0;
+  const x = c * (bubbleRadius * 2) + bubbleRadius + 10 + offset;
+  const y = r * (bubbleRadius * 1.73) + bubbleRadius + 10;
+  return { x, y };
+}
+
+function snapAndResolveBubble() {
+  // Find nearest empty grid cell
+  let bestR = 0, bestC = 0, minDist = Infinity;
+
+  for (let r = 0; r < 12; r++) {
+    for (let c = 0; c < bubbleCols; c++) {
+      if (!bubbleGrid[r][c]) {
+        const pos = getBubbleCoord(r, c);
+        const dist = Math.hypot(activeFlyingBubble.x - pos.x, activeFlyingBubble.y - pos.y);
+        if (dist < minDist) {
+          minDist = dist;
+          bestR = r;
+          bestC = c;
+        }
+      }
+    }
+  }
+
+  bubbleGrid[bestR][bestC] = activeFlyingBubble.color;
+  const landedColor = activeFlyingBubble.color;
+  activeFlyingBubble = null;
+
+  // Match-3 Flood Fill
+  const matches = findBubbleCluster(bestR, bestC, landedColor.name);
+  if (matches.length >= 3) {
+    playSound('pop');
+    matches.forEach(m => {
+      bubbleGrid[m.r][m.c] = null;
+    });
+    bubbleScore += matches.length * 15;
+
+    // Drop disconnected floating bubbles
+    dropFloatingBubbles();
+  }
+
+  // Advance rows every 6 shots
+  if (bubbleShotsFired % 6 === 0) {
+    advanceBubbleRows();
+  }
+
+  // Check Game Over (any bubble at row 10 or below)
+  for (let c = 0; c < bubbleCols; c++) {
+    if (bubbleGrid[10][c] || bubbleGrid[11][c]) {
+      endBubbleGame();
+      return;
+    }
+  }
+
+  updateBubbleUI();
+}
+
+function findBubbleCluster(startR, startC, targetColorName) {
+  const visited = Array.from({ length: 12 }, () => Array(bubbleCols).fill(false));
+  const queue = [{ r: startR, c: startC }];
+  const cluster = [];
+  visited[startR][startC] = true;
+
+  while (queue.length > 0) {
+    const { r, c } = queue.shift();
+    cluster.push({ r, c });
+
+    const neighbors = getNeighbors(r, c);
+    neighbors.forEach(nb => {
+      if (!visited[nb.r][nb.c] && bubbleGrid[nb.r][nb.c] && bubbleGrid[nb.r][nb.c].name === targetColorName) {
+        visited[nb.r][nb.c] = true;
+        queue.push(nb);
+      }
+    });
+  }
+
+  return cluster;
+}
+
+function getNeighbors(r, c) {
+  const isOdd = r % 2 === 1;
+  const diffs = isOdd
+    ? [[-1, 0], [-1, 1], [0, -1], [0, 1], [1, 0], [1, 1]]
+    : [[-1, -1], [-1, 0], [0, -1], [0, 1], [1, -1], [1, 0]];
+
+  const res = [];
+  diffs.forEach(([dr, dc]) => {
+    const nr = r + dr;
+    const nc = c + dc;
+    if (nr >= 0 && nr < 12 && nc >= 0 && nc < bubbleCols) {
+      res.push({ r: nr, c: nc });
+    }
+  });
+  return res;
+}
+
+function dropFloatingBubbles() {
+  const connected = Array.from({ length: 12 }, () => Array(bubbleCols).fill(false));
+  const queue = [];
+
+  // Top row anchors
+  for (let c = 0; c < bubbleCols; c++) {
+    if (bubbleGrid[0][c]) {
+      connected[0][c] = true;
+      queue.push({ r: 0, c });
+    }
+  }
+
+  while (queue.length > 0) {
+    const { r, c } = queue.shift();
+    getNeighbors(r, c).forEach(nb => {
+      if (!connected[nb.r][nb.c] && bubbleGrid[nb.r][nb.c]) {
+        connected[nb.r][nb.c] = true;
+        queue.push(nb);
+      }
+    });
+  }
+
+  let droppedCount = 0;
+  for (let r = 0; r < 12; r++) {
+    for (let c = 0; c < bubbleCols; c++) {
+      if (bubbleGrid[r][c] && !connected[r][c]) {
+        bubbleGrid[r][c] = null;
+        droppedCount++;
+      }
+    }
+  }
+  if (droppedCount > 0) {
+    bubbleScore += droppedCount * 25;
+  }
+}
+
+function advanceBubbleRows() {
+  for (let r = 11; r > 0; r--) {
+    bubbleGrid[r] = [...bubbleGrid[r - 1]];
+  }
+  bubbleGrid[0] = [];
+  for (let c = 0; c < bubbleCols; c++) {
+    bubbleGrid[0][c] = getRandomBubbleColor();
+  }
+}
+
+function drawBubbleScene() {
+  if (!bubbleCtx) return;
+  const w = bubbleCanvas.width;
+  const h = bubbleCanvas.height;
+
+  bubbleCtx.fillStyle = '#0a091a';
+  bubbleCtx.fillRect(0, 0, w, h);
+
+  // Danger threshold line
+  bubbleCtx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
+  bubbleCtx.lineWidth = 2;
+  bubbleCtx.setLineDash([6, 6]);
+  bubbleCtx.beginPath();
+  bubbleCtx.moveTo(0, 10 * (bubbleRadius * 1.73) + 10);
+  bubbleCtx.lineTo(w, 10 * (bubbleRadius * 1.73) + 10);
+  bubbleCtx.stroke();
+  bubbleCtx.setLineDash([]);
+
+  // Draw Grid Bubbles
+  for (let r = 0; r < 12; r++) {
+    for (let c = 0; c < bubbleCols; c++) {
+      const bubble = bubbleGrid[r][c];
+      if (bubble) {
+        const { x, y } = getBubbleCoord(r, c);
+        drawSingleBubble(x, y, bubble.hex);
+      }
+    }
+  }
+
+  // Draw Flying Bubble
+  if (activeFlyingBubble) {
+    drawSingleBubble(activeFlyingBubble.x, activeFlyingBubble.y, activeFlyingBubble.color.hex);
+  }
+
+  // Draw Shooter Base & Current Bubble
+  const shootX = w / 2;
+  const shootY = h - 35;
+  bubbleCtx.fillStyle = '#1c1a3b';
+  bubbleCtx.beginPath();
+  bubbleCtx.arc(shootX, shootY, bubbleRadius + 6, 0, Math.PI * 2);
+  bubbleCtx.fill();
+  bubbleCtx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+  bubbleCtx.stroke();
+
+  if (currentShooterBubble) {
+    drawSingleBubble(shootX, shootY, currentShooterBubble.hex);
+  }
+}
+
+function drawSingleBubble(x, y, colorHex) {
+  bubbleCtx.beginPath();
+  bubbleCtx.arc(x, y, bubbleRadius, 0, Math.PI * 2);
+  bubbleCtx.fillStyle = colorHex;
+  bubbleCtx.fill();
+
+  // Glass shine reflection
+  bubbleCtx.beginPath();
+  bubbleCtx.arc(x - 4, y - 4, bubbleRadius / 2.8, 0, Math.PI * 2);
+  bubbleCtx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+  bubbleCtx.fill();
+}
+
+function togglePauseBubble() {
+  if (!bubbleIsActive) return;
+  bubbleIsPaused = !bubbleIsPaused;
+  document.getElementById('bubble-pause-text').innerText = bubbleIsPaused ? '▶️ চালু করুন' : '⏸️ বিরতি';
+  playSound('tap');
+}
+
+function endBubbleGame() {
+  bubbleIsActive = false;
+  if (bubbleAnimReq) cancelAnimationFrame(bubbleAnimReq);
+  playSound('wrong');
+
+  const prevBest = parseInt(localStorage.getItem('bfg_best_bubble') || '0', 10);
+  const newBest = Math.max(prevBest, bubbleScore);
+  localStorage.setItem('bfg_best_bubble', newBest);
+
+  const overlay = document.getElementById('bubble-overlay');
+  document.getElementById('bubble-overlay-desc').innerText = `বাবল নিচে পৌঁছে গেছে! আপনার মোট স্কোর: ${toBnNum(bubbleScore)}।`;
+  overlay.style.display = 'flex';
+
+  updateBubbleUI();
+  updateHomeBestScores();
+}
+
+function updateBubbleUI() {
+  const bestBubble = localStorage.getItem('bfg_best_bubble') || '0';
+  document.getElementById('bubble-score-val').innerText = toBnNum(bubbleScore);
+  document.getElementById('bubble-best-val').innerText = toBnNum(bestBubble);
+  const previewEl = document.getElementById('bubble-next-preview');
+  if (previewEl && nextShooterBubble) {
+    previewEl.innerText = nextShooterBubble.emoji;
+  }
+}
+
+// ====================================================================
+// GAME 12: COLOR MEMORY CHALLENGE (রঙের মেমোরি / Simon)
+// ====================================================================
+let colorSequence = [];
+let playerColorStep = 0;
+let colorRound = 1;
+let colorIsPlayerTurn = false;
+let colorIsPlayingSequence = false;
+const COLOR_PAD_FREQS = [329.63, 440.00, 554.37, 659.25]; // E4, A4, C#5, E5
+
+function initColorMemory() {
+  restartColorMemory();
+}
+
+function restartColorMemory() {
+  colorSequence = [];
+  playerColorStep = 0;
+  colorRound = 1;
+  colorIsPlayerTurn = false;
+  colorIsPlayingSequence = false;
+
+  document.getElementById('colormem-result-card').style.display = 'none';
+  document.getElementById('colormem-active-controls').style.display = 'flex';
+  document.getElementById('colormem-round-val').innerText = '১';
+  document.getElementById('colormem-hub-score').innerText = '১';
+
+  const bestRound = localStorage.getItem('bfg_best_colormem') || '0';
+  document.getElementById('colormem-best-val').innerText = toBnNum(bestRound);
+  document.getElementById('colormem-status-text').innerText = '▶️ "শুরু করুন" বাটনে চাপ দিন';
+}
+
+function startColorMemory() {
+  document.getElementById('colormem-active-controls').style.display = 'none';
+  colorSequence = [];
+  colorRound = 1;
+  nextColorRound();
+}
+
+function nextColorRound() {
+  playerColorStep = 0;
+  colorIsPlayerTurn = false;
+  colorSequence.push(Math.floor(Math.random() * 4));
+
+  document.getElementById('colormem-round-val').innerText = toBnNum(colorRound);
+  document.getElementById('colormem-hub-score').innerText = toBnNum(colorRound);
+  document.getElementById('colormem-status-text').innerText = '👀 সুর ও আলোর ক্রমটি লক্ষ্য করুন...';
+
+  playColorSequence();
+}
+
+function playColorSequence() {
+  colorIsPlayingSequence = true;
+  let idx = 0;
+
+  const playStep = () => {
+    if (idx >= colorSequence.length) {
+      colorIsPlayingSequence = false;
+      colorIsPlayerTurn = true;
+      document.getElementById('colormem-status-text').innerText = '👉 এখন আপনার পালা! ক্রমটি মনে করে ট্যাপ করুন';
+      return;
+    }
+
+    const padIdx = colorSequence[idx];
+    flashColorPad(padIdx);
+    idx++;
+    setTimeout(playStep, 600);
+  };
+
+  setTimeout(playStep, 400);
+}
+
+function flashColorPad(padIdx) {
+  const pad = document.getElementById(`cpad-${padIdx}`);
+  if (!pad) return;
+
+  pad.classList.add('lit');
+  playSound('tone', COLOR_PAD_FREQS[padIdx]);
+
+  setTimeout(() => {
+    pad.classList.remove('lit');
+  }, 320);
+}
+
+function handleColorPadClick(padIdx) {
+  if (!colorIsPlayerTurn || colorIsPlayingSequence) return;
+
+  flashColorPad(padIdx);
+
+  if (padIdx === colorSequence[playerColorStep]) {
+    playerColorStep++;
+    if (playerColorStep === colorSequence.length) {
+      // Completed round!
+      colorIsPlayerTurn = false;
+      colorRound++;
+      document.getElementById('colormem-status-text').innerText = '🎉 চমৎকার! পরবর্তী রাউন্ড আসছে...';
+      playSound('correct');
+
+      const prevBest = parseInt(localStorage.getItem('bfg_best_colormem') || '0', 10);
+      if (colorRound - 1 > prevBest) {
+        localStorage.setItem('bfg_best_colormem', colorRound - 1);
+        document.getElementById('colormem-best-val').innerText = toBnNum(colorRound - 1);
+      }
+
+      setTimeout(nextColorRound, 1000);
+    }
+  } else {
+    // Mistake
+    endColorMemory();
+  }
+}
+
+function endColorMemory() {
+  colorIsPlayerTurn = false;
+  playSound('wrong');
+
+  const achieved = colorRound - 1;
+  const prevBest = parseInt(localStorage.getItem('bfg_best_colormem') || '0', 10);
+  const newBest = Math.max(prevBest, achieved);
+  localStorage.setItem('bfg_best_colormem', newBest);
+
+  document.getElementById('colormem-final-round').innerText = toBnNum(achieved);
+  const greeting = document.getElementById('colormem-result-greeting');
+  if (achieved >= 10) greeting.innerText = 'অসাধারণ স্মৃতিশক্তি! আপনি একজন কালার মেমোরি চ্যাম্পিয়ন!';
+  else if (achieved >= 5) greeting.innerText = 'দারুণ মনোযোগ ও স্মৃতিশক্তি!';
+  else greeting.innerText = 'ভালো চেষ্টা করেছেন! বারবার খেললে স্মৃতিশক্তি আরও প্রখর হবে।';
+
+  document.getElementById('colormem-result-card').style.display = 'block';
+  updateHomeBestScores();
+}
+
 // ==================== Initialization ====================
 document.addEventListener('DOMContentLoaded', () => {
   initSettings();
@@ -1461,8 +2879,112 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Close modals when clicking backdrop
+  window.addEventListener('click', (e) => {
+    if (e.target && e.target.classList && e.target.classList.contains('modal-backdrop')) {
+      e.target.style.display = 'none';
+    }
+  });
+
+  // Close modals on Escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-backdrop').forEach(m => m.style.display = 'none');
+    }
+  });
+
   // Push initial state
   if (history.pushState) {
     history.pushState({ page: 'home' }, '');
   }
 });
+
+// ==================== PWA Service Worker & Install Logic ====================
+let deferredInstallPrompt = null;
+
+// Register Service Worker on window load
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then((reg) => {
+        console.log('Bangla Fun Games Service Worker registered:', reg.scope);
+      })
+      .catch((err) => {
+        console.warn('Bangla Fun Games Service Worker registration note:', err);
+      });
+  });
+}
+
+// Capture Android / Chrome PWA install trigger
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+
+  // Reveal the install buttons
+  const navBtn = document.getElementById('pwa-install-nav-btn');
+  if (navBtn) navBtn.style.display = 'inline-flex';
+
+  const banner = document.getElementById('pwa-install-banner');
+  if (banner && localStorage.getItem('bfg_pwa_banner_dismissed') !== 'true') {
+    banner.style.display = 'flex';
+  }
+});
+
+// Handle successful installation
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  const navBtn = document.getElementById('pwa-install-nav-btn');
+  if (navBtn) navBtn.style.display = 'none';
+
+  const banner = document.getElementById('pwa-install-banner');
+  if (banner) banner.style.display = 'none';
+
+  showPwaToast('🎉 বাংলা ফান গেমস অ্যাপ সফলভাবে ইনস্টল হয়েছে!');
+});
+
+function triggerPwaInstall() {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        showPwaToast('📲 অ্যাপ ইনস্টল শুরু হয়েছে...');
+      }
+      deferredInstallPrompt = null;
+    });
+  } else {
+    // If browser doesn't support automatic prompt or on standalone/desktop, show guide modal
+    openPwaGuideModal();
+  }
+}
+
+function dismissPwaBanner() {
+  const banner = document.getElementById('pwa-install-banner');
+  if (banner) banner.style.display = 'none';
+  localStorage.setItem('bfg_pwa_banner_dismissed', 'true');
+}
+
+function openPwaGuideModal() {
+  const modal = document.getElementById('pwa-guide-modal');
+  if (modal) modal.style.display = 'flex';
+}
+
+function closePwaGuideModal() {
+  const modal = document.getElementById('pwa-guide-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function showPwaToast(message) {
+  let toast = document.getElementById('pwa-toast-el');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'pwa-toast-el';
+    toast.className = 'pwa-toast';
+    document.body.appendChild(toast);
+  }
+  toast.innerText = message;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3500);
+}
+

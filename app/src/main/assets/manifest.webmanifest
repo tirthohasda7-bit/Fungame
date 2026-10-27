@@ -1,0 +1,41 @@
+{
+  "name": "বাংলা ফান গেমস - Bangla Fun Games",
+  "short_name": "বাংলা গেমস",
+  "id": "bangla-fun-games-pwa",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0d0c1d",
+  "theme_color": "#0d0c1d",
+  "description": "১২টি সম্পূর্ণ ফ্রি ও আকর্ষণীয় বাংলা গেম — কুইজ, মেমোরি ম্যাচ, টিক-ট্যাক-টো, স্নেক গেম, ২০৪৮, বাবল শুটার ও আরও অনেক কিছু!",
+  "lang": "bn",
+  "dir": "ltr",
+  "categories": ["games", "entertainment", "education"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

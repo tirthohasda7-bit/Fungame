@@ -31,11 +31,6 @@ import com.example.ui.theme.MyApplicationTheme
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    try {
-      WebView.setDataDirectorySuffix("bfg_app")
-    } catch (_: Exception) {
-      // Suffix already set or not supported
-    }
     enableEdgeToEdge()
     setContent {
       MyApplicationTheme {

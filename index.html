@@ -3,9 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="বাংলা ফান গেমস - সম্পূর্ণ ফ্রি, আধুনিক ও মোবাইল-বান্ধব কুইজ, টিক-ট্যাক-টো, মেমোরি, পাথর-কাগজ-কাঁচি, সংখ্যা অনুমান ও গণিত চ্যালেঞ্জ গেম।">
-  <meta name="theme-color" content="#131127">
-  <title>বাংলা ফান গেমস | Bangla Fun Games</title>
+  <meta name="description" content="বাংলা ফান গেমস - সম্পূর্ণ ফ্রি, আধুনিক ও মোবাইল-বান্ধব ১২টি মজার গেম — কুইজ, মেমোরি, টিক-ট্যাক-টো, স্নেক, ২০৪৮, বাবল শুটার ও আরও অনেক কিছু।">
+  <meta name="theme-color" content="#0d0c1d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="বাংলা গেমস">
+  <meta name="application-name" content="বাংলা ফান গেমস">
+
+  <!-- PWA Manifest & Icons -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="alternate" type="application/manifest+json" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <title>বাংলা ফান গেমস | Bangla Fun Games - অনলাইন বাংলা গেমিং প্ল্যাটফর্ম</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,16 +35,29 @@
           <span class="brand-subtitle">Bangla Fun Games</span>
         </div>
       </div>
+
+      <!-- Desktop/Tablet Quick Nav -->
+      <nav class="desktop-nav-links">
+        <a href="#games-section" class="dnav-link" onclick="navigateTo('home');">গেমস</a>
+        <button class="dnav-btn" onclick="openAboutModal()">পরিচিতি</button>
+        <button class="dnav-btn" onclick="openContactModal()">যোগাযোগ</button>
+        <button class="dnav-btn" onclick="openPrivacyModal()">গোপনীয়তা</button>
+        <button class="dnav-btn" onclick="openPwaGuideModal()" title="PWA ইনস্টল নির্দেশিকা">ইনস্টল গাইড</button>
+      </nav>
       
+      <!-- Top Action Buttons -->
       <div class="nav-actions">
+        <button id="pwa-install-nav-btn" class="nav-install-btn" onclick="triggerPwaInstall()" style="display: none;" title="Android-এ অ্যাপ ইনস্টল করুন">
+          <span>📲 ইনস্টল অ্যাপ</span>
+        </button>
         <button id="sound-btn" class="icon-btn" aria-label="সাউন্ড অন বা অফ" title="সাউন্ড চালু/বন্ধ">
           <span id="sound-icon">🔊</span>
         </button>
         <button id="theme-btn" class="icon-btn" aria-label="থিম পরিবর্তন" title="থিম পরিবর্তন">
           <span id="theme-icon">🌙</span>
         </button>
-        <button class="nav-link-btn" onclick="openAboutModal()">
-          <span>ℹ️ পরিচিতি</span>
+        <button class="nav-link-btn" onclick="openContactModal()" title="যোগাযোগ ও মতামত">
+          <span>✉️ যোগাযোগ</span>
         </button>
       </div>
     </div>
@@ -42,20 +68,47 @@
     
     <!-- ==================== HOME / HUB VIEW ==================== -->
     <section id="view-home" class="app-view active">
-      <!-- Hero Banner -->
+      <!-- Hero Banner Card -->
       <div class="hero-card">
         <div class="hero-image-wrapper">
           <img src="banner.jpg" alt="Bangla Fun Games Banner" class="hero-img" onerror="this.style.display='none'">
         </div>
         <div class="hero-overlay">
-          <span class="hero-badge">✨ ১০০% ফ্রি • কোনো বিজ্ঞাপন নেই • অফলাইন সমর্থিত</span>
-          <h1 class="hero-title">আনন্দ ও বুদ্ধির সেরা বাংলা গেমস</h1>
-          <p class="hero-desc">আপনার সাধারণ জ্ঞান যাচাই করুন, বন্ধুদের সাথে খেলুন, সংখ্যা অনুমান করুন অথবা গণিতের স্পিড চ্যালেঞ্জ নিন!</p>
+          <div class="hero-badge-row">
+            <span class="hero-badge">✨ ১০০% ফ্রি</span>
+            <span class="hero-badge badge-accent">🚫 কোনো বিজ্ঞাপন নেই</span>
+            <span class="hero-badge badge-info">📱 মোবাইল ফ্রেন্ডলি</span>
+          </div>
+          <h1 class="hero-title">আনন্দ ও বুদ্ধির সেরা বাংলা গেমিং প্ল্যাটফর্ম</h1>
+          <p class="hero-desc">আপনার সাধারণ জ্ঞান যাচাই করুন, বন্ধুদের সাথে কাটাকুটি খেলুন, সংখ্যা অনুমান করুন অথবা গণিতের স্পিড চ্যালেঞ্জ নিয়ে মস্তিষ্কের দক্ষতা বাড়ান!</p>
           <div class="hero-actions">
             <a href="#games-section" class="btn btn-primary btn-large">
-              <span>🚀 গেম তালিকা দেখুন</span>
+              <span>🚀 এখনই গেম খেলুন</span>
             </a>
+            <button class="btn btn-outline btn-large" onclick="openPwaGuideModal()">
+              <span>📲 অ্যাপ ইনস্টল গাইড</span>
+            </button>
+            <button class="btn btn-outline btn-large" onclick="openAboutModal()">
+              <span>ℹ️ প্ল্যাটফর্ম পরিচিতি</span>
+            </button>
           </div>
+        </div>
+      </div>
+
+      <!-- PWA Smart Install Banner -->
+      <div id="pwa-install-banner" class="pwa-install-banner" style="display: none;">
+        <div class="pwa-banner-left">
+          <span class="pwa-banner-icon">📲</span>
+          <div class="pwa-banner-info">
+            <h3 class="pwa-banner-title">মোবাইলে অ্যাপ হিসেবে ইনস্টল করুন</h3>
+            <p class="pwa-banner-desc">হোম স্ক্রিনে আইকন বানিয়ে দ্রুত, ফুল-স্ক্রিনে ও ইন্টারনেট ছাড়া অফলাইনে খেলুন!</p>
+          </div>
+        </div>
+        <div class="pwa-banner-right">
+          <button class="btn btn-accent btn-sm" onclick="triggerPwaInstall()">
+            <span>ইনস্টল করুন ⬇️</span>
+          </button>
+          <button class="pwa-dismiss-btn" onclick="dismissPwaBanner()" aria-label="বন্ধ করুন">✕</button>
         </div>
       </div>
 
@@ -64,22 +117,22 @@
         <div class="stat-pill">
           <span class="stat-icon">🎮</span>
           <div class="stat-info">
-            <span class="stat-value">৬টি</span>
-            <span class="stat-label">মজার গেম</span>
+            <span class="stat-value">১২টি</span>
+            <span class="stat-label">সম্পূর্ণ গেম</span>
           </div>
         </div>
         <div class="stat-pill">
           <span class="stat-icon">🧠</span>
           <div class="stat-info">
             <span class="stat-value">বুদ্ধি ও জ্ঞান</span>
-            <span class="stat-label">ব্রেন চ্যালেঞ্জ</span>
+            <span class="stat-label">ব্রেন ও আর্কেড</span>
           </div>
         </div>
         <div class="stat-pill">
           <span class="stat-icon">⚡</span>
           <div class="stat-info">
-            <span class="stat-value">১০০% ফ্রি</span>
-            <span class="stat-label">মোবাইল-ফার্স্ট</span>
+            <span class="stat-value">ইনস্ট্যান্ট স্পিড</span>
+            <span class="stat-label">কোনো ডাউনলোড নেই</span>
           </div>
         </div>
       </div>
@@ -87,44 +140,52 @@
       <!-- Games Hub Section -->
       <section id="games-section" class="section-games">
         <div class="section-header">
-          <h2 class="section-title">
-            <span>🎯 সব গেমস</span>
-            <span class="count-badge" id="games-count">৬টি গেম</span>
-          </h2>
-          <p class="section-subtitle">পছন্দের গেম বেছে নিয়ে "খেলুন" বাটনে ক্লিক করুন</p>
+          <div>
+            <h2 class="section-title">
+              <span>🎯 সব গেমস</span>
+              <span class="count-badge" id="games-count">১২টি গেম</span>
+            </h2>
+            <p class="section-subtitle">পছন্দের গেমটি বেছে নিয়ে "খেলুন ▶" বাটনে ট্যাপ করুন</p>
+          </div>
         </div>
 
-        <!-- Search and Category Filters -->
+        <!-- Search Box & Category Filters -->
         <div class="filter-controls">
           <div class="search-box">
             <span class="search-icon">🔍</span>
-            <input type="text" id="game-search" placeholder="গেমের নাম দিয়ে খুঁজুন..." aria-label="গেম খুঁজুন">
+            <input type="text" id="game-search" placeholder="গেমের নাম দিয়ে সহজে খুঁজুন (যেমন: সাপ, ২০৪৮, ছুঁচো, কুইজ, বাবল)..." aria-label="গেম খুঁজুন">
             <button id="clear-search" class="clear-btn" style="display:none;" aria-label="মুছে ফেলুন">✕</button>
           </div>
-          <div class="category-tabs" role="tablist">
-            <button class="tab-btn active" data-category="all" role="tab">সব গেম</button>
-            <button class="tab-btn" data-category="quiz" role="tab">কুইজ</button>
-            <button class="tab-btn" data-category="board" role="tab">বোর্ড ও ক্লাসিক</button>
-            <button class="tab-btn" data-category="memory" role="tab">মেমোরি ও ব্রেন</button>
-            <button class="tab-btn" data-category="math" role="tab">গণিত</button>
+          <div class="category-tabs" role="tablist" aria-label="গেমের ক্যাটাগরি">
+            <button class="tab-btn active" data-category="all" role="tab">🌐 সব গেম</button>
+            <button class="tab-btn" data-category="arcade" role="tab">🕹️ অ্যাকশন ও আর্কেড</button>
+            <button class="tab-btn" data-category="quiz" role="tab">🏆 কুইজ</button>
+            <button class="tab-btn" data-category="board" role="tab">⚔️ বোর্ড ও পাজল</button>
+            <button class="tab-btn" data-category="memory" role="tab">🧠 মেমোরি ও ব্রেন</button>
+            <button class="tab-btn" data-category="math" role="tab">➕ গণিত</button>
           </div>
         </div>
 
-        <!-- Games Cards Grid -->
+        <!-- Games Cards Grid (All 6 Games) -->
         <div class="games-grid" id="games-grid">
           
           <!-- Game 1: Bengali Quiz -->
-          <article class="game-card" data-category="quiz" data-title="বাংলা কুইজ সাধারণ জ্ঞান">
+          <article class="game-card" data-category="quiz" data-title="বাংলা কুইজ সাধারণ জ্ঞান bengali quiz">
             <div class="game-card-banner quiz-banner">
               <span class="game-emoji">🏆</span>
               <span class="badge-tag">সাধারণ জ্ঞান</span>
             </div>
             <div class="game-card-body">
+              <div class="card-meta-top">
+                <span class="meta-cat">কুইজ ও লার্নিং</span>
+                <span class="meta-level">২৫টি প্রশ্ন</span>
+              </div>
               <h3 class="game-title">বাংলা কুইজ চ্যালেঞ্জ</h3>
-              <p class="game-desc">বাংলাদেশ ও বিশ্বের ইতিহাস, বিজ্ঞান, খেলাধুলা ও সাহিত্য নিয়ে ২৫টি চমৎকার কুইজ প্রশ্ন।</p>
+              <p class="game-desc">বাংলাদেশ ও বিশ্বের ইতিহাস, বিজ্ঞান, খেলাধুলা ও সাহিত্য নিয়ে ২৫টি চমৎকার কুইজ প্রশ্ন ও সঠিক উত্তরের ব্যাখ্যা।</p>
               <div class="game-features">
                 <span>⏱️ স্কোর ট্র্যাকিং</span>
                 <span>⭐ সঠিক উত্তর ব্যাখ্যা</span>
+                <span>👑 সেরা স্কোর</span>
               </div>
               <div class="card-footer">
                 <span class="best-score-preview" id="preview-best-quiz">সর্বোচ্চ স্কোর: <strong>০/২৫</strong></span>
@@ -136,17 +197,22 @@
           </article>
 
           <!-- Game 2: Tic-Tac-Toe -->
-          <article class="game-card" data-category="board" data-title="টিক ট্যাক টো কাটাকুটি">
+          <article class="game-card" data-category="board" data-title="টিক ট্যাক টো কাটাকুটি tic tac toe">
             <div class="game-card-banner ttt-banner">
               <span class="game-emoji">❌ ⭕</span>
               <span class="badge-tag">২ প্লেয়ার বা AI</span>
             </div>
             <div class="game-card-body">
+              <div class="card-meta-top">
+                <span class="meta-cat">বোর্ড গেম</span>
+                <span class="meta-level">২ মোড</span>
+              </div>
               <h3 class="game-title">টিক-ট্যাক-টো (কাটাকুটি)</h3>
-              <p class="game-desc">একই ফোনে বন্ধুর সাথে খেলুন অথবা বুদ্ধিমান কম্পিউটারের বিপক্ষে কাটাকুটি খেলে জয়ী হোন!</p>
+              <p class="game-desc">একই ফোনে বন্ধুর সাথে খেলুন অথবা বুদ্ধিমান কম্পিউটারের বিপক্ষে কাটাকুটি খেলে চ্যাম্পিয়ন হোন!</p>
               <div class="game-features">
                 <span>🤖 কম্পিউটার মোড</span>
                 <span>👥 ২ জন খেলোয়াড়</span>
+                <span>🏆 লাইভ স্কোরবোর্ড</span>
               </div>
               <div class="card-footer">
                 <span class="best-score-preview" id="preview-best-ttt">মোট জয়: <strong>০</strong></span>
@@ -158,17 +224,22 @@
           </article>
 
           <!-- Game 3: Memory Match -->
-          <article class="game-card" data-category="memory" data-title="মেমোরি কার্ড ম্যাচিং স্মৃতি পরীক্ষা">
+          <article class="game-card" data-category="memory" data-title="মেমোরি কার্ড ম্যাচিং স্মৃতি পরীক্ষা memory match">
             <div class="game-card-banner memory-banner">
               <span class="game-emoji">🎴</span>
               <span class="badge-tag">ব্রেন ট্রেইনার</span>
             </div>
             <div class="game-card-body">
+              <div class="card-meta-top">
+                <span class="meta-cat">স্মৃতি পরীক্ষা</span>
+                <span class="meta-level">১৬টি কার্ড</span>
+              </div>
               <h3 class="game-title">মেমোরি কার্ড ম্যাচিং</h3>
-              <p class="game-desc">কার্ডগুলো উল্টে জোড়া মেলান! কম চালে এবং দ্রুততম সময়ে সব কার্ড মিলিয়ে চ্যাম্পিয়ন হোন।</p>
+              <p class="game-desc">কার্ডগুলো উল্টে জোড়া মেলান! কম চালে এবং দ্রুততম সময়ে সব কার্ড মিলিয়ে নিজের স্মৃতিশক্তি পরীক্ষা করুন।</p>
               <div class="game-features">
-                <span>⚡ স্মৃতি পরীক্ষা</span>
+                <span>⚡ ৩ডি কার্ড ফ্লিপ</span>
                 <span>⏱️ সময় ও চাল ট্র্যাকার</span>
+                <span>🎯 ৮টি জোড়া</span>
               </div>
               <div class="card-footer">
                 <span class="best-score-preview" id="preview-best-memory">সেরা চাল: <strong>-</strong></span>
@@ -186,11 +257,16 @@
               <span class="badge-tag">ক্লাসিক হ্যান্ড গেম</span>
             </div>
             <div class="game-card-body">
+              <div class="card-meta-top">
+                <span class="meta-cat">ক্লাসিক গেম</span>
+                <span class="meta-level">ইনস্ট্যান্ট ফাইট</span>
+              </div>
               <h3 class="game-title">পাথর কাগজ কাঁচি</h3>
               <p class="game-desc">পাথর, কাগজ নাকি কাঁচি? কম্পিউটারের চাল অনুমান করে জয়ী হোন এবং ধারাবাহিক জয়ের রেকর্ড গড়ুন!</p>
               <div class="game-features">
                 <span>🔥 স্ট্রিক ট্র্যাকার</span>
-                <span>🤖 কম্পিউটার যুদ্ধ</span>
+                <span>🤖 অ্যানিমেটেড যুদ্ধ</span>
+                <span>🎉 ফলাফল ব্যাখ্যা</span>
               </div>
               <div class="card-footer">
                 <span class="best-score-preview" id="preview-best-rps">মোট জয়: <strong>০</strong></span>
@@ -208,11 +284,16 @@
               <span class="badge-tag">বুদ্ধির খেলা</span>
             </div>
             <div class="game-card-body">
+              <div class="card-meta-top">
+                <span class="meta-cat">লজিক ও ব্রেন</span>
+                <span class="meta-level">১-১০০ রেঞ্জ</span>
+              </div>
               <h3 class="game-title">সংখ্যা অনুমানের খেলা</h3>
-              <p class="game-desc">কম্পিউটার ১ থেকে ১০০ এর মধ্যে একটি গোপন সংখ্যা ভেবেছে। ইঙ্গিতের সাহায্যে সর্বনিম্ন চালে সংখ্যাটি খুঁজে বের করুন!</p>
+              <p class="game-desc">কম্পিউটার ১ থেকে ১০০ এর মধ্যে একটি গোপন সংখ্যা ভেবেছে। বড়/ছোট ইঙ্গিতের সাহায্যে সর্বনিম্ন চালে বের করুন!</p>
               <div class="game-features">
                 <span>🔼 বড়/ছোট ইঙ্গিত</span>
-                <span>🏆 সর্বনিম্ন চাল রেকর্ড</span>
+                <span>📜 পূর্ববর্তী চাল তালিকা</span>
+                <span>👑 সর্বনিম্ন চাল রেকর্ড</span>
               </div>
               <div class="card-footer">
                 <span class="best-score-preview" id="preview-best-guess">সেরা চাল: <strong>-</strong></span>
@@ -230,11 +311,16 @@
               <span class="badge-tag">স্পিড চ্যালেঞ্জ</span>
             </div>
             <div class="game-card-body">
+              <div class="card-meta-top">
+                <span class="meta-cat">গণিত ও গতি</span>
+                <span class="meta-level">৪৫ সেকেন্ড</span>
+              </div>
               <h3 class="game-title">গণিত স্পিড চ্যালেঞ্জ</h3>
               <p class="game-desc">৪৫ সেকেন্ডে দ্রুত যোগ, বিয়োগ ও গুণের সহজ সমাধান করুন। দ্রুত ও সঠিক হিসাব করে সর্বোচ্চ স্কোর গড়ুন!</p>
               <div class="game-features">
-                <span>⏱️ ৪৫ সেকেন্ড স্পিড</span>
+                <span>⏱️ স্পিড টাইমার</span>
                 <span>⭐ ৩টি লেভেল মোড</span>
+                <span>🔥 স্ট্রিক বোনাস</span>
               </div>
               <div class="card-footer">
                 <span class="best-score-preview" id="preview-best-math">সেরা স্কোর: <strong>০</strong></span>
@@ -245,23 +331,185 @@
             </div>
           </article>
 
+          <!-- Game 7: Snake Game (সাপের খেলা) -->
+          <article class="game-card" data-category="arcade" data-title="সাপের খেলা সাপ snake game arcade">
+            <div class="game-card-banner snake-banner">
+              <span class="game-emoji">🐍 🍎</span>
+              <span class="badge-tag">ক্লাসিক আর্কেড</span>
+            </div>
+            <div class="game-card-body">
+              <div class="card-meta-top">
+                <span class="meta-cat">অ্যাকশন ও আর্কেড</span>
+                <span class="meta-level">গতিশীল</span>
+              </div>
+              <h3 class="game-title">সাপের খেলা (Snake Game)</h3>
+              <p class="game-desc">সুস্বাদু লাল আপেল খেয়ে সাপকে লম্বা করুন! দেয়ালে কিংবা নিজের শরীরে ধাক্কা না খেয়ে সর্বোচ্চ স্কোর গড়ুন।</p>
+              <div class="game-features">
+                <span>🕹️ টাচ কন্ট্রোল ও ডি-প্যাড</span>
+                <span>🍎 গোল্ডেন বোনাস ফল</span>
+                <span>⏸️ পজ ও গতি নিয়ন্ত্রণ</span>
+              </div>
+              <div class="card-footer">
+                <span class="best-score-preview" id="preview-best-snake">সেরা স্কোর: <strong>০</strong></span>
+                <button class="btn btn-primary" onclick="launchGame('snake')">
+                  <span>খেলুন ▶</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 8: 2048 Puzzle (২০৪৮ পাজল) -->
+          <article class="game-card" data-category="board" data-title="২০৪৮ পাজল 2048 puzzle sliding number math">
+            <div class="game-card-banner p2048-banner">
+              <span class="game-emoji">🔢 🧩</span>
+              <span class="badge-tag">মস্তিষ্কের ধাঁধা</span>
+            </div>
+            <div class="game-card-body">
+              <div class="card-meta-top">
+                <span class="meta-cat">বোর্ড ও পাজল</span>
+                <span class="meta-level">৪x৪ গ্রিড</span>
+              </div>
+              <h3 class="game-title">২০৪৮ পাজল (2048)</h3>
+              <p class="game-desc">একই সংখ্যার টাইলস মিলিয়ে ২, ৪, ৮... করে ২০৪৮ বানিয়ে চ্যাম্পিয়ন হোন! প্রতিটি সোয়াইপে বুদ্ধি ও দূরদর্শিতা পরীক্ষা করুন।</p>
+              <div class="game-features">
+                <span>👆 সোয়াইপ ও টাচ বোতাম</span>
+                <span>🎯 ২০৪৮ টাইল টার্গেট</span>
+                <span>👑 সেরা পয়েন্ট ট্র্যাকার</span>
+              </div>
+              <div class="card-footer">
+                <span class="best-score-preview" id="preview-best-2048">সেরা স্কোর: <strong>০</strong></span>
+                <button class="btn btn-secondary" onclick="launchGame('2048')">
+                  <span>খেলুন ▶</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 9: Whack-a-Mole (ছুঁচো ধরা খেলা) -->
+          <article class="game-card" data-category="arcade" data-title="ছুঁচো ধরা খেলা ছুঁচো মারো whack a mole arcade mole">
+            <div class="game-card-banner whack-banner">
+              <span class="game-emoji">🐹 🔨</span>
+              <span class="badge-tag">রিফ্লেক্স চ্যালেঞ্জ</span>
+            </div>
+            <div class="game-card-body">
+              <div class="card-meta-top">
+                <span class="meta-cat">অ্যাকশন ও স্পিড</span>
+                <span class="meta-level">৩০ সেকেন্ড</span>
+              </div>
+              <h3 class="game-title">ছুঁচো ধরা খেলা (Whack-a-Mole)</h3>
+              <p class="game-desc">গর্ত থেকে ছুঁচো মাথা তুললেই দ্রুত ট্যাপ করে আঘাত করুন! ৩০ সেকেন্ডে যত বেশি সম্ভব ছুঁচো ধরে রেকর্ড স্কোর গড়ুন।</p>
+              <div class="game-features">
+                <span>⏱️ ৩০ সেকেন্ড টাইমার</span>
+                <span>⭐ গোল্ডেন ছুঁচো বোনাস</span>
+                <span>⚡ সুপার ফাস্ট রিফ্লেক্স</span>
+              </div>
+              <div class="card-footer">
+                <span class="best-score-preview" id="preview-best-whack">সেরা স্কোর: <strong>০</strong></span>
+                <button class="btn btn-warning" onclick="launchGame('whack')">
+                  <span>খেলুন ▶</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 10: 15 Number Sliding Puzzle (সংখ্যা সাজানোর ধাঁধা) -->
+          <article class="game-card" data-category="board" data-title="সংখ্যা সাজানোর ধাঁধা ১৫ পাজল 15 number sliding puzzle">
+            <div class="game-card-banner numpuzzle-banner">
+              <span class="game-emoji">🧩 🔢</span>
+              <span class="badge-tag">লজিক পাজল</span>
+            </div>
+            <div class="game-card-body">
+              <div class="card-meta-top">
+                <span class="meta-cat">লজিক ও ব্রেন</span>
+                <span class="meta-level">১৫ টাইলস</span>
+              </div>
+              <h3 class="game-title">সংখ্যা সাজানোর ধাঁধা (15 Puzzle)</h3>
+              <p class="game-desc">এলোমেলো টাইলসগুলো স্লাইড করে ১ থেকে ১৫ পর্যন্ত ক্রমানুসারে সাজান। সর্বনিম্ন চালে এবং কম সময়ে ধাঁধা সমাধান করুন!</p>
+              <div class="game-features">
+                <span>🔄 ১০০% সমাধানযোগ্য শাফেল</span>
+                <span>⏱️ চাল ও সময় ট্র্যাকার</span>
+                <span>🧠 মেধা ও যুক্তি বিকাশ</span>
+              </div>
+              <div class="card-footer">
+                <span class="best-score-preview" id="preview-best-numpuzzle">সেরা চাল: <strong>-</strong></span>
+                <button class="btn btn-purple" onclick="launchGame('numpuzzle')">
+                  <span>খেলুন ▶</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 11: Bubble Shooter (বাবল শুটার) -->
+          <article class="game-card" data-category="arcade" data-title="বাবল শুটার বাবল বাস্টার bubble shooter arcade match">
+            <div class="game-card-banner bubble-banner">
+              <span class="game-emoji">🫧 🎯</span>
+              <span class="badge-tag">রঙিন আর্কেড</span>
+            </div>
+            <div class="game-card-body">
+              <div class="card-meta-top">
+                <span class="meta-cat">অ্যাকশন ও নিশানা</span>
+                <span class="meta-level">ম্যাচ-৩ বাবল</span>
+              </div>
+              <h3 class="game-title">বাবল শুটার (Bubble Shooter)</h3>
+              <p class="game-desc">একই রঙের ৩ বা ততোধিক বাবল নিশানা করে ফুটিয়ে দিন! বাবলগুলো নিচে পৌঁছানোর আগেই বোর্ড ক্লিয়ার করে বিশাল স্কোর অর্জন করুন।</p>
+              <div class="game-features">
+                <span>🎯 টাচ নিশানা ও বাউন্স</span>
+                <span>💥 ক্লাস্টার বাস্ট বোনাস</span>
+                <span>⏸️ পজ ও রিজুম সুবিধা</span>
+              </div>
+              <div class="card-footer">
+                <span class="best-score-preview" id="preview-best-bubble">সেরা স্কোর: <strong>০</strong></span>
+                <button class="btn btn-cyan" onclick="launchGame('bubble')">
+                  <span>খেলুন ▶</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 12: Color Memory Challenge (রঙের মেমোরি চ্যালেঞ্জ) -->
+          <article class="game-card" data-category="memory" data-title="রঙের মেমোরি চ্যালেঞ্জ সাইমন সিকোয়েন্স color memory simon">
+            <div class="game-card-banner colormem-banner">
+              <span class="game-emoji">🎨 💡</span>
+              <span class="badge-tag">সুর ও স্মৃতি</span>
+            </div>
+            <div class="game-card-body">
+              <div class="card-meta-top">
+                <span class="meta-cat">স্মৃতি ও মনোযোগ</span>
+                <span class="meta-level">ক্রমবর্ধনশীল</span>
+              </div>
+              <h3 class="game-title">রঙের মেমোরি চ্যালেঞ্জ</h3>
+              <p class="game-desc">রঙ ও সুরের ক্রম মনে রেখে ঠিক একইভাবে ট্যাপ করুন! প্রতিটি রাউন্ডে এক ধাপ করে সুরের ধারা বাড়বে।</p>
+              <div class="game-features">
+                <span>🎵 মিষ্টি মিউজিক্যাল টোন</span>
+                <span>💡 লাইট-আপ অ্যানিমেশন</span>
+                <span>🔥 সর্বোচ্চ স্ট্রিক রেকর্ড</span>
+              </div>
+              <div class="card-footer">
+                <span class="best-score-preview" id="preview-best-colormem">সর্বোচ্চ রাউন্ড: <strong>০</strong></span>
+                <button class="btn btn-accent" onclick="launchGame('colormem')">
+                  <span>খেলুন ▶</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
         </div>
 
         <div id="no-results" class="no-results" style="display:none;">
           <span>🔍</span>
-          <p>কোনো গেম খুঁজে পাওয়া যায়নি! অন্য নামে অনুসন্ধান করুন।</p>
+          <p>কোনো গেম খুঁজে পাওয়া যায়নি! অন্য কোনো শব্দ দিয়ে অনুসন্ধান করুন।</p>
           <button class="btn btn-outline" onclick="resetSearch()">সব গেম দেখুন</button>
         </div>
       </section>
 
-      <!-- Why Bangla Fun Games section -->
+      <!-- Why Bangla Fun Games Features Section -->
       <section class="section-info">
         <h3 class="info-title">💡 কেন বাংলা ফান গেমস সেরা?</h3>
         <div class="info-grid">
           <div class="info-box">
             <span class="info-icon">📱</span>
-            <h4>মোবাইল ফ্রেন্ডলি</h4>
-            <p>যেকোনো সাধারণ স্মার্টফোনে কোনো ল্যাগ ছাড়াই সাবলীলভাবে চলে।</p>
+            <h4>মোবাইল-বান্ধব নকশা</h4>
+            <p>যেকোনো সাধারণ স্মার্টফোনে কোনো ল্যাগ ছাড়াই সাবলীল ও মসৃণভাবে চলে।</p>
           </div>
           <div class="info-box">
             <span class="info-icon">🇧🇩</span>
@@ -270,10 +518,21 @@
           </div>
           <div class="info-box">
             <span class="info-icon">🔒</span>
-            <h4>১০০% নিরাপদ ও ফ্রি</h4>
-            <p>কোনো সাইন-আপ বা পেমেন্ট নেই। ডাটা ডিভাইসেই সংরক্ষিত থাকে।</p>
+            <h4>১০০% নিরাপদ ও সুরক্ষিত</h4>
+            <p>কোনো সাইন-আপ বা পাসওয়ার্ড নেই। সব ডাটা আপনার ডিভাইসেই সংরক্ষিত থাকে।</p>
           </div>
         </div>
+      </section>
+
+      <!-- Quick Platform Actions Banner -->
+      <section class="quick-banner">
+        <div class="quick-banner-content">
+          <h3>📢 আপনার কোনো মতামত বা পরামর্শ আছে?</h3>
+          <p>আমাদের গেম সম্পর্কে আপনার মতামত জানান অথবা নতুন কোনো গেমের আইডিয়া থাকলে শেয়ার করুন!</p>
+        </div>
+        <button class="btn btn-primary" onclick="openContactModal()">
+          <span>✉️ যোগাযোগ করুন</span>
+        </button>
       </section>
     </section>
 
@@ -293,7 +552,7 @@
       <div id="help-quiz" class="help-card" style="display:none;">
         <h4>📝 কুইজ খেলার নিয়ম:</h4>
         <p>• প্রতিটি প্রশ্নের জন্য ৪টি বিকল্প থাকবে, সঠিকটি বেছে নিন।</p>
-        <p>• সঠিক উত্তর দিলে পয়েন্ট পাবেন এবং তাৎক্ষণিক ফলাফল দেখতে পাবেন।</p>
+        <p>• সঠিক উত্তর দিলে পয়েন্ট পাবেন এবং তাৎক্ষণিক ফলাফল ও ব্যাখ্যা দেখতে পাবেন।</p>
         <p>• সব প্রশ্ন শেষে আপনার সর্বমোট স্কোর ও পারফরম্যান্স বিশ্লেষণ দেখতে পাবেন।</p>
       </div>
 
@@ -844,49 +1103,566 @@
       </div>
     </section>
 
+    <!-- ==================== GAME 7: SNAKE GAME (সাপের খেলা) ==================== -->
+    <section id="view-snake" class="app-view">
+      <div class="view-header">
+        <button class="back-btn" onclick="navigateTo('home')">
+          <span>← গেম তালিকায় ফিরুন</span>
+        </button>
+        <h2 class="view-heading">🐍 সাপের খেলা (Snake Game)</h2>
+        <button class="help-btn" onclick="toggleHelp('snake')">
+          <span>❓ নিয়ম</span>
+        </button>
+      </div>
+
+      <!-- Snake Help -->
+      <div id="help-snake" class="help-card" style="display:none;">
+        <h4>📝 খেলার নিয়মাবলী:</h4>
+        <p>• অন-স্ক্রিন তীর চিহ্ন বোতাম অথবা সোয়াইপ করে সাপকে পরিচালনা করুন।</p>
+        <p>• লাল আপেল খেলে <strong>১০ পয়েন্ট</strong> এবং সাপ ১ ঘর লম্বা হয়।</p>
+        <p>• মাঝে মাঝে আসা গোল্ডেন আপেল খেলে <strong>৩০ বোনাস পয়েন্ট</strong> পাবেন!</p>
+        <p>• নিজের শরীরে বা দেয়ালে ধাক্কা খেলে খেলা শেষ হবে।</p>
+      </div>
+
+      <div class="snake-container">
+        <!-- Snake Stats Bar -->
+        <div class="game-stats-bar">
+          <div class="gstat-item">
+            <span class="g-lbl">বর্তমান স্কোর</span>
+            <span class="g-val" id="snake-score-val">০</span>
+          </div>
+          <div class="gstat-item">
+            <span class="g-lbl">সর্বোচ্চ স্কোর</span>
+            <span class="g-val" id="snake-best-val">০</span>
+          </div>
+          <div class="gstat-item">
+            <span class="g-lbl">খাওয়া আপেল</span>
+            <span class="g-val" id="snake-apple-val">০টি</span>
+          </div>
+        </div>
+
+        <!-- Snake Canvas Wrapper -->
+        <div class="canvas-wrapper">
+          <canvas id="snake-canvas" width="360" height="360"></canvas>
+          <div id="snake-overlay" class="game-canvas-overlay" style="display:none;">
+            <div class="overlay-box">
+              <span class="overlay-icon" id="snake-overlay-icon">💥</span>
+              <h3 id="snake-overlay-title">খেলা সমাপ্ত!</h3>
+              <p id="snake-overlay-desc">দেয়ালে বা নিজের গায়ে ধাক্কা লেগেছে।</p>
+              <button class="btn btn-primary btn-large" onclick="restartSnakeGame()">
+                <span>🔄 আবার খেলুন</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Touch D-Pad -->
+        <div class="touch-dpad">
+          <div class="dpad-row dpad-row-top">
+            <button class="dpad-btn" id="dpad-up" aria-label="উপরে">⬆️</button>
+          </div>
+          <div class="dpad-row dpad-row-mid">
+            <button class="dpad-btn" id="dpad-left" aria-label="বামে">⬅️</button>
+            <div class="dpad-center">🎮</div>
+            <button class="dpad-btn" id="dpad-right" aria-label="ডানে">➡️</button>
+          </div>
+          <div class="dpad-row dpad-row-bottom">
+            <button class="dpad-btn" id="dpad-down" aria-label="নিচে">⬇️</button>
+          </div>
+        </div>
+
+        <!-- Snake Controls -->
+        <div class="game-controls">
+          <button class="btn btn-outline" id="snake-pause-btn" onclick="togglePauseSnake()">
+            <span id="snake-pause-text">⏸️ বিরতি</span>
+          </button>
+          <button class="btn btn-primary" onclick="restartSnakeGame()">
+            <span>🔄 নতুন করে খেলুন</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GAME 8: 2048 PUZZLE (২০৪৮ পাজল) ==================== -->
+    <section id="view-2048" class="app-view">
+      <div class="view-header">
+        <button class="back-btn" onclick="navigateTo('home')">
+          <span>← গেম তালিকায় ফিরুন</span>
+        </button>
+        <h2 class="view-heading">🔢 ২০৪৮ পাজল (2048 Puzzle)</h2>
+        <button class="help-btn" onclick="toggleHelp('2048')">
+          <span>❓ নিয়ম</span>
+        </button>
+      </div>
+
+      <!-- 2048 Help -->
+      <div id="help-2048" class="help-card" style="display:none;">
+        <h4>📝 খেলার নিয়মাবলী:</h4>
+        <p>• অন-স্ক্রিন তীর বাটন অথবা স্ক্রিনে সোয়াইপ করে সব টাইলস এক সাথে সরান।</p>
+        <p>• একই সংখ্যার দুটি টাইলস একত্রিত হলে তারা যুক্ত হয়ে দ্বিগুণ হয় (যেমন: ২+২=৪, ৪+৪=৮)।</p>
+        <p>• লক্ষ্য হলো <strong>২০৪৮ টাইলস</strong> তৈরি করা! নতুন চাল দেওয়ার জায়গা না থাকলে খেলা শেষ।</p>
+      </div>
+
+      <div class="p2048-container">
+        <!-- 2048 Stats -->
+        <div class="game-stats-bar">
+          <div class="gstat-item">
+            <span class="g-lbl">বর্তমান স্কোর</span>
+            <span class="g-val" id="p2048-score-val">০</span>
+          </div>
+          <div class="gstat-item">
+            <span class="g-lbl">সর্বোচ্চ স্কোর</span>
+            <span class="g-val" id="p2048-best-val">০</span>
+          </div>
+          <div class="gstat-item">
+            <span class="g-lbl">টার্গেট</span>
+            <span class="g-val highlight-val">২০৪৮</span>
+          </div>
+        </div>
+
+        <!-- 2048 Grid Board -->
+        <div class="p2048-board-wrapper">
+          <div class="p2048-grid" id="p2048-grid">
+            <!-- 16 cells rendered dynamically -->
+          </div>
+          <div id="p2048-overlay" class="game-canvas-overlay" style="display:none;">
+            <div class="overlay-box">
+              <span class="overlay-icon" id="p2048-overlay-icon">🏆</span>
+              <h3 id="p2048-overlay-title">দারুণ জয়!</h3>
+              <p id="p2048-overlay-desc">আপনি ২০৪৮ টাইলস তৈরি করেছেন!</p>
+              <div class="overlay-buttons">
+                <button class="btn btn-secondary" onclick="restart2048()">
+                  <span>🔄 নতুন গেম</span>
+                </button>
+                <button class="btn btn-outline" id="p2048-continue-btn" onclick="continue2048()" style="display:none;">
+                  <span>চালিয়ে যান ▶</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Touch Direction Controls -->
+        <div class="touch-dpad">
+          <div class="dpad-row dpad-row-top">
+            <button class="dpad-btn" onclick="move2048('up')" aria-label="উপরে">⬆️</button>
+          </div>
+          <div class="dpad-row dpad-row-mid">
+            <button class="dpad-btn" onclick="move2048('left')" aria-label="বামে">⬅️</button>
+            <div class="dpad-center">🧩</div>
+            <button class="dpad-btn" onclick="move2048('right')" aria-label="ডানে">➡️</button>
+          </div>
+          <div class="dpad-row dpad-row-bottom">
+            <button class="dpad-btn" onclick="move2048('down')" aria-label="নিচে">⬇️</button>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="game-controls">
+          <button class="btn btn-secondary" onclick="restart2048()">
+            <span>🔄 নতুন গেম শুরু</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GAME 9: WHACK-A-MOLE (ছুঁচো ধরা খেলা) ==================== -->
+    <section id="view-whack" class="app-view">
+      <div class="view-header">
+        <button class="back-btn" onclick="navigateTo('home')">
+          <span>← গেম তালিকায় ফিরুন</span>
+        </button>
+        <h2 class="view-heading">🐹🔨 ছুঁচো ধরা খেলা (Whack-a-Mole)</h2>
+        <button class="help-btn" onclick="toggleHelp('whack')">
+          <span>❓ নিয়ম</span>
+        </button>
+      </div>
+
+      <!-- Whack Help -->
+      <div id="help-whack" class="help-card" style="display:none;">
+        <h4>📝 খেলার নিয়মাবলী:</h4>
+        <p>• প্রতিটি রাউন্ডে সময় থাকবে <strong>৩০ সেকেন্ড</strong>।</p>
+        <p>• গর্ত থেকে ছুঁচো মাথা তুললে সাথে সাথে ট্যাপ করুন!</p>
+        <p>• সাধারণ ছুঁচোতে <strong>১০ পয়েন্ট</strong> এবং চকচকে গোল্ডেন ছুঁচোতে <strong>৩০ পয়েন্ট</strong> পাবেন।</p>
+        <p>• সময় শেষ হওয়ার আগে যত বেশি সম্ভব ছুঁচো ধরে রেকর্ড গড়ুন!</p>
+      </div>
+
+      <div class="whack-container">
+        <!-- Whack Stats Bar -->
+        <div class="game-stats-bar">
+          <div class="gstat-item timer-item">
+            <span class="g-lbl">অবশিষ্ট সময়</span>
+            <span class="g-val" id="whack-timer-val">৩০ সে.</span>
+          </div>
+          <div class="gstat-item">
+            <span class="g-lbl">মোট স্কোর</span>
+            <span class="g-val" id="whack-score-val">০</span>
+          </div>
+          <div class="gstat-item">
+            <span class="g-lbl">সর্বোচ্চ স্কোর</span>
+            <span class="g-val" id="whack-best-val">০</span>
+          </div>
+        </div>
+
+        <!-- 3x3 Mole Grid -->
+        <div class="whack-grid" id="whack-grid">
+          <!-- 9 holes rendered dynamically -->
+        </div>
+
+        <!-- Result Card -->
+        <div class="result-card" id="whack-result-card" style="display:none;">
+          <div class="result-trophy">⏱️</div>
+          <h3 class="result-title">সময় সমাপ্ত!</h3>
+          <p class="result-subtitle" id="whack-result-greeting">দারুণ স্পিড দেখিয়েছেন!</p>
+
+          <div class="result-score-circle">
+            <span class="score-large" id="whack-final-score">০</span>
+            <span class="score-total">পয়েন্ট</span>
+          </div>
+
+          <div class="result-stats-grid">
+            <div class="res-stat">
+              <span class="res-stat-icon">🔨</span>
+              <span class="res-stat-val" id="whack-final-hits">০টি</span>
+              <span class="res-stat-name">সফল আঘাত</span>
+            </div>
+            <div class="res-stat">
+              <span class="res-stat-icon">👑</span>
+              <span class="res-stat-val" id="whack-final-best">০</span>
+              <span class="res-stat-name">সর্বোচ্চ রেকর্ড</span>
+            </div>
+          </div>
+
+          <div class="result-actions">
+            <button class="btn btn-warning btn-large" onclick="restartWhackGame()">
+              <span>🔄 আবার চ্যালেঞ্জ নিন</span>
+            </button>
+            <button class="btn btn-outline" onclick="navigateTo('home')">
+              <span>🏠 গেম তালিকা</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="game-controls" id="whack-active-controls">
+          <button class="btn btn-outline" id="whack-pause-btn" onclick="togglePauseWhack()">
+            <span id="whack-pause-text">⏸️ বিরতি</span>
+          </button>
+          <button class="btn btn-warning" onclick="restartWhackGame()">
+            <span>🔄 নতুন রাউন্ড শুরু</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GAME 10: 15 NUMBER PUZZLE (সংখ্যা সাজানোর ধাঁধা) ==================== -->
+    <section id="view-numpuzzle" class="app-view">
+      <div class="view-header">
+        <button class="back-btn" onclick="navigateTo('home')">
+          <span>← গেম তালিকায় ফিরুন</span>
+        </button>
+        <h2 class="view-heading">🧩 সংখ্যা সাজানোর ধাঁধা (15 Puzzle)</h2>
+        <button class="help-btn" onclick="toggleHelp('numpuzzle')">
+          <span>❓ নিয়ম</span>
+        </button>
+      </div>
+
+      <!-- Number Puzzle Help -->
+      <div id="help-numpuzzle" class="help-card" style="display:none;">
+        <h4>📝 খেলার নিয়মাবলী:</h4>
+        <p>• খালি ঘরের পাশের টাইলসে ট্যাপ করলেই সেটি খালি ঘরে সরে যাবে।</p>
+        <p>• টাইলসগুলোকে ক্রমানুসারে <strong>১ থেকে ১৫</strong> পর্যন্ত সাজাতে হবে।</p>
+        <p>• শেষ ঘরটি ফাঁকা থাকবে। কম চালে এবং দ্রুততম সময়ে সমাধান করার চেষ্টা করুন!</p>
+      </div>
+
+      <div class="numpuzzle-container">
+        <!-- Number Puzzle Stats -->
+        <div class="game-stats-bar">
+          <div class="gstat-item">
+            <span class="g-lbl">মোট চাল</span>
+            <span class="g-val" id="numpuzzle-moves-val">০</span>
+          </div>
+          <div class="gstat-item">
+            <span class="g-lbl">ব্যয়িত সময়</span>
+            <span class="g-val" id="numpuzzle-time-val">০০:০০</span>
+          </div>
+          <div class="gstat-item">
+            <span class="g-lbl">সেরা রেকর্ড</span>
+            <span class="g-val" id="numpuzzle-best-val">-</span>
+          </div>
+        </div>
+
+        <!-- 4x4 Sliding Board -->
+        <div class="numpuzzle-board-wrapper">
+          <div class="numpuzzle-grid" id="numpuzzle-grid">
+            <!-- 16 tiles rendered dynamically -->
+          </div>
+
+          <div id="numpuzzle-overlay" class="game-canvas-overlay" style="display:none;">
+            <div class="overlay-box">
+              <span class="overlay-icon">🎉</span>
+              <h3>অভিনন্দন! আপনি জিতেছেন!</h3>
+              <p id="numpuzzle-win-details">ধাঁধাটি সফলভাবে সাজানো হয়েছে।</p>
+              <button class="btn btn-purple btn-large" onclick="restartNumPuzzle()">
+                <span>🔄 নতুন করে খেলুন</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="game-controls">
+          <button class="btn btn-purple" onclick="restartNumPuzzle()">
+            <span>🔄 নতুন করে শাফেল করুন</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GAME 11: BUBBLE SHOOTER (বাবল শুটার) ==================== -->
+    <section id="view-bubble" class="app-view">
+      <div class="view-header">
+        <button class="back-btn" onclick="navigateTo('home')">
+          <span>← গেম তালিকায় ফিরুন</span>
+        </button>
+        <h2 class="view-heading">🫧 বাবল শুটার (Bubble Shooter)</h2>
+        <button class="help-btn" onclick="toggleHelp('bubble')">
+          <span>❓ নিয়ম</span>
+        </button>
+      </div>
+
+      <!-- Bubble Help -->
+      <div id="help-bubble" class="help-card" style="display:none;">
+        <h4>📝 খেলার নিয়মাবলী:</h4>
+        <p>• স্ক্রিনে ট্যাপ করে অথবা ড্র্যাগ করে নিশানা নির্ধারণ করুন এবং বাবল ছুঁড়ুন।</p>
+        <p>• একই রঙের <strong>৩টি বা ততোধিক বাবল</strong> একত্রিত হলে সেগুলো ফেটে যাবে।</p>
+        <p>• বাবলগুলো যেন নিচের সীমানা রেখা স্পর্শ না করে! সব বাবল ক্লিয়ার করে সর্বোচ্চ পয়েন্ট নিন।</p>
+      </div>
+
+      <div class="bubble-container">
+        <!-- Bubble Stats Bar -->
+        <div class="game-stats-bar">
+          <div class="gstat-item">
+            <span class="g-lbl">মোট স্কোর</span>
+            <span class="g-val" id="bubble-score-val">০</span>
+          </div>
+          <div class="gstat-item">
+            <span class="g-lbl">সর্বোচ্চ স্কোর</span>
+            <span class="g-val" id="bubble-best-val">০</span>
+          </div>
+          <div class="gstat-item">
+            <span class="g-lbl">পরবর্তী বাবল</span>
+            <span class="g-val next-bubble-preview" id="bubble-next-preview">🫧</span>
+          </div>
+        </div>
+
+        <!-- Bubble Canvas Area -->
+        <div class="canvas-wrapper">
+          <canvas id="bubble-canvas" width="360" height="460"></canvas>
+          <div id="bubble-overlay" class="game-canvas-overlay" style="display:none;">
+            <div class="overlay-box">
+              <span class="overlay-icon" id="bubble-overlay-icon">💥</span>
+              <h3 id="bubble-overlay-title">খেলা শেষ!</h3>
+              <p id="bubble-overlay-desc">বাবল সীমানা পার হয়ে গেছে।</p>
+              <button class="btn btn-cyan btn-large" onclick="restartBubbleGame()">
+                <span>🔄 আবার খেলুন</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="game-controls">
+          <button class="btn btn-outline" id="bubble-pause-btn" onclick="togglePauseBubble()">
+            <span id="bubble-pause-text">⏸️ বিরতি</span>
+          </button>
+          <button class="btn btn-cyan" onclick="restartBubbleGame()">
+            <span>🔄 নতুন খেলা শুরু</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GAME 12: COLOR MEMORY CHALLENGE (রঙের মেমোরি) ==================== -->
+    <section id="view-colormem" class="app-view">
+      <div class="view-header">
+        <button class="back-btn" onclick="navigateTo('home')">
+          <span>← গেম তালিকায় ফিরুন</span>
+        </button>
+        <h2 class="view-heading">🎨 রঙের মেমোরি চ্যালেঞ্জ (Color Memory)</h2>
+        <button class="help-btn" onclick="toggleHelp('colormem')">
+          <span>❓ নিয়ম</span>
+        </button>
+      </div>
+
+      <!-- Color Memory Help -->
+      <div id="help-colormem" class="help-card" style="display:none;">
+        <h4>📝 খেলার নিয়মাবলী:</h4>
+        <p>• খেলা শুরু হলে রঙের প্যাডগুলো একের পর এক আলো জ্বালবে এবং সুর বাজাবে।</p>
+        <p>• রঙের এই ক্রমটি মনোযোগ দিয়ে লক্ষ্য করুন।</p>
+        <p>• আলো জ্বলা শেষ হলে ঠিক একই ক্রমানুসারে প্যাডগুলোতে ট্যাপ করুন।</p>
+        <p>• প্রতিটি সফল রাউন্ডে ক্রমটি এক ধাপ করে বড় হবে। দেখি আপনি কত রাউন্ড পর্যন্ত যেতে পারেন!</p>
+      </div>
+
+      <div class="colormem-container">
+        <!-- Color Memory Stats Bar -->
+        <div class="game-stats-bar">
+          <div class="gstat-item">
+            <span class="g-lbl">বর্তমান রাউন্ড</span>
+            <span class="g-val highlight-val" id="colormem-round-val">১</span>
+          </div>
+          <div class="gstat-item">
+            <span class="g-lbl">সর্বোচ্চ রেকর্ড</span>
+            <span class="g-val" id="colormem-best-val">০</span>
+          </div>
+        </div>
+
+        <!-- Game Status Toast -->
+        <div class="colormem-status-box" id="colormem-status-box">
+          <span id="colormem-status-text">▶️ "শুরু করুন" বাটনে চাপ দিন</span>
+        </div>
+
+        <!-- 4 Simon-style Color Pads in Circle / Rounded Grid -->
+        <div class="colormem-arena">
+          <div class="colormem-pad pad-green" id="cpad-0" onclick="handleColorPadClick(0)">
+            <span class="cpad-label">সবুজ</span>
+          </div>
+          <div class="colormem-pad pad-red" id="cpad-1" onclick="handleColorPadClick(1)">
+            <span class="cpad-label">লাল</span>
+          </div>
+          <div class="colormem-pad pad-yellow" id="cpad-2" onclick="handleColorPadClick(2)">
+            <span class="cpad-label">হলুদ</span>
+          </div>
+          <div class="colormem-pad pad-blue" id="cpad-3" onclick="handleColorPadClick(3)">
+            <span class="cpad-label">নীল</span>
+          </div>
+          <div class="colormem-center-hub">
+            <span id="colormem-hub-score">১</span>
+          </div>
+        </div>
+
+        <!-- Result Card -->
+        <div class="result-card" id="colormem-result-card" style="display:none;">
+          <div class="result-trophy">⚡</div>
+          <h3 class="result-title">ক্রমটি ভুল হয়েছে!</h3>
+          <p class="result-subtitle" id="colormem-result-greeting">ভালো স্মৃতিশক্তির পরিচয় দিয়েছেন!</p>
+
+          <div class="result-score-circle">
+            <span class="score-large" id="colormem-final-round">০</span>
+            <span class="score-total">রাউন্ড</span>
+          </div>
+
+          <div class="result-actions">
+            <button class="btn btn-accent btn-large" onclick="restartColorMemory()">
+              <span>🔄 আবার চেষ্টা করুন</span>
+            </button>
+            <button class="btn btn-outline" onclick="navigateTo('home')">
+              <span>🏠 গেম তালিকা</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="game-controls" id="colormem-active-controls">
+          <button class="btn btn-accent btn-large" id="colormem-start-btn" onclick="startColorMemory()">
+            <span>▶️ খেলা শুরু করুন</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- ==================== ABOUT / INFO MODAL ==================== -->
-  <div id="about-modal" class="modal-backdrop" style="display:none;">
+  <!-- ==================== PROFESSIONAL FOOTER ==================== -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-col brand-col">
+        <div class="footer-brand" onclick="navigateTo('home')">
+          <span class="brand-icon">🎮</span>
+          <span class="brand-title">বাংলা ফান গেমস</span>
+        </div>
+        <p class="footer-desc">বাংলা ভাষাভাষী সকল গেমারদের জন্য উন্মুক্ত, নিরাপদ এবং সম্পূর্ণ ফ্রি অনলাইন গেমিং পোর্টাল। কোনো বিজ্ঞাপন বা পেমেন্ট ছাড়াই সরাসরি ব্রাউজারে খেলুন।</p>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">দ্রুত নেভিগেশন</h4>
+        <ul class="footer-links">
+          <li><a href="#games-section" onclick="navigateTo('home');">হোম ও গেম তালিকা</a></li>
+          <li><button onclick="openAboutModal()" class="footer-link-btn">আমাদের সম্পর্কে</button></li>
+          <li><button onclick="openContactModal()" class="footer-link-btn">যোগাযোগ ও মতামত</button></li>
+          <li><button onclick="openPrivacyModal()" class="footer-link-btn">গোপনীয়তা নীতি</button></li>
+          <li><button onclick="openPwaGuideModal()" class="footer-link-btn">📲 অ্যাপ ইনস্টল নির্দেশিকা (PWA)</button></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">জনপ্রিয় গেমস</h4>
+        <ul class="footer-links">
+          <li><button onclick="launchGame('snake')" class="footer-link-btn">সাপের খেলা (Snake)</button></li>
+          <li><button onclick="launchGame('2048')" class="footer-link-btn">২০৪৮ পাজল (2048)</button></li>
+          <li><button onclick="launchGame('whack')" class="footer-link-btn">ছুঁচো ধরা খেলা</button></li>
+          <li><button onclick="launchGame('bubble')" class="footer-link-btn">বাবল শুটার</button></li>
+          <li><button onclick="launchGame('numpuzzle')" class="footer-link-btn">১৫ সংখ্যা পাজল</button></li>
+          <li><button onclick="launchGame('colormem')" class="footer-link-btn">রঙের মেমোরি</button></li>
+          <li><button onclick="launchGame('quiz')" class="footer-link-btn">বাংলা কুইজ চ্যালেঞ্জ</button></li>
+          <li><button onclick="launchGame('tictactoe')" class="footer-link-btn">কাটাকুটি (Tic-Tac-Toe)</button></li>
+          <li><button onclick="launchGame('rps')" class="footer-link-btn">পাথর কাগজ কাঁচি</button></li>
+          <li><button onclick="launchGame('math')" class="footer-link-btn">গণিত স্পিড চ্যালেঞ্জ</button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© ২০২৬ বাংলা ফান গেমস (Bangla Fun Games) • সর্বস্বত্ব সংরক্ষিত।</p>
+      <p class="footer-made-with">নির্মিত ❤️ বাংলা ভাষাভাষী সকল গেমপ্রেমীদের জন্য</p>
+    </div>
+  </footer>
+
+  <!-- ==================== MODAL 1: ABOUT (পরিচিতি) ==================== -->
+  <div id="about-modal" class="modal-backdrop" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="about-title">
     <div class="modal-card about-modal-card">
       <div class="modal-top">
-        <h3 class="modal-title">ℹ️ বাংলা ফান গেমস সম্পর্কে</h3>
+        <h3 class="modal-title" id="about-title">ℹ️ বাংলা ফান গেমস সম্পর্কে</h3>
         <button class="close-x" onclick="closeAboutModal()" aria-label="বন্ধ করুন">✕</button>
       </div>
       
       <div class="about-content">
-        <p><strong>বাংলা ফান গেমস (Bangla Fun Games)</strong> একটি সম্পূর্ণ ফ্রি, আধুনিক ও মোবাইল-বান্ধব অনলাইন গেমিং পোর্টাল। এতে রয়েছে ৬টি দারুণ শিক্ষামূলক ও মজার গেম।</p>
+        <p><strong>বাংলা ফান গেমস (Bangla Fun Games)</strong> একটি আধুনিক, শিক্ষামূলক ও বিনোদনমূলক উন্মুক্ত অনলাইন গেমিং পোর্টাল।</p>
         
         <div class="about-feature-list">
           <div class="a-feat">
             <span class="a-icon">✨</span>
             <div>
               <strong>জিরো খরচ ও ওপেন টেকনোলজি:</strong>
-              <p>এটি শুধুমাত্র HTML5, CSS3 ও Vanilla JavaScript দিয়ে তৈরি। কোনো পেইড API বা ডাটাবেজের প্রয়োজন নেই।</p>
+              <p>এটি সম্পূর্ণ পিওর HTML5, CSS3 ও Vanilla JavaScript দিয়ে তৈরি। কোনো পেইড API বা ভারী ডাটাবেজের প্রয়োজন নেই।</p>
             </div>
           </div>
           <div class="a-feat">
             <span class="a-icon">📱</span>
             <div>
               <strong>মোবাইলে সরাসরি ব্যবহার:</strong>
-              <p>আপনার অ্যান্ড্রয়েড ফোন, ট্যাব অথবা কম্পিউটারের যেকোনো ব্রাউজারে এটি নিখুঁতভাবে চলবে।</p>
+              <p>আপনার অ্যান্ড্রয়েড ফোন, ট্যাব অথবা কম্পিউটারের যেকোনো ব্রাউজারে এটি কোনো ইনস্টলেশন ছাড়াই তাৎক্ষণিক চলবে।</p>
             </div>
           </div>
           <div class="a-feat">
             <span class="a-icon">💾</span>
             <div>
-              <strong>লোকাল স্টোরেজ:</strong>
+              <strong>লোকাল স্টোরেজ নিরাপত্তা:</strong>
               <p>আপনার সর্বোচ্চ স্কোর ও সেটিংস আপনার নিজের ডিভাইসের ব্রাউজারেই সুরক্ষিত থাকে। কোনো ব্যক্তিগত তথ্য সংগ্রহ করা হয় না।</p>
+            </div>
+          </div>
+          <div class="a-feat">
+            <span class="a-icon">🎯</span>
+            <div>
+              <strong>মস্তিষ্কের চর্চা ও বিনোদন:</strong>
+              <p>সাধারণ জ্ঞান, যুক্তি, স্মৃতিশক্তি এবং দ্রুত গাণিতিক চিন্তা বৃদ্ধির লক্ষ্যে প্রতিটি গেম সাজানো হয়েছে।</p>
             </div>
           </div>
         </div>
 
         <div class="hosting-guide-box">
-          <h4>🌐 কীভাবে ইন্টারনেটে ফ্রি পাবলিশ করবেন?</h4>
-          <ol>
-            <li><strong>GitHub Pages:</strong> GitHub এ একটি ফ্রি রিপোজিটরি খুলে <code>index.html</code>, <code>style.css</code>, <code>script.js</code> আপলোড করুন এবং Pages চালু করুন।</li>
-            <li><strong>Netlify / Vercel:</strong> ফোল্ডারটি সরাসরি টেনে দিয়ে ১ মিনিটেই লাইভ ওয়েবসাইট লিংক পেয়ে যাবেন।</li>
-          </ol>
+          <h4>🌐 উন্মুক্ত ও ফ্রি হোস্টিং সুবিধা:</h4>
+          <p>এই প্রজেক্টটি Vercel এবং GitHub Pages-এ সম্পূর্ণ বিনামূল্যে সারাজীবন হোস্ট করে যে কারও সাথে শেয়ার করা যায়।</p>
         </div>
       </div>
 
@@ -894,6 +1670,162 @@
         <button class="btn btn-primary" onclick="closeAboutModal()">
           <span>বুঝেছি, ধন্যবাদ! 👍</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 2: CONTACT (যোগাযোগ ও মতামত) ==================== -->
+  <div id="contact-modal" class="modal-backdrop" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+    <div class="modal-card contact-modal-card">
+      <div class="modal-top">
+        <h3 class="modal-title" id="contact-title">✉️ যোগাযোগ ও মতামত</h3>
+        <button class="close-x" onclick="closeContactModal()" aria-label="বন্ধ করুন">✕</button>
+      </div>
+      
+      <div class="contact-content">
+        <p class="contact-intro">আপনার কোনো প্রশ্ন, গেমের আইডিয়া বা মতামত থাকলে নিচে লিখে পাঠান:</p>
+        
+        <form id="contact-form" onsubmit="handleContactSubmit(event)">
+          <div class="form-group">
+            <label for="contact-name">আপনার নাম <span class="required">*</span></label>
+            <input type="text" id="contact-name" placeholder="যেমন: রাহুল হাসান" required>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-email">ইমেইল ঠিকানা <span class="required">*</span></label>
+            <input type="email" id="contact-email" placeholder="name@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-subject">বিষয়</label>
+            <select id="contact-subject">
+              <option value="feedback">গেমের প্রশংসা বা সাধারণ মতামত</option>
+              <option value="bug">কোনো সমস্যা বা বাগ রিপোর্ট</option>
+              <option value="suggestion">নতুন গেমের পরামর্শ</option>
+              <option value="other">অন্যান্য</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-message">আপনার বার্তা বা মতামত <span class="required">*</span></label>
+            <textarea id="contact-message" rows="4" placeholder="আপনার মূল্যবান মতামত এখানে লিখুন..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="contact-submit-btn">
+            <span>🚀 বার্তা পাঠান</span>
+          </button>
+        </form>
+
+        <!-- Success confirmation message -->
+        <div id="contact-success" class="contact-success-box" style="display:none;">
+          <span class="success-icon">🎉</span>
+          <h4>ধন্যবাদ! আপনার বার্তাটি গৃহীত হয়েছে।</h4>
+          <p>বাংলা ফান গেমস ব্যবহারের জন্য আন্তরিক ধন্যবাদ। আপনার মূল্যবান পরামর্শ আমাদের প্ল্যাটফর্মকে আরও উন্নত করতে সাহায্য করবে।</p>
+          <button class="btn btn-primary" onclick="resetContactForm()">
+            <span>নতুন বার্তা লিখুন</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 3: PRIVACY POLICY (গোপনীয়তা নীতি) ==================== -->
+  <div id="privacy-modal" class="modal-backdrop" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+    <div class="modal-card privacy-modal-card">
+      <div class="modal-top">
+        <h3 class="modal-title" id="privacy-title">🛡️ গোপনীয়তা নীতি (Privacy Policy)</h3>
+        <button class="close-x" onclick="closePrivacyModal()" aria-label="বন্ধ করুন">✕</button>
+      </div>
+      
+      <div class="privacy-content">
+        <div class="privacy-badge">🔒 শতভাগ নিরাপদ ও ব্যক্তিগত তথ্যের নিশ্চয়তা</div>
+        <p><strong>বাংলা ফান গেমস (Bangla Fun Games)</strong> ব্যবহারকারীদের ব্যক্তিগত গোপনীয়তা রক্ষা করতে সম্পূর্ণ অঙ্গীকারবদ্ধ। নিচে আমাদের স্বচ্ছ গোপনীয়তা নীতি তুলে ধরা হলো:</p>
+
+        <div class="privacy-section">
+          <h4>১. ব্যক্তিগত তথ্যের সংগ্রহ:</h4>
+          <p>আমাদের ওয়েবসাইটে কোনো সাইন-আপ, লগইন বা ব্যক্তিগত তথ্য (যেমন: ফোন নম্বর, ঠিকানা, ব্যাংকিং তথ্য ইত্যাদি) সংগ্রহ করা হয় না।</p>
+        </div>
+
+        <div class="privacy-section">
+          <h4>২. লোকাল ডাটা ও স্কোর সংরক্ষণ:</h4>
+          <p>গেমের সর্বোচ্চ স্কোর, চালের রেকর্ড এবং ডার্ক/লাইট থিম সেটিংস আপনার ডিভাইসের নিজস্ব ব্রাউজার মেমোরিতে (HTML5 LocalStorage) সংরক্ষিত থাকে। এই ডাটা কোনো বহিরাগত সার্ভারে পাঠানো হয় না।</p>
+        </div>
+
+        <div class="privacy-section">
+          <h4>৩. কুকিজ ও ট্র্যাকিং:</h4>
+          <p>আমরা ব্যবহারকারীদের ট্র্যাক করার জন্য কোনো ট্র্যাকিং কুকিজ বা বিজ্ঞাপন নেটওয়ার্ক ব্যবহার করি না। এটি সম্পূর্ণ বিজ্ঞাপনমুক্ত ও পরিবার-বান্ধব পরিবেশ।</p>
+        </div>
+
+        <div class="privacy-section">
+          <h4>৪. শিশু ও শিক্ষার্থী নিরাপত্তা:</h4>
+          <p>আমাদের সব গেম মেধা বিকাশ ও সুস্থ বিনোদনের উদ্দেশ্যে তৈরি। এটি সব বয়সের শিশু, শিক্ষার্থী ও পরিবারের জন্য সম্পূর্ণ নিরাপদ।</p>
+        </div>
+      </div>
+
+      <div class="modal-buttons">
+        <button class="btn btn-primary" onclick="closePrivacyModal()">
+          <span>বুঝেছি, সহমত 👍</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 4: PWA INSTALL GUIDE (অ্যাপ ইনস্টল নির্দেশিকা) ==================== -->
+  <div id="pwa-guide-modal" class="modal-backdrop" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="pwa-guide-title">
+    <div class="modal-card about-modal-card">
+      <div class="modal-top">
+        <h3 class="modal-title" id="pwa-guide-title">📲 অ্যাপ ইনস্টল নির্দেশিকা (PWA Guide)</h3>
+        <button class="close-x" onclick="closePwaGuideModal()" aria-label="বন্ধ করুন">✕</button>
+      </div>
+
+      <div class="about-content">
+        <div class="about-hero-badge">⚡ লাইটওয়েট, সুপারফাস্ট ও অফলাইন ফ্রেন্ডলি</div>
+        <p><strong>বাংলা ফান গেমস (Bangla Fun Games)</strong> একটি আধুনিক <strong>PWA (Progressive Web App)</strong>। এটি কোনো প্লে-স্টোর চার্জ বা অতিরিক্ত মেমোরি খরচ ছাড়াই আপনার Android ফোন বা কম্পিউটারে হুবহু নেটিভ অ্যাপের মতো ইনস্টল করা যায়।</p>
+
+        <div class="about-features-grid">
+          <div class="about-feat-item">
+            <span class="feat-icon">📱</span>
+            <div class="feat-info">
+              <h4>Android ফোনে ইনস্টল করার নিয়ম</h4>
+              <p>১. Chrome ব্রাউজারের ওপরের ডানদিকের <strong>তিনটি ডট (⋮)</strong> মেনুতে চাপ দিন।<br>
+              ২. তালিকা থেকে <strong>"Install app"</strong> অথবা <strong>"Add to Home screen"</strong> (হোম স্ক্রিনে যোগ করুন) চাপুন।<br>
+              ৩. <strong>Install</strong> কনফার্ম করলেই আপনার মোবাইলের হোম স্ক্রিন ও অ্যাপ ড্রয়ারে আইকন যুক্ত হবে।</p>
+            </div>
+          </div>
+
+          <div class="about-feat-item">
+            <span class="feat-icon">💻</span>
+            <div class="feat-info">
+              <h4>কম্পিউটার বা ল্যাপটপে ইনস্টল</h4>
+              <p>Chrome বা Edge ব্রাউজারের অ্যাড্রেস বারের ডানে থাকা <strong>ইনস্টল আইকন (⬇️)</strong>-এ ক্লিক করুন। অথবা ৩-ডট মেনু থেকে <strong>"Install Bangla Games"</strong> চাপুন।</p>
+            </div>
+          </div>
+
+          <div class="about-feat-item">
+            <span class="feat-icon">📶</span>
+            <div class="feat-info">
+              <h4>অফলাইন ক্যাশিং ও ফুলস্ক্রিন</h4>
+              <p>একবার লোড হওয়ার পর সার্ভিস ওয়ার্কারের মাধ্যমে গেমগুলো ক্যাশ হয়ে যায়। ফলে ইন্টারনেট সংযোগ দুর্বল হলেও গেমগুলো নিরবচ্ছিন্নভাবে খেলা যায়।</p>
+            </div>
+          </div>
+
+          <div class="about-feat-item">
+            <span class="feat-icon">✨</span>
+            <div class="feat-info">
+              <h4>স্বয়ংক্রিয় ইনস্ট্যান্ট আপডেট</h4>
+              <p>কোনো ম্যানুয়াল এপিকে আপডেট ছাড়াই নতুন গেম ও ফিচার স্বয়ংক্রিয়ভাবে লাইভ হবে।</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-buttons" style="margin-top: 18px;">
+          <button class="btn btn-primary" onclick="triggerPwaInstall()">
+            <span>📲 এখন ইনস্টল করতে চান? চাপুন</span>
+          </button>
+          <button class="btn btn-outline" onclick="closePwaGuideModal()">
+            <span>বুঝেছি, ধন্যবাদ</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -916,9 +1848,9 @@
       <span class="bnav-icon">🎴</span>
       <span class="bnav-text">মেমোরি</span>
     </button>
-    <button class="bnav-btn" id="bnav-more" onclick="navigateTo('home'); document.getElementById('games-section').scrollIntoView({behavior:'smooth'});">
-      <span class="bnav-icon">🎮</span>
-      <span class="bnav-text">সব গেম</span>
+    <button class="bnav-btn" id="bnav-contact" onclick="openContactModal()">
+      <span class="bnav-icon">✉️</span>
+      <span class="bnav-text">যোগাযোগ</span>
     </button>
   </nav>
 
