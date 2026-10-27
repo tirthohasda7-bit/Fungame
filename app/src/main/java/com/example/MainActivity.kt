@@ -1,6 +1,8 @@
 package com.example
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
@@ -59,11 +61,17 @@ fun BanglaFunGamesApp() {
 
   BackHandler {
     holder.webView?.let { wv ->
-      wv.evaluateJavascript(
-        "if (typeof currentView !== 'undefined' && currentView !== 'home') { navigateTo('home'); 'navigated'; } else { 'stay'; }"
-      ) { res ->
-        if (res?.contains("navigated") != true && wv.canGoBack()) {
-          wv.goBack()
+      val currentUrl = wv.url ?: ""
+      // If user navigated into about.html, contact.html, etc., go back to index.html
+      if (!currentUrl.endsWith("index.html") && wv.canGoBack()) {
+        wv.goBack()
+      } else {
+        wv.evaluateJavascript(
+          "if (typeof currentView !== 'undefined' && currentView !== 'home') { navigateTo('home'); 'navigated'; } else { 'stay'; }"
+        ) { res ->
+          if (res?.contains("navigated") != true && wv.canGoBack()) {
+            wv.goBack()
+          }
         }
       }
     }
@@ -101,6 +109,38 @@ fun BanglaFunGamesApp() {
           cacheMode = WebSettings.LOAD_DEFAULT
         }
         webViewClient = object : WebViewClient() {
+          override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+          ): Boolean {
+            val url = request?.url?.toString() ?: return false
+            // Handle email links safely without crashing WebView
+            if (url.startsWith("mailto:") || url.startsWith("tel:")) {
+              try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                view?.context?.startActivity(intent)
+              } catch (e: Exception) {
+                Log.w("BanglaFunGames", "No application found to handle: $url", e)
+              }
+              return true
+            }
+            // Allow in-app asset navigation
+            if (url.startsWith("file:///android_asset/")) {
+              return false
+            }
+            // Handle external web links in external browser
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+              try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                view?.context?.startActivity(intent)
+                return true
+              } catch (e: Exception) {
+                Log.w("BanglaFunGames", "Failed to launch browser for: $url", e)
+              }
+            }
+            return false
+          }
+
           override fun onReceivedError(
             view: WebView?,
             request: WebResourceRequest?,

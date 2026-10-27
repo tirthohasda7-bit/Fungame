@@ -5,6 +5,10 @@ const CACHE_NAME = 'bangla-fun-games-cache-v1';
 const STATIC_ASSETS = [
   './',
   './index.html',
+  './about.html',
+  './contact.html',
+  './privacy.html',
+  './terms.html',
   './style.css',
   './script.js',
   './manifest.webmanifest',

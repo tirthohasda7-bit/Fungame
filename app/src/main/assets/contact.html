@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="যোগাযোগ ও সহায়তা - বাংলা ফান গেমস (Bangla Fun Games)। আপনার মূল্যবান মতামত, পরামর্শ বা ত্রুটি রিপোর্ট করতে সরাসরি তীরথ হাসদার সাথে যোগাযোগ করুন: tirthohasda7@gmail.com">
+  <meta name="theme-color" content="#0d0c1d">
+  
+  <title>যোগাযোগ ও মতামত | বাংলা ফান গেমস (Bangla Fun Games)</title>
+  
+  <!-- PWA Manifest & Icons -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="alternate" type="application/manifest+json" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="navbar" id="top-nav">
+    <div class="nav-container">
+      <a href="index.html" class="brand" style="text-decoration: none;">
+        <span class="brand-icon">🎮</span>
+        <div class="brand-text">
+          <span class="brand-title">বাংলা ফান গেমস</span>
+          <span class="brand-subtitle">Bangla Fun Games</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="desktop-nav-links">
+        <a href="index.html#games-section" class="dnav-link">গেমস</a>
+        <a href="about.html" class="dnav-link">পরিচিতি</a>
+        <a href="contact.html" class="dnav-link" style="color: var(--primary); font-weight: 700;">যোগাযোগ</a>
+        <a href="privacy.html" class="dnav-link">গোপনীয়তা</a>
+        <a href="terms.html" class="dnav-link">শর্তাবলী</a>
+      </nav>
+      
+      <!-- Top Action Buttons -->
+      <div class="nav-actions">
+        <button id="theme-btn" class="icon-btn" aria-label="থিম পরিবর্তন" title="থিম পরিবর্তন" onclick="toggleThemeGlobal()">
+          <span id="theme-icon">🌙</span>
+        </button>
+        <a href="index.html" class="btn btn-primary btn-sm" style="text-decoration: none;">
+          <span>▶ গেম খেলুন</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="content-page-wrapper">
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="index.html">হোম</a>
+      <span>›</span>
+      <span style="color: var(--text-primary);">যোগাযোগ ও সহায়তা (Contact Us)</span>
+    </nav>
+
+    <!-- Hero Card -->
+    <header class="page-hero-card">
+      <span class="page-hero-badge">✉️ সরাসরি যোগাযোগ</span>
+      <h1 class="page-hero-title">আমরা আপনার মতামত ও পরামর্শ শুনতে আগ্রহী</h1>
+      <p class="page-hero-subtitle">কোনো প্রশ্ন, গেমের আইডিয়া, বাগ রিপোর্ট বা সহযোগিতার প্রস্তাব থাকলে নিচে উল্লেখিত চ্যানেলে আমাদের সাথে নির্দ্বিধায় যোগাযোগ করতে পারেন।</p>
+      <div class="page-meta-row">
+        <div class="page-meta-item">
+          <span>👤 প্রতিষ্ঠাতা ও পরিচালক:</span>
+          <strong style="color: var(--text-primary);">তীরথ হাসদা (Tirtho Hasda)</strong>
+        </div>
+        <div class="page-meta-item">
+          <span>⏱️ উত্তর দেওয়ার সময়:</span>
+          <span style="color: var(--accent);">২৪ - ৪৮ ঘণ্টার মধ্যে</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <article class="content-article-card">
+      
+      <div class="contact-split-grid">
+        
+        <!-- Left: Official Contact Details -->
+        <div class="contact-info-card">
+          <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
+            <span>📍</span> অফিশিয়াল যোগাযোগের তথ্য
+          </h2>
+          <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+            আমাদের প্ল্যাটফর্মে কোনো ভুয়া বা বিভ্রান্তিকর যোগাযোগের ঠিকানা ব্যবহার করা হয় না। আপনার প্রশ্নের সরাসরি উত্তর দিতে আমরা দায়বদ্ধ।
+          </p>
+
+          <div class="contact-direct-item">
+            <span class="cdi-icon">📧</span>
+            <div class="cdi-text">
+              <h4>অফিসিয়াল ইমেইল ঠিকানা</h4>
+              <p>সব ধরনের প্রশ্ন ও মতামতের জন্য:</p>
+              <a href="mailto:tirthohasda7@gmail.com" class="cdi-link">tirthohasda7@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="contact-direct-item">
+            <span class="cdi-icon">👨‍💻</span>
+            <div class="cdi-text">
+              <h4>মূল দায়িত্বপ্রাপ্ত ব্যক্তি</h4>
+              <p><strong>তীরথ হাসদা (Tirtho Hasda)</strong><br>
+              <span style="font-size: 0.82rem; color: var(--text-muted);">ওয়েব ডেভেলপার ও ক্রিয়েটর, বাংলা ফান গেমস</span></p>
+            </div>
+          </div>
+
+          <div class="contact-direct-item">
+            <span class="cdi-icon">⚡</span>
+            <div class="cdi-text">
+              <h4>প্রতিক্রিয়া সময়সীমা (SLA)</h4>
+              <p>আমরা সাধারণত কার্যদিবসের <strong>২৪ থেকে ৪৮ ঘণ্টার</strong> মধ্যে প্রতিটি ইমেইল পড়ে উত্তর প্রদান করি।</p>
+            </div>
+          </div>
+
+          <div class="contact-direct-item">
+            <span class="cdi-icon">🛡️</span>
+            <div class="cdi-text">
+              <h4>তথ্যের নিরাপত্তা নিশ্চয়তা</h4>
+              <p>যোগাযোগের মাধ্যমে পাঠানো আপনার নাম ও ইমেইল ঠিকানা অন্য কোনো তৃতীয় পক্ষের সাথে শেয়ার করা হয় না।</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Interactive Contact Form -->
+        <div class="contact-form-wrapper" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px;">
+          <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px;">
+            <span>✍️</span> বার্তা পাঠান (Send Message)
+          </h2>
+          
+          <form id="standalone-contact-form" onsubmit="handleStandaloneContact(event)">
+            <div class="form-group">
+              <label for="c-name">আপনার পূর্ণ নাম <span class="required">*</span></label>
+              <input type="text" id="c-name" placeholder="যেমন: মো: সুমন হোসেন" required>
+            </div>
+
+            <div class="form-group">
+              <label for="c-email">আপনার ইমেইল ঠিকানা <span class="required">*</span></label>
+              <input type="email" id="c-email" placeholder="example@gmail.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="c-subject">বার্তার বিষয়</label>
+              <select id="c-subject">
+                <option value="গেমের প্রশংসা বা সাধারণ মতামত">গেমের প্রশংসা বা সাধারণ মতামত</option>
+                <option value="কোনো ত্রুটি বা বাগ রিপোর্ট">কোনো ত্রুটি বা বাগ রিপোর্ট</option>
+                <option value="নতুন কোনো গেমের প্রস্তাব বা আইডিয়া">নতুন কোনো গেমের প্রস্তাব বা আইডিয়া</option>
+                <option value="কপিরাইট বা নীতিমালা সংক্রান্ত">কপিরাইট বা নীতিমালা সংক্রান্ত</option>
+                <option value="অন্যান্য জিজ্ঞাসা">অন্যান্য জিজ্ঞাসা</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="c-message">আপনার বিস্তারিত বার্তা <span class="required">*</span></label>
+              <textarea id="c-message" rows="5" placeholder="আপনার বক্তব্য বা সমস্যা স্পষ্ট করে লিখুন..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 8px;">
+              <span>🚀 বার্তা প্রেরণ করুন</span>
+            </button>
+          </form>
+
+          <!-- Success Box -->
+          <div id="c-success-box" class="contact-success-box" style="display: none;">
+            <span class="success-icon">🎉</span>
+            <h4>ধন্যবাদ! বার্তাটি প্রস্তুত হয়েছে।</h4>
+            <p>আপনার বার্তাটির একটি কপি আপনার ডিফল্ট ইমেইল অ্যাপ দিয়ে পাঠাতে নিচের বাটনে ট্যাপ করতে পারেন অথবা আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব।</p>
+            <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+              <a id="c-mailto-link" href="#" class="btn btn-accent btn-sm" style="text-decoration: none;">
+                <span>📧 সরাসরি ইমেইলে পাঠান</span>
+              </a>
+              <button class="btn btn-outline btn-sm" onclick="resetStandaloneForm()">
+                <span>নতুন বার্তা লিখুন</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Section: Frequently Asked Questions (FAQ) -->
+      <section class="content-section" style="margin-top: 40px;">
+        <h2><span>❓</span> সচরাচর জিজ্ঞাসিত প্রশ্নাবলী (FAQ)</h2>
+        
+        <div class="faq-card-list">
+          <div class="faq-card">
+            <h4><span>১.</span> বাংলা ফান গেমসের সেবা কি সম্পূর্ণ ফ্রি?</h4>
+            <p>হ্যাঁ, বাংলা ফান গেমসের সকল ১২টি গেম ১০০% ফ্রি। এতে কোনো ট্রায়াল ভার্সন, সাবস্ক্রিপশন ফি বা লুকানো আর্থিক চার্জ নেই।</p>
+          </div>
+
+          <div class="faq-card">
+            <h4><span>২.</span> আমি নতুন কোনো গেম যোগ করার অনুরোধ কীভাবে করতে পারি?</h4>
+            <p>আমাদের কাছে নতুন গেমের আইডিয়া পাঠাতে উপরের ফর্ম থেকে "নতুন কোনো গেমের প্রস্তাব বা আইডিয়া" সিলেক্ট করে আপনার চিন্তা বিস্তারিত লিখে পাঠান, অথবা সরাসরি <a href="mailto:tirthohasda7@gmail.com" style="color: var(--primary);">tirthohasda7@gmail.com</a>-এ ইমেইল করুন।</p>
+          </div>
+
+          <div class="faq-card">
+            <h4><span>৩.</span> কোনো গেমে সমস্যা বা ত্রুটি (Bug) দেখলে কী করব?</h4>
+            <p>আপনি কোন ডিভাইসে এবং কোন ব্রাউজারে খেলছেন তা উল্লেখ করে একটি সংক্ষিপ্ত বাগ রিপোর্ট পাঠালে আমরা দ্রুত সমাধান করব।</p>
+          </div>
+
+          <div class="faq-card">
+            <h4><span>৪.</span> গেমগুলো কি অফলাইনে খেলা যায়?</h4>
+            <p>হ্যাঁ! আমাদের সাইটটি PWA (Progressive Web App) প্রযুক্তি সাপোর্ট করে। ব্রাউজারের "Install" বা "Add to Home screen" চাপলে গেমগুলো আপনার ফোনে সেভ হয়ে যাবে এবং দুর্বল সংযোগেও খেলা যাবে।</p>
+          </div>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-brand-col">
+        <div class="brand">
+          <span class="brand-icon">🎮</span>
+          <span class="brand-title">বাংলা ফান গেমস</span>
+        </div>
+        <p class="footer-about">বাংলা ফান গেমস সম্পূর্ণ উন্মুক্ত, নিরাপদ ও পরিবার-বান্ধব অনলাইন বাংলা গেমিং প্ল্যাটফর্ম। তৈরি করেছেন তীরথ হাসদা।</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">
+          ✉️ ইমেইল: <a href="mailto:tirthohasda7@gmail.com" style="color: var(--text-secondary); text-decoration: none;">tirthohasda7@gmail.com</a>
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">প্রয়োজনীয় লিংক</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">হোম ও গেম তালিকা</a></li>
+          <li><a href="about.html">আমাদের সম্পর্কে (About Us)</a></li>
+          <li><a href="contact.html" style="color: var(--primary); font-weight: 600;">যোগাযোগ ও সহায়তা (Contact)</a></li>
+          <li><a href="privacy.html">গোপনীয়তা নীতি (Privacy Policy)</a></li>
+          <li><a href="terms.html">ব্যবহারের শর্তাবলী (Terms of Service)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">জনপ্রিয় গেমস</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">সাপের খেলা (Snake)</a></li>
+          <li><a href="index.html">২০৪৮ পাজল (2048)</a></li>
+          <li><a href="index.html">ছুঁচো ধরা খেলা</a></li>
+          <li><a href="index.html">বাবল শুটার</a></li>
+          <li><a href="index.html">১৫ সংখ্যা পাজল</a></li>
+          <li><a href="index.html">বাংলা কুইজ চ্যালেঞ্জ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© ২০২৬ বাংলা ফান গেমস (Bangla Fun Games) • প্রতিষ্ঠাতা: তীরথ হাসদা • সর্বস্বত্ব সংরক্ষিত।</p>
+      <p class="footer-made-with">নির্মিত ❤️ বাংলা ভাষাভাষী সকল গেমপ্রেমীদের জন্য</p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme initialization
+    function initTheme() {
+      const savedTheme = localStorage.getItem('bangla_games_theme') || 'dark';
+      document.body.classList.toggle('light-theme', savedTheme === 'light');
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+    }
+    function toggleThemeGlobal() {
+      const isLight = document.body.classList.toggle('light-theme');
+      localStorage.setItem('bangla_games_theme', isLight ? 'light' : 'dark');
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = isLight ? '☀️' : '🌙';
+    }
+    initTheme();
+
+    // Form submission
+    function handleStandaloneContact(e) {
+      e.preventDefault();
+      const name = document.getElementById('c-name').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      const subject = document.getElementById('c-subject').value;
+      const message = document.getElementById('c-message').value.trim();
+      
+      const form = document.getElementById('standalone-contact-form');
+      const successBox = document.getElementById('c-success-box');
+      const mailtoLink = document.getElementById('c-mailto-link');
+
+      // Create mailto fallback link
+      const mailtoUrl = `mailto:tirthohasda7@gmail.com?subject=${encodeURIComponent('[Bangla Fun Games] ' + subject)}&body=${encodeURIComponent('প্রেরক: ' + name + ' (' + email + ')\n\nবার্তা:\n' + message)}`;
+      mailtoLink.href = mailtoUrl;
+
+      form.style.display = 'none';
+      successBox.style.display = 'block';
+    }
+
+    function resetStandaloneForm() {
+      const form = document.getElementById('standalone-contact-form');
+      const successBox = document.getElementById('c-success-box');
+      form.reset();
+      form.style.display = 'block';
+      successBox.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

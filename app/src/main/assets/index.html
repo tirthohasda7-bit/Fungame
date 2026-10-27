@@ -39,9 +39,10 @@
       <!-- Desktop/Tablet Quick Nav -->
       <nav class="desktop-nav-links">
         <a href="#games-section" class="dnav-link" onclick="navigateTo('home');">গেমস</a>
-        <button class="dnav-btn" onclick="openAboutModal()">পরিচিতি</button>
-        <button class="dnav-btn" onclick="openContactModal()">যোগাযোগ</button>
-        <button class="dnav-btn" onclick="openPrivacyModal()">গোপনীয়তা</button>
+        <a href="about.html" class="dnav-link">পরিচিতি</a>
+        <a href="contact.html" class="dnav-link">যোগাযোগ</a>
+        <a href="privacy.html" class="dnav-link">গোপনীয়তা</a>
+        <a href="terms.html" class="dnav-link">শর্তাবলী</a>
         <button class="dnav-btn" onclick="openPwaGuideModal()" title="PWA ইনস্টল নির্দেশিকা">ইনস্টল গাইড</button>
       </nav>
       
@@ -56,9 +57,9 @@
         <button id="theme-btn" class="icon-btn" aria-label="থিম পরিবর্তন" title="থিম পরিবর্তন">
           <span id="theme-icon">🌙</span>
         </button>
-        <button class="nav-link-btn" onclick="openContactModal()" title="যোগাযোগ ও মতামত">
+        <a href="contact.html" class="nav-link-btn" title="যোগাযোগ ও মতামত" style="text-decoration: none;">
           <span>✉️ যোগাযোগ</span>
-        </button>
+        </a>
       </div>
     </div>
   </header>
@@ -76,7 +77,7 @@
         <div class="hero-overlay">
           <div class="hero-badge-row">
             <span class="hero-badge">✨ ১০০% ফ্রি</span>
-            <span class="hero-badge badge-accent">🚫 কোনো বিজ্ঞাপন নেই</span>
+            <span class="hero-badge badge-accent">⚡ দ্রুত ও নিরাপদ</span>
             <span class="hero-badge badge-info">📱 মোবাইল ফ্রেন্ডলি</span>
           </div>
           <h1 class="hero-title">আনন্দ ও বুদ্ধির সেরা বাংলা গেমিং প্ল্যাটফর্ম</h1>
@@ -88,9 +89,9 @@
             <button class="btn btn-outline btn-large" onclick="openPwaGuideModal()">
               <span>📲 অ্যাপ ইনস্টল গাইড</span>
             </button>
-            <button class="btn btn-outline btn-large" onclick="openAboutModal()">
+            <a href="about.html" class="btn btn-outline btn-large" style="text-decoration: none;">
               <span>ℹ️ প্ল্যাটফর্ম পরিচিতি</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -530,9 +531,9 @@
           <h3>📢 আপনার কোনো মতামত বা পরামর্শ আছে?</h3>
           <p>আমাদের গেম সম্পর্কে আপনার মতামত জানান অথবা নতুন কোনো গেমের আইডিয়া থাকলে শেয়ার করুন!</p>
         </div>
-        <button class="btn btn-primary" onclick="openContactModal()">
+        <a href="contact.html" class="btn btn-primary" style="text-decoration: none;">
           <span>✉️ যোগাযোগ করুন</span>
-        </button>
+        </a>
       </section>
     </section>
 
@@ -632,6 +633,16 @@
           </div>
         </div>
       </div>
+
+      <!-- বাংলা কুইজ খেলার নিয়মাবলী -->
+      <div class="rules-expandable-card">
+        <h4>📖 বাংলা কুইজ খেলার নিয়ম ও নির্দেশিকা</h4>
+        <ul>
+          <li><strong>লক্ষ্য:</strong> বাংলাদেশ, ইতিহাস, সাহিত্য, বিজ্ঞান ও সাধারণ জ্ঞানের ২৫টি আকর্ষণীয় প্রশ্নের সঠিক উত্তর দিয়ে সর্বোচ্চ স্কোর অর্জন করা।</li>
+          <li><strong>খেলার নিয়ম:</strong> প্রতিটি প্রশ্নের জন্য ৪টি বিকল্প থাকবে। সঠিক বিকল্পে ট্যাপ করলে ১০ পয়েন্ট পাবেন এবং সবুজ রঙে সঠিক উত্তর নিশ্চিত হবে। ভুল উত্তর দিলে লাল চিহ্ন সহ সঠিক উত্তরটি স্বয়ংক্রিয়ভাবে চিহ্নিত হবে।</li>
+          <li><strong>স্কোরিং ও রেকর্ড:</strong> মোট ২৫টি প্রশ্ন শেষে আপনার মোট অর্জিত স্কোর ও পূর্বের সর্বোচ্চ রেকর্ড সংরক্ষিত হবে।</li>
+        </ul>
+      </div>
     </section>
 
     <!-- ==================== GAME 2: TIC-TAC-TOE VIEW ==================== -->
@@ -711,6 +722,16 @@
             <span>🗑️ স্কোর মুছুন</span>
           </button>
         </div>
+      </div>
+
+      <!-- টিক-ট্যাক-টো খেলার নিয়মাবলী -->
+      <div class="rules-expandable-card">
+        <h4>📖 টিক-ট্যাক-টো খেলার নিয়ম ও নির্দেশিকা</h4>
+        <ul>
+          <li><strong>লক্ষ্য:</strong> ৩x৩ গ্রিডের যেকোনো অনুভূমিক, উলম্ব বা তির্যক সরলরেখায় নিজের চিহ্নের ৩টি ঘর একটানা পূরণ করা।</li>
+          <li><strong>খেলার মোড ও কন্ট্রোল:</strong> স্মার্ট বট (AI) অথবা একই ডিভাইসে বন্ধুর সাথে অফলাইনে খেলা যায়। যেকোনো খালি ঘরে ট্যাপ করে নিজের প্রতীক (X অথবা O) বসান।</li>
+          <li><strong>স্কোরবোর্ড:</strong> প্রতিটি রাউন্ডের জয়, পরাজয় ও ড্র-এর ফলাফল স্বয়ংক্রিয়ভাবে ট্র্যাকার বোর্ডে যোগ হয়ে সংরক্ষিত থাকে।</li>
+        </ul>
       </div>
     </section>
 
@@ -796,6 +817,16 @@
           </div>
         </div>
 
+      </div>
+
+      <!-- মেমোরি কার্ড খেলার নিয়মাবলী -->
+      <div class="rules-expandable-card">
+        <h4>📖 মেমোরি কার্ড ম্যাচিং খেলার নিয়ম ও নির্দেশিকা</h4>
+        <ul>
+          <li><strong>লক্ষ্য:</strong> উল্টানো কার্ডগুলোর মধ্য থেকে একই রকম দুটি ইমোজির জোড়া খুঁজে বের করে পুরো বোর্ড খালি করা।</li>
+          <li><strong>খেলার নিয়ম:</strong> যেকোনো দুটি কার্ডে পরপর ট্যাপ করে উল্টান। দুটো কার্ড মিলে গেলে সেগুলো স্থায়ীভাবে খোলা থাকবে; না মিললে আবার বন্ধ হয়ে যাবে।</li>
+          <li><strong>স্মৃতিশক্তি ও রেকর্ড:</strong> কম চাল (Moves) ও দ্রুততম সময়ে সমস্ত জোড়া মিলিয়ে আপনার মস্তিষ্কের তীক্ষ্ণতা পরীক্ষা করুন এবং নতুন রেকর্ড গড়ুন।</li>
+        </ul>
       </div>
     </section>
 
@@ -895,6 +926,16 @@
           </button>
         </div>
       </div>
+
+      <!-- পাথর কাগজ কাঁচি খেলার নিয়মাবলী -->
+      <div class="rules-expandable-card">
+        <h4>📖 পাথর কাগজ কাঁচি খেলার নিয়ম ও নির্দেশিকা</h4>
+        <ul>
+          <li><strong>লক্ষ্য:</strong> কম্পিউটারের সিদ্ধান্তের বিরুদ্ধে সঠিক অঙ্গভঙ্গি নির্বাচন করে সর্বাধিক রাউন্ড জয়ী হওয়া।</li>
+          <li><strong>ক্লাসিক নিয়ম:</strong> পাথর কাঁচিকে ভেঙে ফেলে, কাঁচি কাগজ কাটে এবং কাগজ পাথরকে ঢেকে ফেলে। উভয় পক্ষ একই পছন্দ করলে ড্র হবে।</li>
+          <li><strong>কন্ট্রোল:</strong> পাথর, কাগজ বা কাঁচি বোতামের যেকোনোটিতে ট্যাপ করে নিজের চাল দিন। স্কোরবোর্ডে জয়-পরাজয়ের ধারাবাহিক হিসাব দেখা যাবে।</li>
+        </ul>
+      </div>
     </section>
 
     <!-- ==================== GAME 5: NUMBER GUESSING VIEW ==================== -->
@@ -990,6 +1031,16 @@
             <span>🔄 নতুন সংখ্যা বেছে নিন</span>
           </button>
         </div>
+      </div>
+
+      <!-- সংখ্যা অনুমান খেলার নিয়মাবলী -->
+      <div class="rules-expandable-card">
+        <h4>📖 সংখ্যা অনুমানের খেলার নিয়ম ও নির্দেশিকা</h4>
+        <ul>
+          <li><strong>লক্ষ্য:</strong> ১ থেকে ১০০-এর মধ্যে কম্পিউটার কর্তৃক নির্ধারিত গোপন সংখ্যাটি সর্বনিম্ন পদক্ষেপে সঠিকভাবে অনুমান করা।</li>
+          <li><strong>বুদ্ধিমত্তার ইঙ্গিত:</strong> প্রতিটি অনুমানের পর সিস্টেম আপনাকে জানাবে গোপন সংখ্যাটি আপনার প্রদত্ত সংখ্যার চেয়ে 'বড়' নাকি 'ছোট'।</li>
+          <li><strong>স্কোরিং:</strong> যত কম পদক্ষেপে আপনি সঠিক সংখ্যাটি উদ্ঘাটন করতে পারবেন, আপনার বুদ্ধিমত্তার স্কোর তত বেশি বৃদ্ধি পাবে।</li>
+        </ul>
       </div>
     </section>
 
@@ -1101,6 +1152,16 @@
           </button>
         </div>
       </div>
+
+      <!-- গণিত স্পিড চ্যালেঞ্জ খেলার নিয়মাবলী -->
+      <div class="rules-expandable-card">
+        <h4>📖 গণিত স্পিড চ্যালেঞ্জ খেলার নিয়ম ও নির্দেশিকা</h4>
+        <ul>
+          <li><strong>লক্ষ্য:</strong> ৬০ সেকেন্ডের কাউন্টডাউন সময়ের মধ্যে দ্রুত সঠিক যোগ, বিয়োগ ও গুণের সমাধান বেছে নিয়ে সর্বোচ্চ পয়েন্ট তোলা।</li>
+          <li><strong>খেলার নিয়ম:</strong> স্ক্রিনে আসা সমীকরণের জন্য ৪টি বিকল্প দেওয়া থাকবে। সঠিক সমাধানে দ্রুত ট্যাপ করলে স্কোর যোগ হবে।</li>
+          <li><strong>গতি ও দক্ষতা:</strong> সময় ফুরিয়ে যাওয়ার আগেই ক্ষিপ্র গতিতে নির্ভুল হিসাব করার মাধ্যমে আপনার মস্তিষ্কের গতি বৃদ্ধি করুন।</li>
+        </ul>
+      </div>
     </section>
 
     <!-- ==================== GAME 7: SNAKE GAME (সাপের খেলা) ==================== -->
@@ -1180,6 +1241,16 @@
             <span>🔄 নতুন করে খেলুন</span>
           </button>
         </div>
+      </div>
+
+      <!-- সাপের খেলা খেলার নিয়মাবলী -->
+      <div class="rules-expandable-card">
+        <h4>📖 সাপের খেলা (Snake Game) নিয়ম ও নির্দেশিকা</h4>
+        <ul>
+          <li><strong>লক্ষ্য:</strong> লাল রঙের খাবার খেয়ে সাপটিকে দীর্ঘায়িত করা এবং বোর্ডের দেওয়াল কিংবা নিজের শরীরে ধাক্কা খাওয়া প্রতিহত করা।</li>
+          <li><strong>টাচ ও কিবোর্ড কন্ট্রোল:</strong> মোবাইলে অন-স্ক্রিন তীর বোতাম (↑, ↓, ←, →) অথবা আঙুল দিয়ে সোয়াইপ করুন। ডেস্কটপে কীবোর্ডের অ্যারো কি দিয়ে খেলুন।</li>
+          <li><strong>স্কোর ও বৃদ্ধি:</strong> প্রতিবার খাবার গ্রহণ করলে পয়েন্ট বাড়বে এবং সাপের দৈর্ঘ্য ও গতি ক্রমশ বৃদ্ধি পাবে।</li>
+        </ul>
       </div>
     </section>
 
@@ -1263,6 +1334,16 @@
             <span>🔄 নতুন গেম শুরু</span>
           </button>
         </div>
+      </div>
+
+      <!-- ২০৪৮ পাজল খেলার নিয়মাবলী -->
+      <div class="rules-expandable-card">
+        <h4>📖 ২০৪৮ পাজল খেলার নিয়ম ও নির্দেশিকা</h4>
+        <ul>
+          <li><strong>লক্ষ্য:</strong> ৪x৪ গ্রিডের টাইলসগুলো স্থানান্তরিত করে একই মানের টাইলসের সংমিশ্রণে ২০৪৮ সংখ্যার টাইলস তৈরি করা।</li>
+          <li><strong>কন্ট্রোল:</strong> মোবাইলের স্ক্রিনে আঙুল দিয়ে যেকোনো দিকে সোয়াইপ করুন অথবা অন-স্ক্রিন ডিরেকশন বোতাম ট্যাপ করুন।</li>
+          <li><strong>নিয়ম:</strong> দুটি সমমানের টাইল (যেমন ২+২=৪, ৪+৪=৮) একসাথে ধাক্কা খেলে নতুন বড় সংখ্যা গঠিত হয়। বোর্ড পূর্ণ হয়ে গেলে খেলা শেষ।</li>
+        </ul>
       </div>
     </section>
 
@@ -1353,6 +1434,16 @@
           </button>
         </div>
       </div>
+
+      <!-- ছুঁচো ধরা খেলার নিয়মাবলী -->
+      <div class="rules-expandable-card">
+        <h4>📖 ছুঁচো ধরা (Whack-a-Mole) খেলার নিয়ম ও নির্দেশিকা</h4>
+        <ul>
+          <li><strong>লক্ষ্য:</strong> ৩০ সেকেন্ডের নির্ধারিত সময়ে মাটির গর্ত থেকে মাথা তোলা দুষ্ট ছুঁচোগুলোকে ক্ষিপ্রতার সাথে আঘাত করে পয়েন্ট সংগ্রহ করা।</li>
+          <li><strong>কন্ট্রোল:</strong> যেকোনো গর্তে ছুঁচো দৃশ্যমান হওয়ার সাথে সাথেই দ্রুত তার উপর আঙুল দিয়ে ট্যাপ করুন।</li>
+          <li><strong>রিফ্লেক্স ও রেকর্ড:</strong> দ্রুত রিফ্লেক্স কাজে লাগিয়ে সর্বোচ্চ ছুঁচো শিকার করুন এবং ব্যক্তিগত সেরা স্কোর অর্জন করুন।</li>
+        </ul>
+      </div>
     </section>
 
     <!-- ==================== GAME 10: 15 NUMBER PUZZLE (সংখ্যা সাজানোর ধাঁধা) ==================== -->
@@ -1417,6 +1508,16 @@
           </button>
         </div>
       </div>
+
+      <!-- ১৫ সংখ্যা পাজল খেলার নিয়মাবলী -->
+      <div class="rules-expandable-card">
+        <h4>📖 ১৫ সংখ্যা পাজল খেলার নিয়ম ও নির্দেশিকা</h4>
+        <ul>
+          <li><strong>লক্ষ্য:</strong> এলোমেলোভাবে সাজানো ১ থেকে ১৫ পর্যন্ত সংখ্যা টাইলসগুলোকে ক্রমানুসারে বাম থেকে ডানে সাজানো।</li>
+          <li><strong>খেলার নিয়ম:</strong> খালি ঘরের সংলগ্ন যেকোনো সংখ্যায় ট্যাপ করলেই টাইলটি খালি স্থানে সরে আসবে।</li>
+          <li><strong>রেকর্ড:</strong> কত কম চালে ও কত কম সময়ে সম্পূর্ণ পাজলটি সমাধান করতে পারেন, তা লোকাল স্টোরেজে রেকর্ড হিসেবে সংরক্ষিত থাকবে।</li>
+        </ul>
+      </div>
     </section>
 
     <!-- ==================== GAME 11: BUBBLE SHOOTER (বাবল শুটার) ==================== -->
@@ -1480,6 +1581,16 @@
             <span>🔄 নতুন খেলা শুরু</span>
           </button>
         </div>
+      </div>
+
+      <!-- বাবল শুটার খেলার নিয়মাবলী -->
+      <div class="rules-expandable-card">
+        <h4>📖 বাবল শুটার খেলার নিয়ম ও নির্দেশিকা</h4>
+        <ul>
+          <li><strong>লক্ষ্য:</strong> একই রঙের ৩ বা ততোধিক বাবল একত্রিত করে ফুটিয়ে পুরো বোর্ডের বাবল অপসারণ করা।</li>
+          <li><strong>কন্ট্রোল:</strong> স্ক্রিনের যেকোনো স্থানে ট্যাপ করে বাবল নিক্ষেপের দিক নির্ধারণ করুন এবং বাবল ছুঁড়ুন।</li>
+          <li><strong>কম্বো পয়েন্ট:</strong> একসাথে বড় দল বাবল বিচ্ছিন্ন করতে পারলে অতিরিক্ত বোনাস পয়েন্ট অর্জন করবেন।</li>
+        </ul>
       </div>
     </section>
 
@@ -1569,6 +1680,16 @@
           </button>
         </div>
       </div>
+
+      <!-- রঙের মেমোরি খেলার নিয়মাবলী -->
+      <div class="rules-expandable-card">
+        <h4>📖 রঙের মেমোরি চ্যালেঞ্জ খেলার নিয়ম ও নির্দেশিকা</h4>
+        <ul>
+          <li><strong>লক্ষ্য:</strong> কম্পিউটার যে ক্রমে ৪টি রঙিন প্যাড ফ্ল্যাশ করে দেখাবে, সেই ক্রমটি নিখুঁতভাবে মনে রেখে পুনরায় চাপানো।</li>
+          <li><strong>খেলার নিয়ম:</strong> প্রতি সফল রাউন্ডে নতুন আরও একটি রঙের সংকেত যোগ হবে। ভুল বোতাম চাপলেই রাউন্ড সমাপ্ত হবে।</li>
+          <li><strong>মস্তিষ্কের ব্যায়াম:</strong> সর্বোচ্চ কয়টি ধাপের রঙিন সংকেত মনে রাখতে পারেন তা যাচাই করে স্মরণশক্তি বাড়ান।</li>
+        </ul>
+      </div>
     </section>
 
   </main>
@@ -1581,16 +1702,20 @@
           <span class="brand-icon">🎮</span>
           <span class="brand-title">বাংলা ফান গেমস</span>
         </div>
-        <p class="footer-desc">বাংলা ভাষাভাষী সকল গেমারদের জন্য উন্মুক্ত, নিরাপদ এবং সম্পূর্ণ ফ্রি অনলাইন গেমিং পোর্টাল। কোনো বিজ্ঞাপন বা পেমেন্ট ছাড়াই সরাসরি ব্রাউজারে খেলুন।</p>
+        <p class="footer-desc">বাংলা ভাষাভাষী সকল গেমপ্রেমীদের জন্য উন্মুক্ত, নিরাপদ এবং সম্পূর্ণ ফ্রি অনলাইন গেমিং পোর্টাল। তৈরি করেছেন তীরথ হাসদা।</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">
+          ✉️ অফিসিয়াল যোগাযোগ: <a href="mailto:tirthohasda7@gmail.com" style="color: var(--text-secondary); text-decoration: none;">tirthohasda7@gmail.com</a>
+        </p>
       </div>
 
       <div class="footer-col">
-        <h4 class="footer-heading">দ্রুত নেভিগেশন</h4>
+        <h4 class="footer-heading">প্রয়োজনীয় লিংক</h4>
         <ul class="footer-links">
           <li><a href="#games-section" onclick="navigateTo('home');">হোম ও গেম তালিকা</a></li>
-          <li><button onclick="openAboutModal()" class="footer-link-btn">আমাদের সম্পর্কে</button></li>
-          <li><button onclick="openContactModal()" class="footer-link-btn">যোগাযোগ ও মতামত</button></li>
-          <li><button onclick="openPrivacyModal()" class="footer-link-btn">গোপনীয়তা নীতি</button></li>
+          <li><a href="about.html">আমাদের সম্পর্কে (About Us)</a></li>
+          <li><a href="contact.html">যোগাযোগ ও সহায়তা (Contact)</a></li>
+          <li><a href="privacy.html">গোপনীয়তা নীতি (Privacy Policy)</a></li>
+          <li><a href="terms.html">ব্যবহারের শর্তাবলী (Terms of Service)</a></li>
           <li><button onclick="openPwaGuideModal()" class="footer-link-btn">📲 অ্যাপ ইনস্টল নির্দেশিকা (PWA)</button></li>
         </ul>
       </div>
@@ -1613,7 +1738,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>© ২০২৬ বাংলা ফান গেমস (Bangla Fun Games) • সর্বস্বত্ব সংরক্ষিত।</p>
+      <p>© ২০২৬ বাংলা ফান গেমস (Bangla Fun Games) • প্রতিষ্ঠাতা: তীরথ হাসদা • সর্বস্বত্ব সংরক্ষিত।</p>
       <p class="footer-made-with">নির্মিত ❤️ বাংলা ভাষাভাষী সকল গেমপ্রেমীদের জন্য</p>
     </div>
   </footer>
@@ -1848,10 +1973,10 @@
       <span class="bnav-icon">🎴</span>
       <span class="bnav-text">মেমোরি</span>
     </button>
-    <button class="bnav-btn" id="bnav-contact" onclick="openContactModal()">
+    <a href="contact.html" class="bnav-btn" id="bnav-contact" style="text-decoration: none;">
       <span class="bnav-icon">✉️</span>
       <span class="bnav-text">যোগাযোগ</span>
-    </button>
+    </a>
   </nav>
 
   <script src="script.js"></script>

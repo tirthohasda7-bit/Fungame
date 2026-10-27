@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="আমাদের সম্পর্কে - বাংলা ফান গেমস (Bangla Fun Games)। জানুন আমাদের লক্ষ্য, ১২টি শিক্ষামূলক ও ব্রেন গেমের বিস্তারিত এবং নির্মাতা তীরথ হাসদার অনুপ্রেরণা।">
+  <meta name="theme-color" content="#0d0c1d">
+  
+  <title>আমাদের সম্পর্কে | বাংলা ফান গেমস (Bangla Fun Games)</title>
+  
+  <!-- PWA Manifest & Icons -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="alternate" type="application/manifest+json" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="navbar" id="top-nav">
+    <div class="nav-container">
+      <a href="index.html" class="brand" style="text-decoration: none;">
+        <span class="brand-icon">🎮</span>
+        <div class="brand-text">
+          <span class="brand-title">বাংলা ফান গেমস</span>
+          <span class="brand-subtitle">Bangla Fun Games</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="desktop-nav-links">
+        <a href="index.html#games-section" class="dnav-link">গেমস</a>
+        <a href="about.html" class="dnav-link" style="color: var(--primary); font-weight: 700;">পরিচিতি</a>
+        <a href="contact.html" class="dnav-link">যোগাযোগ</a>
+        <a href="privacy.html" class="dnav-link">গোপনীয়তা</a>
+        <a href="terms.html" class="dnav-link">শর্তাবলী</a>
+      </nav>
+      
+      <!-- Top Action Buttons -->
+      <div class="nav-actions">
+        <button id="theme-btn" class="icon-btn" aria-label="থিম পরিবর্তন" title="থিম পরিবর্তন" onclick="toggleThemeGlobal()">
+          <span id="theme-icon">🌙</span>
+        </button>
+        <a href="index.html" class="btn btn-primary btn-sm" style="text-decoration: none;">
+          <span>▶ গেম খেলুন</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="content-page-wrapper">
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="index.html">হোম</a>
+      <span>›</span>
+      <span style="color: var(--text-primary);">আমাদের সম্পর্কে (About Us)</span>
+    </nav>
+
+    <!-- Hero Card -->
+    <header class="page-hero-card">
+      <span class="page-hero-badge">ℹ️ প্ল্যাটফর্ম পরিচিতি ও লক্ষ্য</span>
+      <h1 class="page-hero-title">বাংলা ফান গেমস সম্পর্কে জানুন</h1>
+      <p class="page-hero-subtitle">বাংলা ভাষাভাষী সকল বয়সের শিক্ষার্থীদের মেধা বিকাশ, সুস্থ মানসিক বিনোদন এবং মস্তিষ্কের উদ্দীপনামূলক অনুশীলনের লক্ষ্যে নির্মিত উন্মুক্ত ওয়েব গেমিং পোর্টাল।</p>
+      <div class="page-meta-row">
+        <div class="page-meta-item">
+          <span>👤 প্রতিষ্ঠাতা ও ডেভেলপার:</span>
+          <strong style="color: var(--text-primary);">তীরথ হাসদা (Tirtho Hasda)</strong>
+        </div>
+        <div class="page-meta-item">
+          <span>✉️ অফিসিয়াল যোগাযোগ:</span>
+          <a href="mailto:tirthohasda7@gmail.com" style="color: var(--primary); text-decoration: none;">tirthohasda7@gmail.com</a>
+        </div>
+        <div class="page-meta-item">
+          <span>📅 প্ল্যাটফর্ম সংস্করণ:</span>
+          <span style="color: var(--accent);">২.০ (PWA সক্ষম)</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Article Card -->
+    <article class="content-article-card">
+      
+      <!-- Section 1: Introduction -->
+      <section class="content-section">
+        <h2><span>🎯</span> আমাদের উদ্দেশ্য ও দর্শন (Mission & Vision)</h2>
+        <p>বর্তমান ইন্টারনেটের যুগে মানসম্মত, নিরাপদ এবং বিজ্ঞাপন-যন্ত্রণা মুক্ত বাংলা শিক্ষামূলক গেমের সংখ্যা খুবই কম। অধিকাংশ সাধারণ অনলাইন গেমে আক্রমণাত্মক বিজ্ঞাপন, ক্ষতিকর পপ-আপ বা অপ্রাসঙ্গিক কনটেন্ট থাকে যা শিশু ও শিক্ষার্থীদের জন্য অনুপযুক্ত।</p>
+        <p><strong>বাংলা ফান গেমস (Bangla Fun Games)</strong> শুরু করার মূল দর্শন হলো—এমন একটি সম্পূর্ণ নিরাপদ, গতিশীল ও পরিষ্কার ইন্টারফেস তৈরি করা যেখানে প্রতিটি খেলার পেছনে থাকবে বুদ্ধিমত্তা, একাগ্রতা, স্মৃতিশক্তি ও যুক্তি বৃদ্ধির উপাদান। এখানে প্রতিটি নির্দেশনা সহজ ও স্বাভাবিক বাংলা ভাষায় প্রদান করা হয়েছে যাতে যেকোনো বয়সের মানুষ স্বাচ্ছন্দ্যে অংশ নিতে পারেন।</p>
+        
+        <div class="highlight-notice-box">
+          <h4>💡 শতভাগ বিনামূল্যে উন্মুক্ত গেমিং</h4>
+          <p>এই প্ল্যাটফর্মের কোনো গেম খেলার জন্য কোনো প্রকার সাবস্ক্রিপশন ফি, প্রদেয় একাউন্ট কিংবা রেজিস্ট্রেশনের প্রয়োজন নেই। এটি সারাজীবন সম্পূর্ণ বিনামূল্যে উন্মুক্ত থাকবে।</p>
+        </div>
+      </section>
+
+      <!-- Section 2: The 12 Games Explained -->
+      <section class="content-section">
+        <h2><span>🎮</span> আমাদের ১২টি গেম এবং এদের মেধা বিকাশের ভূমিকা</h2>
+        <p>আমাদের সংগ্রহে থাকা ১২টি গেমের প্রতিটি আলাদা মানসিক দক্ষতা বিকাশে সাহায্য করে:</p>
+
+        <div class="games-overview-grid">
+          <!-- Game 1 -->
+          <div class="game-overview-item">
+            <span class="go-icon">🏆</span>
+            <div class="go-info">
+              <h4>১. বাংলা কুইজ চ্যালেঞ্জ (Quiz)</h4>
+              <p>ইতিহাস, বিজ্ঞান, খেলাধুলা ও সাহিত্য বিষয়ক ২৫টি বৈচিত্র্যময় প্রশ্ন। সঠিক উত্তরের পাশাপাশি প্রতিটিতে রয়েছে তথ্যবহুল ব্যাখ্যা।</p>
+              <span class="go-tag">দক্ষতা: সাধারণ জ্ঞান ও বিশ্লেষণ</span>
+            </div>
+          </div>
+
+          <!-- Game 2 -->
+          <div class="game-overview-item">
+            <span class="go-icon">❌⭕</span>
+            <div class="go-info">
+              <h4>২. কাটাকুটি (Tic-Tac-Toe)</h4>
+              <p>বুদ্ধিমান কম্পিউটারের বিরুদ্ধে কিংবা এক ফোনে দুই বন্ধু মিলে খেলার সুযোগ। দূরদর্শিতা ও প্রতিপক্ষের চাল অনুমান করার চর্চা।</p>
+              <span class="go-tag">দক্ষতা: কৌশলগত পরিকল্পনা</span>
+            </div>
+          </div>
+
+          <!-- Game 3 -->
+          <div class="game-overview-item">
+            <span class="go-icon">🎴</span>
+            <div class="go-info">
+              <h4>৩. মেমোরি কার্ড ম্যাচিং (Memory)</h4>
+              <p>১৬টি কার্ড উল্টে ৮ জোড়া প্রতিচ্ছবি মেলানোর চ্যালেঞ্জ। কম চাল ও দ্রুততম সময়ে সমাধান করতে হয়।</p>
+              <span class="go-tag">দক্ষতা: ভিজ্যুয়াল স্মৃতি ও মনোযোগ</span>
+            </div>
+          </div>
+
+          <!-- Game 4 -->
+          <div class="game-overview-item">
+            <span class="go-icon">🪨📄✂️</span>
+            <div class="go-info">
+              <h4>৪. পাথর কাগজ কাঁচি (RPS)</h4>
+              <p>ক্লাসিক হাত গেম যেখানে কম্পিউটারের সাথে তাত্ক্ষণিক লড়াই হয়। ধারাবাহিক জয়ের স্ট্রিক রেকর্ড ট্র্যাকিং।</p>
+              <span class="go-tag">দক্ষতা: দ্রুত সিদ্ধান্ত গ্রহণ</span>
+            </div>
+          </div>
+
+          <!-- Game 5 -->
+          <div class="game-overview-item">
+            <span class="go-icon">🔢🎯</span>
+            <div class="go-info">
+              <h4>৫. সংখ্যা অনুমান (Guess Number)</h4>
+              <p>১ থেকে ১০০ পর্যন্ত গোপন সংখ্যা কম চালে খুঁজে বের করার লজিক খেলা। বড়/ছোট ইঙ্গিতের ভিত্তিতে অনুসন্ধান।</p>
+              <span class="go-tag">দক্ষতা: বাইনারি সার্চ ও যৌক্তিক অনুমান</span>
+            </div>
+          </div>
+
+          <!-- Game 6 -->
+          <div class="game-overview-item">
+            <span class="go-icon">➕✖️</span>
+            <div class="go-info">
+              <h4>৬. গণিত স্পিড চ্যালেঞ্জ (Math)</h4>
+              <p>৪৫ সেকেন্ডের সময়সীমায় দ্রুত যোগ, বিয়োগ ও গুণের নির্ভুল সমাধান। শিক্ষার্থীদের জন্য অনন্য গাণিতিক ওয়ার্কআউট।</p>
+              <span class="go-tag">দক্ষতা: মানসিক দ্রুত গণনা</span>
+            </div>
+          </div>
+
+          <!-- Game 7 -->
+          <div class="game-overview-item">
+            <span class="go-icon">🐍🍎</span>
+            <div class="go-info">
+              <h4>৭. সাপের খেলা (Snake Game)</h4>
+              <p>ক্লাসিক আর্কেড সাপের খেলা। টাচ ডি-প্যাড বা সোয়াইপের সাহায্যে আপেল খাওয়া ও শরীরের সাথে সংঘর্ষ এড়িয়ে রেকর্ড গড়া।</p>
+              <span class="go-tag">দক্ষতা: মোটর রিফ্লেক্স ও সময়জ্ঞান</span>
+            </div>
+          </div>
+
+          <!-- Game 8 -->
+          <div class="game-overview-item">
+            <span class="go-icon">🧩🔢</span>
+            <div class="go-info">
+              <h4>৮. ২০৪৮ পাজল (2048 Puzzle)</h4>
+              <p>একই মানের টাইলস একত্রিত করে ৪x৪ গ্রিডে ২০৪৮ পর্যন্ত পৌঁছানোর জটিল গাণিতিক ও স্লাইডিং পাজল।</p>
+              <span class="go-tag">দক্ষতা: দীর্ঘমেয়াদী স্থানিক কৌশল</span>
+            </div>
+          </div>
+
+          <!-- Game 9 -->
+          <div class="game-overview-item">
+            <span class="go-icon">🐹🔨</span>
+            <div class="go-info">
+              <h4>৯. ছুঁচো ধরা খেলা (Whack-a-Mole)</h4>
+              <p>৩০ সেকেন্ডে গর্ত থেকে মাথা তোলা ছুঁচোকে দ্রুত ট্যাপ করে পয়েন্ট অর্জন। গোল্ডেন ছুঁচোর বিশেষ বোনাস।</p>
+              <span class="go-tag">দক্ষতা: হাত-চোখের দ্রুত সমন্বয়</span>
+            </div>
+          </div>
+
+          <!-- Game 10 -->
+          <div class="game-overview-item">
+            <span class="go-icon">🔢🧩</span>
+            <div class="go-info">
+              <h4>১০. সংখ্যা সাজানোর ধাঁধা (15 Puzzle)</h4>
+              <p>১৫টি এলোমেলো টাইলস খালি ঘরে স্লাইড করে ১ থেকে ১৫ পর্যন্ত ক্রমানুসারে সাজানো। গাণিতিকভাবে সমাধানযোগ্য।</p>
+              <span class="go-tag">দক্ষতা: ক্রমবিকাশ ও সমস্যা সমাধান</span>
+            </div>
+          </div>
+
+          <!-- Game 11 -->
+          <div class="game-overview-item">
+            <span class="go-icon">🫧🎯</span>
+            <div class="go-info">
+              <h4>১১. বাবল শুটার (Bubble Shooter)</h4>
+              <p>নির্দিষ্ট কোণে বাবল নিক্ষেপ করে একই রঙের ৩টি বা ততোধিক বাবলের ক্লাস্টার বাস্ট করা ও বোর্ড রক্ষা করা।</p>
+              <span class="go-tag">দক্ষতা: কোণ ও জ্যামিতিক নিশানা</span>
+            </div>
+          </div>
+
+          <!-- Game 12 -->
+          <div class="game-overview-item">
+            <span class="go-icon">🎨💡</span>
+            <div class="go-info">
+              <h4>১২. রঙের মেমোরি চ্যালেঞ্জ (Color Memory)</h4>
+              <p>৪টি রঙের প্যাডের আলো ও সুরের ক্রম মনে রেখে প্রতি রাউন্ডে হুবহু পুনরাবৃত্তি করা। সাইমন-স্টাইল সিকোয়েন্স।</p>
+              <span class="go-tag">দক্ষতা: শ্রবণ ও চাক্ষুষ স্মৃতি</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Technical Architecture -->
+      <section class="content-section">
+        <h2><span>⚡</span> প্রযুক্তি ও নিরাপত্তা মান (Technology & Security)</h2>
+        <p>আমরা বিশ্বাস করি সাধারণ ও দক্ষ কোডই সেরা ব্যবহারকারী অভিজ্ঞতা প্রদান করে। এজন্য বাংলা ফান গেমস সম্পূর্ণভাবে আধুনিক ওয়েব স্ট্যান্ডার্ড মেনে তৈরি করা হয়েছে:</p>
+        <ul>
+          <li><strong>পিওর ভ্যানিলা টেকনোলজি:</strong> কোনো ভারী এক্সটার্নাল ফ্রেমওয়ার্ক বা অপ্রয়োজনীয় থার্ড-পার্টি লাইব্রেরি নেই। পিওর HTML5, আধুনিক CSS3 এবং ES6+ JavaScript দিয়ে নির্মিত।</li>
+          <li><strong>ওয়েব অডিও সিন্থেসাইজার:</strong> কোনো বাহ্যিক ভারী অডিও ফাইল ছাড়াই ব্রাউজারের Web Audio API ব্যবহার করে রিয়েল-টাইম সাউন্ড তৈরি করা হয়, ফলে ডাটা খরচ প্রায় শূন্য।</li>
+          <li><strong>প্রগ্রেসিভ ওয়েব অ্যাপ (PWA):</strong> যেকোনো আধুনিক ব্রাউজারে এটি নেটিভ অ্যাপের মতো ইনস্টল করা যায় এবং সার্ভিস ওয়ার্কারের মাধ্যমে অফলাইনেও দ্রুত খেলা যায়।</li>
+          <li><strong>জিরো ডেটা ট্র্যাকিং:</strong> আমরা কোনো ব্যবহারকারীর ব্যক্তিগত তথ্য, মোবাইল নম্বর বা পাসওয়ার্ড সংরক্ষণ করি না। গেমের সর্বোচ্চ স্কোর আপনার ডিভাইসের ব্রাউজার মেমোরিতে (LocalStorage) থাকে।</li>
+        </ul>
+      </section>
+
+      <!-- Section 4: Developer Story -->
+      <section class="content-section">
+        <h2><span>👨‍💻</span> ডেভেলপারের কথা (About the Developer)</h2>
+        <p>বাংলা ফান গেমস প্ল্যাটফর্মটির পরিকল্পনা, ইন্টারফেস ডিজাইন এবং প্রোগ্রামিং করেছেন <strong>তীরথ হাসদা (Tirtho Hasda)</strong>। একজন নিবেদিতপ্রাণ ওয়েব ডেভেলপার হিসেবে বাংলা ভাষার ব্যবহারকারীদের জন্য মানসম্মত ডিজিটাল বিনোদন ও শিক্ষামূলক রিসোর্স গড়ে তোলাই তার অন্যতম প্রধান ব্রত।</p>
+        <p>আপনার যেকোনো সুচিন্তিত পরামর্শ, নতুন গেমের ধারণা বা গঠনমূলক সমালোচনা প্ল্যাটফর্মটিকে আরও এগিয়ে নিতে সহায়তা করবে। সরাসরি ইমেইলে যোগাযোগ করতে পারেন: <a href="mailto:tirthohasda7@gmail.com" style="color: var(--primary); font-weight: 600;">tirthohasda7@gmail.com</a></p>
+      </section>
+
+      <!-- Call to Action Banner -->
+      <div style="text-align: center; margin-top: 36px; padding: 24px; background: var(--bg-surface); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+        <h3 style="color: var(--text-primary); margin-bottom: 10px;">গেম খেলতে প্রস্তুত?</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 18px; font-size: 0.95rem;">১২টি বৈচিত্র্যময় গেমের মধ্য থেকে আপনার পছন্দেরটি বেছে নিয়ে খেলা শুরু করুন!</p>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <a href="index.html#games-section" class="btn btn-primary btn-large" style="text-decoration: none;">
+            <span>🚀 গেম তালিকায় যান</span>
+          </a>
+          <a href="contact.html" class="btn btn-outline btn-large" style="text-decoration: none;">
+            <span>✉️ মতামত জানান</span>
+          </a>
+        </div>
+      </div>
+
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-brand-col">
+        <div class="brand">
+          <span class="brand-icon">🎮</span>
+          <span class="brand-title">বাংলা ফান গেমস</span>
+        </div>
+        <p class="footer-about">বাংলা ফান গেমস সম্পূর্ণ উন্মুক্ত, নিরাপদ ও পরিবার-বান্ধব অনলাইন বাংলা গেমিং প্ল্যাটফর্ম। তৈরি করেছেন তীরথ হাসদা।</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">
+          ✉️ ইমেইল: <a href="mailto:tirthohasda7@gmail.com" style="color: var(--text-secondary); text-decoration: none;">tirthohasda7@gmail.com</a>
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">প্রয়োজনীয় লিংক</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">হোম ও গেম তালিকা</a></li>
+          <li><a href="about.html" style="color: var(--primary); font-weight: 600;">আমাদের সম্পর্কে (About Us)</a></li>
+          <li><a href="contact.html">যোগাযোগ ও সহায়তা (Contact)</a></li>
+          <li><a href="privacy.html">গোপনীয়তা নীতি (Privacy Policy)</a></li>
+          <li><a href="terms.html">ব্যবহারের শর্তাবলী (Terms of Service)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">জনপ্রিয় গেমস</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">সাপের খেলা (Snake)</a></li>
+          <li><a href="index.html">২০৪৮ পাজল (2048)</a></li>
+          <li><a href="index.html">ছুঁচো ধরা খেলা</a></li>
+          <li><a href="index.html">বাবল শুটার</a></li>
+          <li><a href="index.html">১৫ সংখ্যা পাজল</a></li>
+          <li><a href="index.html">বাংলা কুইজ চ্যালেঞ্জ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© ২০২৬ বাংলা ফান গেমস (Bangla Fun Games) • প্রতিষ্ঠাতা: তীরথ হাসদা • সর্বস্বত্ব সংরক্ষিত।</p>
+      <p class="footer-made-with">নির্মিত ❤️ বাংলা ভাষাভাষী সকল গেমপ্রেমীদের জন্য</p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme initialization
+    function initTheme() {
+      const savedTheme = localStorage.getItem('bangla_games_theme') || 'dark';
+      document.body.classList.toggle('light-theme', savedTheme === 'light');
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+    }
+    function toggleThemeGlobal() {
+      const isLight = document.body.classList.toggle('light-theme');
+      localStorage.setItem('bangla_games_theme', isLight ? 'light' : 'dark');
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = isLight ? '☀️' : '🌙';
+    }
+    initTheme();
+  </script>
+</body>
+</html>
