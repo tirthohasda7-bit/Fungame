@@ -30,10 +30,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.ui.theme.MyApplicationTheme
 
+import java.io.File
+
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
+    cleanupCorruptedSeedFiles()
     setContent {
       MyApplicationTheme {
         Box(
@@ -46,6 +49,23 @@ class MainActivity : ComponentActivity() {
           BanglaFunGamesApp()
         }
       }
+    }
+  }
+
+  private fun cleanupCorruptedSeedFiles() {
+    try {
+      val webviewDir = File(dataDir, "app_webview")
+      if (webviewDir.exists()) {
+        val seedFiles = listOf("variations_seed", "variations_seed_new", "variations_stamp")
+        for (name in seedFiles) {
+          val f = File(webviewDir, name)
+          if (f.exists() && f.length() == 0L) {
+            f.delete()
+          }
+        }
+      }
+    } catch (e: Exception) {
+      Log.d("BanglaFunGames", "Seed cleanup skipped: ${e.message}")
     }
   }
 }
