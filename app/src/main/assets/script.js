@@ -136,6 +136,12 @@ let currentView = 'home';
 
 function navigateTo(viewId) {
   playSound('tap');
+
+  // Stop any active 5-game loops and timers when switching views
+  if (typeof stopAllGames5 === 'function') {
+    stopAllGames5();
+  }
+
   document.querySelectorAll('.app-view').forEach(view => {
     view.classList.remove('active');
   });

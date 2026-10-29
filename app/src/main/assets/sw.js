@@ -1,6 +1,6 @@
 // Bangla Fun Games - Service Worker
-// Version: 1.0.0
-const CACHE_NAME = 'bangla-fun-games-cache-v1';
+// Version: 3.0.0
+const CACHE_NAME = 'bangla-fun-games-cache-v3';
 
 const STATIC_ASSETS = [
   './',
@@ -10,7 +10,9 @@ const STATIC_ASSETS = [
   './privacy.html',
   './terms.html',
   './style.css',
+  './games5.css',
   './script.js',
+  './games5.js',
   './manifest.webmanifest',
   './banner.jpg',
   './icons/icon-192.png',

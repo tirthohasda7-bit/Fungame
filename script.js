@@ -136,6 +136,12 @@ let currentView = 'home';
 
 function navigateTo(viewId) {
   playSound('tap');
+
+  // Stop any active 5-game loops and timers when switching views
+  if (typeof stopAllGames5 === 'function') {
+    stopAllGames5();
+  }
+
   document.querySelectorAll('.app-view').forEach(view => {
     view.classList.remove('active');
   });
@@ -185,6 +191,16 @@ function launchGame(gameType) {
     initBubbleGame();
   } else if (gameType === 'colormem') {
     initColorMemory();
+  } else if (gameType === 'runner') {
+    if (typeof initRunnerGame === 'function') initRunnerGame();
+  } else if (gameType === 'traffic') {
+    if (typeof initTrafficGame === 'function') initTrafficGame();
+  } else if (gameType === 'stack') {
+    if (typeof initStackGame === 'function') initStackGame();
+  } else if (gameType === 'fruitslice') {
+    if (typeof initFruitSliceGame === 'function') initFruitSliceGame();
+  } else if (gameType === 'brick') {
+    if (typeof initBrickBreakerGame === 'function') initBrickBreakerGame();
   }
 }
 
@@ -433,6 +449,11 @@ function updateHomeBestScores() {
   const colorMemPreview = document.getElementById('preview-best-colormem');
   if (colorMemPreview) {
     colorMemPreview.innerHTML = `সর্বোচ্চ রাউন্ড: <strong>${toBnNum(bestColorMem)}</strong>`;
+  }
+
+  // 5 New Games Preview Update
+  if (typeof updateHomeBestScores5 === 'function') {
+    updateHomeBestScores5();
   }
 }
 
